@@ -26,7 +26,7 @@ export function usePaystackBanksQuery() {
   return useQuery({
     queryKey: queryKeys.billing.banks(),
     queryFn: () => getPaystackBanks(),
-    staleTime: 1000 * 60 * 60, // 1 hour caching
+    staleTime: 1000 * 60 * 60,
   });
 }
 

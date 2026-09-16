@@ -10,22 +10,26 @@ import type {
   UpdatePayoutAccountParams,
 } from "@/types";
 
-// ---------------------------------------------------------------------------
-// VENDOR BILLING & SETTLEMENT
-// ---------------------------------------------------------------------------
-
 export async function getPaystackBanks(): Promise<Bank[]> {
   const data = await apiClient.get<Bank[] | { items: Bank[] }>("/billing/banks");
-  if (Array.isArray(data)) return data;
-  if (
+  let items: Bank[] = [];
+  if (Array.isArray(data)) {
+    items = data;
+  } else if (
     data &&
     typeof data === "object" &&
     "items" in data &&
     Array.isArray((data as { items: Bank[] }).items)
   ) {
-    return (data as { items: Bank[] }).items;
+    items = (data as { items: Bank[] }).items;
   }
-  return [];
+
+  const seen = new Set<string>();
+  return items.filter(bank => {
+    if (!bank.code || seen.has(bank.code)) return false;
+    seen.add(bank.code);
+    return true;
+  });
 }
 
 export async function resolvePayoutAccount(params: ResolveAccountParams): Promise<ResolvedAccount> {
@@ -41,10 +45,6 @@ export async function updatePayoutAccount(
 export async function getBillingSummary(): Promise<BillingSummary> {
   return apiClient.get<BillingSummary>("/billing/summary");
 }
-
-// ---------------------------------------------------------------------------
-// STOREFRONT SPLIT PAYMENT INITIALIZATION
-// ---------------------------------------------------------------------------
 
 export async function initializeOrderPayment(
   params: InitializePaymentParams

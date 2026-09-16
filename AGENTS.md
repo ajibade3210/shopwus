@@ -50,6 +50,7 @@ AFTER EVERY CODE CHANGE, WITHOUT EXCEPTION, YOU MUST:
 - **PRACTICAL REVIEWS:** Keep the review practical. Do not over-engineer, suggest unnecessary improvements, or nitpick.
 - **BREAKING-CHANGE RISK:** Breaking-change risk must be called out immediately and clearly. If a change could impact existing API contracts, payload shapes, database schema, background jobs, integrations, or expected behavior, say so up front and treat it as a high-priority warning.
 - **COMPLETION CONFIRMATION:** If everything is fine, say so explicitly: "Nothing important appears to be missing."
+- Remove all unnecessary comments or redundant comments. Keep code clean, lean, and self-documenting without redundant inline explanations or unnecessary JSDoc blocks.
 
 ---
 

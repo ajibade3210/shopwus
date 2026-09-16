@@ -30,14 +30,12 @@ export function BillingSection() {
   const stats = summary?.stats;
   const transactions = summary?.transactions || [];
 
-  // Initialize selected values if already configured
   useEffect(() => {
     if (billing?.bankCode) setSelectedBankCode(billing.bankCode);
     if (billing?.accountNumber) setAccountNumber(billing.accountNumber);
     if (billing?.accountName) setResolvedAccountName(billing.accountName);
   }, [billing]);
 
-  // Auto-resolve account name when bank & 10 digits are typed
   const performAccountResolution = async (acc: string, bank: string) => {
     if (acc.length !== 10 || !bank) return;
     setIsResolving(true);
@@ -99,7 +97,6 @@ export function BillingSection() {
 
   return (
     <div className="space-y-6">
-      {/* 1. Paystack Subaccount Settlement Setup */}
       <Card
         title="Payout & Settlement Bank Account"
         description="Direct automated bank settlements powered by Paystack Split Payments. Storefront sales deposit directly to your verified commercial bank account."
@@ -130,8 +127,8 @@ export function BillingSection() {
                   className="w-full px-3.5 py-2.5 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl font-medium"
                 >
                   <option value="">-- Choose Commercial Bank --</option>
-                  {banks.map(bank => (
-                    <option key={bank.code} value={bank.code}>
+                  {banks.map((bank, index) => (
+                    <option key={`${bank.code}-${bank.id ?? index}`} value={bank.code}>
                       {bank.name}
                     </option>
                   ))}
@@ -162,7 +159,6 @@ export function BillingSection() {
             </div>
           </div>
 
-          {/* Account Resolution Status Feedback */}
           <div className="space-y-2">
             {resolvedAccountName && (
               <div className="flex items-center gap-2 text-xs text-emerald-800 bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl font-medium">
@@ -191,7 +187,6 @@ export function BillingSection() {
               </div>
             )}
 
-            {/* Explainer Note */}
             <div className="p-3 bg-amber-50/70 border border-amber-200/80 rounded-xl text-[11px] text-[#855e2e] leading-relaxed flex items-start gap-2">
               <ShieldCheck size={16} className="text-amber-700 shrink-0 mt-0.5" />
               <div>
@@ -224,13 +219,11 @@ export function BillingSection() {
         </div>
       </Card>
 
-      {/* 2. Settlement Analytics & Transaction Ledger */}
       <Card
         title="Settlement History & Transactions"
         description="Audit trail of verified storefront sales, platform fees, and net merchant payouts."
       >
         <div className="space-y-4">
-          {/* Quick Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="p-3.5 bg-[#fafaf9] border border-[#e5e7eb] rounded-2xl">
               <div className="text-[10px] uppercase font-bold text-[#6b7280]">
@@ -260,7 +253,6 @@ export function BillingSection() {
             </div>
           </div>
 
-          {/* Transactions Table */}
           {transactions.length === 0 ? (
             <div className="p-8 text-center text-[#6b7280] border border-dashed border-[#e5e7eb] rounded-2xl bg-[#fafaf9]">
               <CreditCard size={28} className="mx-auto mb-2 text-[#9ca3af]" />
