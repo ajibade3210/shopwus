@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, Layers, X } from "lucide-react";
+import { AlertCircle, Layers, Truck, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   useCategoriesQuery,
@@ -10,6 +10,13 @@ import {
 import type { ProductModalProps, ProductOption, ProductVariantInput } from "@/types";
 import { ProductImageUploader } from "./product-image-uploader";
 import { ProductVariantMatrix } from "./product-variant-matrix";
+
+const WEIGHT_PRESETS = [
+  { label: "0.5kg", sub: "Small", val: "0.5" },
+  { label: "1.0kg", sub: "Standard", val: "1.0" },
+  { label: "2.0kg", sub: "Shoes/Boxed", val: "2.0" },
+  { label: "5.0kg", sub: "Heavy", val: "5.0" },
+] as const;
 
 export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductModalProps) {
   const isEditing = Boolean(product);
@@ -33,6 +40,8 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
     images: [] as string[],
     status: "ACTIVE" as "ACTIVE" | "DRAFT" | "ARCHIVED",
     isFeatured: false,
+    requiresShipping: true,
+    weightKg: "0.5",
   });
 
   // Variant Options & Matrix State
@@ -65,6 +74,8 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
         images: product.images || [],
         status: product.status,
         isFeatured: product.isFeatured,
+        requiresShipping: product.requiresShipping !== false,
+        weightKg: product.weightKg ? String(product.weightKg) : "0.5",
       });
 
       if (product.hasVariants && product.variants && product.variants.length > 0) {
@@ -103,6 +114,8 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
         images: [],
         status: "ACTIVE",
         isFeatured: false,
+        requiresShipping: true,
+        weightKg: "0.5",
       });
       setOptions([]);
       setVariants([]);
@@ -278,6 +291,11 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
       images: formData.images,
       status: formData.status,
       isFeatured: formData.isFeatured,
+      requiresShipping: formData.requiresShipping,
+      weightKg:
+        formData.requiresShipping && formData.weightKg
+          ? Number.parseFloat(formData.weightKg)
+          : null,
     };
 
     try {
@@ -528,6 +546,86 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
             onAddImage={handleAddImage}
             onRemoveImage={handleRemoveImage}
           />
+
+          {/* Shipping & Parcel Weight */}
+          <div className="pt-4 border-t border-[#eee7dc] space-y-3">
+            <div className="flex items-center justify-between p-3.5 bg-[#faf8f5] border border-[#e5e7eb] rounded-2xl">
+              <div className="flex items-center gap-2.5">
+                <Truck size={18} className="text-[#6b7280]" />
+                <div>
+                  <h3 className="text-xs font-bold text-[#191c1d]">Requires Physical Delivery</h3>
+                  <p className="text-[11px] text-[#6b7280]">
+                    Disable for digital downloads, e-books, or in-person appointments.
+                  </p>
+                </div>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.requiresShipping}
+                  onChange={e => setFormData({ ...formData, requiresShipping: e.target.checked })}
+                  className="sr-only peer"
+                />
+                <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#111827]" />
+              </label>
+            </div>
+
+            {formData.requiresShipping && (
+              <div className="p-3.5 bg-[#faf8f5] border border-[#e5e7eb] rounded-2xl space-y-2.5">
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-[#191c1d]">
+                      Estimated Parcel Weight (kg)
+                    </label>
+                    <span className="text-[11px] text-[#6b7280]">Includes packaging box</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="0.1"
+                      max="100"
+                      placeholder="1.0"
+                      value={formData.weightKg}
+                      onChange={e => setFormData({ ...formData, weightKg: e.target.value })}
+                      className="w-full sm:w-44 px-3.5 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl font-sans font-bold tabular-nums"
+                    />
+                    <span className="text-xs font-medium text-[#6b7280]">kg</span>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-[11px] text-[#6b7280] mb-1.5 font-medium">Quick presets:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {WEIGHT_PRESETS.map(preset => {
+                      const isActive =
+                        Number.parseFloat(formData.weightKg) === Number.parseFloat(preset.val);
+                      return (
+                        <button
+                          key={preset.val}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, weightKg: preset.val })}
+                          className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer font-medium ${
+                            isActive
+                              ? "bg-[#111827] text-white border-[#111827]"
+                              : "bg-white text-[#4b5563] border-[#e5e7eb] hover:border-[#9ca3af] hover:bg-[#fafaf9]"
+                          }`}
+                        >
+                          {preset.label}{" "}
+                          <span className="opacity-75 text-[10px]">({preset.sub})</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-[#9ca3af]">
+                  Used by Terminal Africa to calculate accurate real-time courier quotes at
+                  storefront checkout.
+                </p>
+              </div>
+            )}
+          </div>
 
           {/* Status & Featured Toggle */}
           <div className="pt-4 border-t border-[#eee7dc] flex items-center justify-between">

@@ -17,10 +17,41 @@ export interface DeliverySettings {
   state?: string | null;
   postalCode?: string | null;
   country: string;
+  senderPhone?: string | null;
   enableStorePickup: boolean;
   pickupInstructions?: string | null;
   enableHomeDelivery: boolean;
   freeDeliveryThreshold?: number | string | null;
+  fallbackShippingFee?: number | string | null;
+}
+
+export interface DeliveryQuote {
+  rateId: string;
+  carrierName: string;
+  carrierSlug?: string | null;
+  carrierLogo?: string | null;
+  deliveryEta?: number | null;
+  deliveryTime?: string | null;
+  currency: string;
+  fee: number;
+  feeKobo: number;
+}
+
+export interface GetDeliveryQuotesPayload {
+  destination: {
+    recipientName: string;
+    phone: string;
+    addressLine1: string;
+    addressLine2?: string | null;
+    city: string;
+    state: string;
+    postalCode?: string | null;
+  };
+  items: Array<{
+    productId: string;
+    variantId?: string | null;
+    quantity: number;
+  }>;
 }
 
 export interface StorefrontDeliveryConfig {
@@ -29,7 +60,8 @@ export interface StorefrontDeliveryConfig {
   pickupInstructions?: string | null;
   enableHomeDelivery: boolean;
   freeDeliveryThreshold?: number | null;
-  deliveryZones: Array<{
+  fallbackShippingFee?: number | null;
+  deliveryZones?: Array<{
     id: string;
     name: string;
     states: string[];
@@ -52,26 +84,10 @@ export interface UpdateDeliverySettingsInput {
   city?: string | null;
   state?: string | null;
   postalCode?: string | null;
+  senderPhone?: string | null;
   enableStorePickup?: boolean;
   pickupInstructions?: string | null;
   enableHomeDelivery?: boolean;
   freeDeliveryThreshold?: number | null;
-}
-
-export interface DeliveryZoneModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  editingZone: DeliveryZone | null;
-  zoneName: string;
-  zoneFee: string;
-  zoneEstimatedDays: string;
-  selectedStates: string[];
-  isSubmitting: boolean;
-  onZoneNameChange: (name: string) => void;
-  onZoneFeeChange: (fee: string) => void;
-  onZoneEstimatedDaysChange: (days: string) => void;
-  onToggleState: (stateName: string) => void;
-  onSelectAllStates: () => void;
-  onDeselectAllStates: () => void;
-  onSubmit: (e: React.FormEvent) => void;
+  fallbackShippingFee?: number | null;
 }

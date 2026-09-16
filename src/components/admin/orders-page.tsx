@@ -1,9 +1,10 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { useOrderSummaryQuery, useOrdersQuery } from "@/hooks/queries";
 import { formatMoney, Metric, PageTitle } from "./admin-layout";
+import { CreateOrderModal } from "./orders/create-order-modal";
 import { OrderDetailsDrawer } from "./orders/order-details-drawer";
 import { OrdersTable } from "./orders/orders-table";
 
@@ -12,6 +13,7 @@ export function OrdersPage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const { data: summary } = useOrderSummaryQuery();
   const {
@@ -31,7 +33,19 @@ export function OrdersPage() {
 
   return (
     <section className="content">
-      <PageTitle title="Orders & Fulfillment" />
+      <PageTitle
+        title="Orders & Fulfillment"
+        action={
+          <button
+            type="button"
+            onClick={() => setIsCreateModalOpen(true)}
+            className="px-3.5 py-2 bg-[#191c1d] hover:bg-black text-white text-xs font-semibold rounded-xl transition-all shadow-xs flex items-center gap-1.5"
+          >
+            <Plus size={15} />
+            Record Sale / Order
+          </button>
+        }
+      />
 
       {/* Top Metric Strip */}
       <div className="metrics">
@@ -166,6 +180,13 @@ export function OrdersPage() {
         orderId={selectedOrderId}
         onClose={() => setSelectedOrderId(null)}
         onUpdated={() => refetch()}
+      />
+
+      {/* Manual Order Creation Modal */}
+      <CreateOrderModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreated={() => refetch()}
       />
     </section>
   );

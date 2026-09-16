@@ -59,3 +59,13 @@ export async function getStorefrontDeliveryConfig(slug: string): Promise<Storefr
     `/delivery/storefront/${encodeURIComponent(slug)}`
   );
 }
+
+export async function getStorefrontDeliveryQuotes(
+  slug: string,
+  payload: import("@/types").GetDeliveryQuotesPayload
+): Promise<import("@/types").DeliveryQuote[]> {
+  return apiClient.post<import("@/types").DeliveryQuote[]>(
+    `/delivery/storefront/${encodeURIComponent(slug)}/quotes`,
+    payload
+  );
+}

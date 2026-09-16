@@ -1,6 +1,7 @@
 import { apiClient } from "@/lib/api-client";
 import type {
   CheckoutSession,
+  CreateManualOrderInput,
   CreateOrderInput,
   GetOrdersParams,
   Order,
@@ -13,6 +14,10 @@ import type {
 // ---------------------------------------------------------------------------
 // VENDOR ORDERS API
 // ---------------------------------------------------------------------------
+
+export async function createManualOrder(input: CreateManualOrderInput): Promise<Order> {
+  return apiClient.post<Order>("/orders/manual", input);
+}
 
 export async function getOrders(params?: GetOrdersParams): Promise<OrdersResponse> {
   return apiClient.get<OrdersResponse>("/orders", params);
@@ -28,6 +33,10 @@ export async function getOrderById(id: string): Promise<Order> {
 
 export async function updateOrderStatus(id: string, input: UpdateOrderStatusInput): Promise<Order> {
   return apiClient.patch<Order>(`/orders/${encodeURIComponent(id)}/status`, input);
+}
+
+export async function dispatchOrder(id: string): Promise<Order> {
+  return apiClient.post<Order>(`/orders/${encodeURIComponent(id)}/dispatch`);
 }
 
 // ---------------------------------------------------------------------------

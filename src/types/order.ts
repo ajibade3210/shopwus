@@ -89,6 +89,9 @@ export interface Order {
   pickupLocation?: string | null;
   trackingNumber?: string | null;
   courierName?: string | null;
+  terminalRateId?: string | null;
+  terminalShipmentId?: string | null;
+  trackingUrl?: string | null;
   estimatedDelivery?: string | null;
   fulfilledAt?: string | null;
   paymentReference?: string | null;
@@ -169,7 +172,9 @@ export interface CreateOrderInput {
   notes?: string | null;
   deliveryType: DeliveryType;
   shippingAddress?: ShippingAddress | null;
-  deliveryZoneId?: string | null;
+  terminalRateId?: string | null;
+  deliveryFee?: number;
+  carrierName?: string | null;
   items: Array<{
     productId: string;
     variantId?: string | null;
@@ -220,6 +225,10 @@ export interface CheckoutDeliveryFormProps {
   onDeliveryTypeChange: (type: DeliveryType) => void;
   address: ShippingAddress;
   onAddressChange: (address: ShippingAddress) => void;
+  quotes?: import("./delivery").DeliveryQuote[];
+  selectedRateId?: string | null;
+  onSelectRate?: (rate: import("./delivery").DeliveryQuote) => void;
+  isLoadingQuotes?: boolean;
   matchedZone?: {
     id: string;
     name: string;
@@ -246,4 +255,40 @@ export interface CheckoutOrderSummaryProps {
     estimatedDays?: string | null;
   } | null;
   deliveryType: DeliveryType;
+}
+
+export interface ManualOrderItemInput {
+  productId: string;
+  variantId?: string | null;
+  quantity: number;
+  unitPrice?: number;
+}
+
+export interface ManualOrderDraftItem {
+  productId: string;
+  variantId?: string | null;
+  productName: string;
+  variantTitle?: string | null;
+  unitPrice: number;
+  quantity: number;
+  maxStock?: number;
+}
+
+export interface CreateManualOrderInput {
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  items: ManualOrderItemInput[];
+  fulfillmentMode: "DIRECT_SALE" | "STORE_PICKUP" | "SHIP_TO_CUSTOMER";
+  shippingAddress?: ShippingAddress | null;
+  deliveryFee?: number;
+  paymentStatus: "PAID" | "UNPAID" | "PENDING";
+  paymentMethod?: "CASH" | "POS" | "BANK_TRANSFER" | "ONLINE" | "OTHER";
+  notes?: string | null;
+}
+
+export interface CreateOrderModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onCreated?: (order: Order) => void;
 }

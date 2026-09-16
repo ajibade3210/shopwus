@@ -4,8 +4,15 @@ import { CheckCircle2, CreditCard, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useStorefrontDeliveryConfigQuery } from "@/hooks/queries";
 import { initializeOrderPayment } from "@/services/api/billing.service";
+import { getStorefrontDeliveryQuotes } from "@/services/api/delivery.service";
 import { placeStorefrontOrder, syncCheckoutSession } from "@/services/api/order.service";
-import type { CheckoutModalProps, DeliveryType, Order, ShippingAddress } from "@/types";
+import type {
+  CheckoutModalProps,
+  DeliveryQuote,
+  DeliveryType,
+  Order,
+  ShippingAddress,
+} from "@/types";
 import { formatCurrency } from "@/utils/currency";
 import { useCart } from "./cart-context";
 import { CheckoutDeliveryForm } from "./checkout-delivery-form";
@@ -39,22 +46,38 @@ export function CheckoutModal({
     phone: "",
     addressLine1: "",
     addressLine2: "",
-    city: "",
+    city: "Ikeja",
     state: "Lagos",
     postalCode: "",
     deliveryNote: "",
   });
 
-  // Default to Store Pickup if merchant doesn't offer Home Delivery
+  // Check if cart contains physical goods that require delivery
+  const requiresShipping = useMemo(() => {
+    return items.some(i => i.product.requiresShipping !== false);
+  }, [items]);
+
+  // Delivery Quotes State
+  const [quotes, setQuotes] = useState<DeliveryQuote[]>([]);
+  const [selectedRateId, setSelectedRateId] = useState<string | null>(null);
+  const [selectedCarrierName, setSelectedCarrierName] = useState<string | null>(null);
+  const [isLoadingQuotes, setIsLoadingQuotes] = useState(false);
+
+  // Default to Store Pickup if merchant doesn't offer Home Delivery or items don't require shipping
   useEffect(() => {
+    if (!requiresShipping) {
+      setDeliveryType("STORE_PICKUP");
+      return;
+    }
+
     if (deliveryConfig) {
       if (!deliveryConfig.enableHomeDelivery && deliveryConfig.enableStorePickup) {
         setDeliveryType("STORE_PICKUP");
       }
     }
-  }, [deliveryConfig]);
+  }, [deliveryConfig, requiresShipping]);
 
-  // Autofill recipient name and phone from customer info when changed
+  // Autofill recipient name and phone from customer info
   useEffect(() => {
     if (customerName && !address.recipientName) {
       setAddress(prev => ({ ...prev, recipientName: customerName }));
@@ -64,33 +87,117 @@ export function CheckoutModal({
     }
   }, [customerName, customerPhone, address.recipientName, address.phone]);
 
-  // Dynamic Shipping Calculation based on state & merchant zones
-  const { matchedZone, deliveryFee, isFreeShipping } = useMemo(() => {
-    if (deliveryType === "STORE_PICKUP") {
-      return { matchedZone: null, deliveryFee: 0, isFreeShipping: false };
+  // Debounced real-time delivery quotes from Terminal Africa / Fallback
+  useEffect(() => {
+    if (
+      !isOpen ||
+      !requiresShipping ||
+      deliveryType !== "HOME_DELIVERY" ||
+      !address.state ||
+      !address.city ||
+      items.length === 0
+    ) {
+      return;
     }
 
-    const freeThreshold = deliveryConfig?.freeDeliveryThreshold;
-    const isFree = Boolean(freeThreshold && subtotal >= freeThreshold);
+    const timer = setTimeout(async () => {
+      setIsLoadingQuotes(true);
+      try {
+        const fetchedQuotes = await getStorefrontDeliveryQuotes(slug, {
+          destination: {
+            recipientName: address.recipientName || customerName || "Valued Customer",
+            phone: address.phone || customerPhone || "+2348000000000",
+            addressLine1: address.addressLine1 || "Storefront Delivery",
+            addressLine2: address.addressLine2 || null,
+            city: address.city,
+            state: address.state,
+            postalCode: address.postalCode || null,
+          },
+          items: items.map(i => ({
+            productId: i.productId,
+            variantId: i.variantId || null,
+            quantity: i.quantity,
+          })),
+        });
 
-    const zones = deliveryConfig?.deliveryZones || [];
-    // 1. Check exact state match
-    let zone = zones.find(z => z.states.includes(address.state));
-    // 2. Fallback to nationwide / flat rate zone (states is empty)
-    if (!zone) {
-      zone = zones.find(z => z.states.length === 0);
+        if (Array.isArray(fetchedQuotes) && fetchedQuotes.length > 0) {
+          setQuotes(fetchedQuotes);
+          // Preserve selected rate if still present in new quotes, else default to first
+          setSelectedRateId(prev => {
+            const exists = fetchedQuotes.some(q => q.rateId === prev);
+            const activeRateId = exists && prev ? prev : fetchedQuotes[0].rateId;
+            const activeQuote = fetchedQuotes.find(q => q.rateId === activeRateId);
+            setSelectedCarrierName(activeQuote?.carrierName || fetchedQuotes[0].carrierName);
+            return activeRateId;
+          });
+        }
+      } catch (_err) {
+        // Safe fallback quote on API failure
+        const fallbackFee = deliveryConfig?.fallbackShippingFee
+          ? Number(deliveryConfig.fallbackShippingFee)
+          : 3000;
+        const fallbackQuote: DeliveryQuote = {
+          rateId: "fallback_standard",
+          carrierName: "Standard Delivery",
+          fee: fallbackFee,
+          feeKobo: fallbackFee * 100,
+          currency: "NGN",
+          deliveryTime: "2 - 4 business days",
+        };
+        setQuotes([fallbackQuote]);
+        setSelectedRateId("fallback_standard");
+        setSelectedCarrierName("Standard Delivery");
+      } finally {
+        setIsLoadingQuotes(false);
+      }
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [
+    isOpen,
+    requiresShipping,
+    deliveryType,
+    address.state,
+    address.city,
+    address.addressLine1,
+    address.recipientName,
+    address.phone,
+    customerName,
+    customerPhone,
+    slug,
+    items,
+    deliveryConfig,
+    address.addressLine2,
+    address.postalCode,
+  ]);
+
+  // Shipping Calculation
+  const freeThreshold = deliveryConfig?.freeDeliveryThreshold;
+  const isFreeShipping = Boolean(freeThreshold && subtotal >= freeThreshold);
+
+  const selectedQuote = useMemo(() => {
+    return quotes.find(q => q.rateId === selectedRateId) || quotes[0] || null;
+  }, [quotes, selectedRateId]);
+
+  const deliveryFee = useMemo(() => {
+    if (!requiresShipping || deliveryType === "STORE_PICKUP") {
+      return 0;
     }
-
-    const fee = isFree ? 0 : zone ? zone.fee : 0;
-
-    return {
-      matchedZone: zone,
-      deliveryFee: fee,
-      isFreeShipping: isFree,
-    };
-  }, [deliveryType, deliveryConfig, address.state, subtotal]);
+    if (isFreeShipping) {
+      return 0;
+    }
+    if (selectedQuote) {
+      return selectedQuote.fee;
+    }
+    return deliveryConfig?.fallbackShippingFee ? Number(deliveryConfig.fallbackShippingFee) : 3000;
+  }, [requiresShipping, deliveryType, isFreeShipping, selectedQuote, deliveryConfig]);
 
   const grandTotal = subtotal + deliveryFee;
+
+  const handleSelectRate = (quote: DeliveryQuote) => {
+    setSelectedRateId(quote.rateId);
+    setSelectedCarrierName(quote.carrierName);
+  };
 
   // Sync CheckoutSession in background when contact info is typed (for lead recovery)
   const handleBlurContact = async () => {
@@ -132,8 +239,17 @@ export function CheckoutModal({
         customerEmail: customerEmail.trim().toLowerCase(),
         customerPhone: customerPhone.trim(),
         notes: notes.trim() || null,
-        deliveryType,
-        shippingAddress: deliveryType === "HOME_DELIVERY" ? address : null,
+        deliveryType: requiresShipping ? deliveryType : "STORE_PICKUP",
+        shippingAddress: requiresShipping && deliveryType === "HOME_DELIVERY" ? address : null,
+        terminalRateId:
+          requiresShipping && deliveryType === "HOME_DELIVERY"
+            ? selectedQuote?.rateId || null
+            : null,
+        deliveryFee,
+        carrierName:
+          requiresShipping && deliveryType === "HOME_DELIVERY"
+            ? selectedCarrierName || selectedQuote?.carrierName || null
+            : null,
         items: items.map(i => ({
           productId: i.productId,
           variantId: i.variantId || null,
@@ -178,75 +294,83 @@ export function CheckoutModal({
             </h2>
             <p className="text-[11px] text-[#6b7280]">
               {step === "success"
-                ? "Your order has been received."
-                : "Complete your details below to place your order."}
+                ? `Order #${createdOrder?.orderNumber || ""} has been recorded.`
+                : "Complete your details to place your order."}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-[#6b7280] hover:text-[#191c1d] hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+            className="p-1.5 text-[#6b7280] hover:text-[#191c1d] rounded-full hover:bg-gray-100 transition-colors"
           >
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
 
-        {step === "success" && createdOrder ? (
-          <div className="p-8 text-center space-y-4">
-            <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200">
-              <CheckCircle2 size={32} />
+        {step === "success" ? (
+          <div className="p-6 text-center space-y-4">
+            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle2 size={24} />
             </div>
-
-            <div>
-              <h3 className="text-lg font-bold text-[#191c1d]">Order Placed Successfully!</h3>
-              <p className="text-xs text-[#6b7280] mt-1 font-mono">
-                Order Reference: <b>{createdOrder.orderNumber}</b>
+            <div className="space-y-1">
+              <h3 className="font-bold text-base text-[#191c1d]">Thank you for your order!</h3>
+              <p className="text-xs text-[#6b7280]">
+                We have sent an order confirmation to{" "}
+                <span className="font-semibold text-[#191c1d]">{customerEmail}</span>.
               </p>
             </div>
 
-            <div className="bg-[#fafaf9] border border-[#e5e7eb] rounded-2xl p-4 text-xs text-left space-y-2">
-              <div className="flex justify-between font-medium">
-                <span className="text-[#6b7280]">Product Subtotal:</span>
-                <span className="font-sans font-bold tabular-nums text-[#191c1d]">
-                  {formatCurrency(Number(createdOrder.subtotal))}
-                </span>
+            {/* Order details snapshot */}
+            {createdOrder && (
+              <div className="bg-[#fafaf9] border border-[#e5e7eb] rounded-2xl p-4 text-left space-y-2 text-xs">
+                <div className="flex justify-between font-semibold text-[#191c1d]">
+                  <span>Order Number:</span>
+                  <span className="font-mono">#{createdOrder.orderNumber}</span>
+                </div>
+                <div className="flex justify-between text-[#6b7280]">
+                  <span>Total Amount:</span>
+                  <span className="font-bold text-[#191c1d]">
+                    {formatCurrency(Number(createdOrder.total))}
+                  </span>
+                </div>
+                <div className="flex justify-between text-[#6b7280]">
+                  <span>Fulfillment:</span>
+                  <span className="font-semibold text-[#191c1d]">
+                    {createdOrder.deliveryType === "STORE_PICKUP"
+                      ? "Store Pickup"
+                      : `${createdOrder.courierName || "Doorstep Delivery"}`}
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-between font-medium">
-                <span className="text-[#6b7280]">Delivery:</span>
-                <span className="font-sans font-bold tabular-nums text-[#191c1d]">
-                  {formatCurrency(Number(createdOrder.deliveryFee))}
-                </span>
-              </div>
-              <div className="pt-2 border-t border-[#eee] flex justify-between font-bold text-[#191c1d]">
-                <span>Total Amount:</span>
-                <span className="font-sans font-bold tabular-nums text-sm">
-                  {formatCurrency(Number(createdOrder.total))}
-                </span>
-              </div>
-              <div className="pt-1 text-[11px] text-[#6b7280]">
-                Confirmation details have been recorded for: <b>{createdOrder.customerEmail}</b>
-              </div>
-            </div>
+            )}
 
-            <p className="text-xs text-[#6b7280]">
-              The merchant will fulfill your order shortly. Thank you for shopping with us!
-            </p>
-
-            <div className="space-y-2 pt-2">
-              {paymentUrl ? (
+            {/* Payment CTA button if authorization URL available */}
+            {paymentUrl ? (
+              <div className="pt-2">
                 <a
                   href={paymentUrl}
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#191c1d] hover:bg-black text-white text-xs font-bold rounded-2xl shadow-xs transition-all"
                 >
-                  <CreditCard size={15} />
-                  <span>Pay Now with Paystack ({formatCurrency(Number(createdOrder.total))})</span>
+                  <CreditCard size={14} /> Pay Now with Paystack
                 </a>
-              ) : null}
+                <p className="text-[10px] text-[#6b7280] mt-1.5">
+                  Secure checkout powered by Paystack.
+                </p>
+              </div>
+            ) : (
+              <p className="text-[11px] text-[#855e2e] bg-amber-50 border border-amber-200/60 p-2.5 rounded-xl">
+                Your order is currently pending payment. The studio will reach out to you via
+                WhatsApp to confirm your payment and fulfillment.
+              </p>
+            )}
 
+            <div className="pt-3 border-t border-[#eee]">
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full py-2.5 bg-[#191c1d] hover:bg-black text-white text-xs font-bold rounded-xl transition-all cursor-pointer"
+                className="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-[#191c1d] text-xs font-bold rounded-xl transition-all w-full"
               >
                 Done
               </button>
@@ -271,7 +395,6 @@ export function CheckoutModal({
               isFreeShipping={isFreeShipping}
               grandTotal={grandTotal}
               deliveryConfig={deliveryConfig}
-              matchedZone={matchedZone}
               deliveryType={deliveryType}
             />
 
@@ -292,7 +415,7 @@ export function CheckoutModal({
                     onChange={e => setCustomerName(e.target.value)}
                     onBlur={handleBlurContact}
                     placeholder="e.g. Funmi Adeleke"
-                    className="w-full px-3.5 py-2 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl"
+                    className="w-full px-3.5 py-2 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl text-xs font-medium focus:ring-1 focus:ring-[#191c1d] outline-none"
                   />
                 </div>
 
@@ -307,7 +430,7 @@ export function CheckoutModal({
                     onChange={e => setCustomerEmail(e.target.value)}
                     onBlur={handleBlurContact}
                     placeholder="funmi@example.com"
-                    className="w-full px-3.5 py-2 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl"
+                    className="w-full px-3.5 py-2 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl text-xs font-medium focus:ring-1 focus:ring-[#191c1d] outline-none"
                   />
                 </div>
 
@@ -322,23 +445,35 @@ export function CheckoutModal({
                     onChange={e => setCustomerPhone(e.target.value)}
                     onBlur={handleBlurContact}
                     placeholder="+234 801 234 5678"
-                    className="w-full px-3.5 py-2 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl"
+                    className="w-full px-3.5 py-2 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl text-xs font-medium focus:ring-1 focus:ring-[#191c1d] outline-none"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Delivery Method & Address */}
-            <CheckoutDeliveryForm
-              deliveryConfig={deliveryConfig}
-              deliveryType={deliveryType}
-              onDeliveryTypeChange={setDeliveryType}
-              address={address}
-              onAddressChange={setAddress}
-              matchedZone={matchedZone}
-              deliveryFee={deliveryFee}
-              isFreeShipping={isFreeShipping}
-            />
+            {/* Delivery Method & Address (Only shown if cart requires physical delivery) */}
+            {requiresShipping ? (
+              <CheckoutDeliveryForm
+                deliveryConfig={deliveryConfig}
+                deliveryType={deliveryType}
+                onDeliveryTypeChange={setDeliveryType}
+                address={address}
+                onAddressChange={setAddress}
+                quotes={quotes}
+                selectedRateId={selectedRateId}
+                onSelectRate={handleSelectRate}
+                isLoadingQuotes={isLoadingQuotes}
+                deliveryFee={deliveryFee}
+                isFreeShipping={isFreeShipping}
+              />
+            ) : (
+              <div className="p-3.5 bg-[#fafaf9] border border-[#e5e7eb] rounded-2xl text-xs text-[#6b7280] flex items-center justify-between">
+                <span>Your items are digital/service products and do not require delivery.</span>
+                <span className="font-bold text-emerald-700 uppercase text-[10px]">
+                  ₦0 Delivery
+                </span>
+              </div>
+            )}
 
             {/* Actions */}
             <div className="pt-4 border-t border-[#eee] flex items-center justify-end gap-2.5">

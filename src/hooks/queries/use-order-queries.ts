@@ -3,13 +3,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-keys";
 import {
+  createManualOrder,
+  dispatchOrder,
   getOrderById,
   getOrderSummary,
   getOrders,
   placeStorefrontOrder,
   updateOrderStatus,
 } from "@/services/api/order.service";
-import type { CreateOrderInput, GetOrdersParams, UpdateOrderStatusInput } from "@/types";
+import type {
+  CreateManualOrderInput,
+  CreateOrderInput,
+  GetOrdersParams,
+  UpdateOrderStatusInput,
+} from "@/types";
 
 export function useOrdersQuery(params?: GetOrdersParams) {
   return useQuery({
@@ -56,6 +63,28 @@ export function usePlaceOrderMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.orders.all });
       queryClient.invalidateQueries({ queryKey: queryKeys.products.all });
+    },
+  });
+}
+
+export function useCreateManualOrderMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (input: CreateManualOrderInput) => createManualOrder(input),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.orders.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.products.all });
+    },
+  });
+}
+
+export function useDispatchOrderMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => dispatchOrder(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.orders.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.orders.detail(id) });
     },
   });
 }

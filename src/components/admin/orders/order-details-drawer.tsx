@@ -1,21 +1,41 @@
 "use client";
 
-import { MapPin, Package, ShieldCheck, Truck, User, X } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  ExternalLink,
+  Loader2,
+  MapPin,
+  Package,
+  ShieldCheck,
+  Truck,
+  User,
+  X,
+} from "lucide-react";
 import { useState } from "react";
-import { useOrderQuery, useUpdateOrderStatusMutation } from "@/hooks/queries";
+import {
+  useDispatchOrderMutation,
+  useOrderQuery,
+  useUpdateOrderStatusMutation,
+} from "@/hooks/queries";
 import type { FulfillmentStatus, OrderDetailsDrawerProps, PaymentStatus } from "@/types";
 import { formatCurrency } from "@/utils/currency";
-
 import { StatusBadge } from "../common/status-badge";
+import { useAdminToast } from "../layout/admin-toast-provider";
 
-export function OrderDetailsDrawer({ orderId, onClose }: OrderDetailsDrawerProps) {
+export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetailsDrawerProps) {
+  const { showToast } = useAdminToast();
   const { data: order, isLoading } = useOrderQuery(orderId);
   const updateMutation = useUpdateOrderStatusMutation();
+  const dispatchMutation = useDispatchOrderMutation();
 
   const [fulfillmentStatus, setFulfillmentStatus] = useState<FulfillmentStatus | "">("");
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | "">("");
   const [trackingNumber, setTrackingNumber] = useState("");
   const [courierName, setCourierName] = useState("");
+
+  const [isConfirmDispatchOpen, setIsConfirmDispatchOpen] = useState(false);
+  const [dispatchError, setDispatchError] = useState<string | null>(null);
 
   if (!orderId) return null;
 
@@ -30,7 +50,32 @@ export function OrderDetailsDrawer({ orderId, onClose }: OrderDetailsDrawerProps
         courierName: courierName || undefined,
       },
     });
+    showToast("Order status updated successfully!");
+    if (onUpdated) onUpdated();
   };
+
+  const handleDispatchCourier = async () => {
+    if (!order) return;
+    setDispatchError(null);
+    try {
+      await dispatchMutation.mutateAsync(order.id);
+      showToast("Courier pickup arranged with Terminal Africa!");
+      setIsConfirmDispatchOpen(false);
+      if (onUpdated) onUpdated();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to dispatch courier pickup.";
+      setDispatchError(msg);
+    }
+  };
+
+  const isEligibleForTerminalDispatch =
+    order &&
+    order.deliveryType === "HOME_DELIVERY" &&
+    !order.terminalShipmentId &&
+    order.fulfillmentStatus !== "DELIVERED" &&
+    order.fulfillmentStatus !== "CANCELLED";
+
+  const hasTerminalTracking = order && (order.terminalShipmentId || order.trackingUrl);
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/40 backdrop-blur-xs flex justify-end">
@@ -71,6 +116,97 @@ export function OrderDetailsDrawer({ orderId, onClose }: OrderDetailsDrawerProps
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto p-6 space-y-6 text-xs text-[#191c1d]">
+            {/* Terminal Africa Live Tracking Card (If already dispatched) */}
+            {hasTerminalTracking && (
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-4 space-y-3 shadow-2xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
+                      <Truck size={16} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-emerald-950 text-xs">
+                        Courier Pickup Arranged
+                      </h4>
+                      <p className="text-[11px] text-emerald-700">
+                        {order.courierName || "Terminal Africa Partner Courier"}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    Dispatched
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-[11px] pt-2 border-t border-emerald-200/60">
+                  <div>
+                    <span className="text-emerald-800/70 block text-[10px]">Tracking Number:</span>
+                    <span className="font-mono font-bold text-emerald-950">
+                      {order.trackingNumber || order.terminalShipmentId}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-emerald-800/70 block text-[10px]">
+                      Shipment Reference:
+                    </span>
+                    <span className="font-mono text-emerald-900 truncate block">
+                      {order.terminalShipmentId || "N/A"}
+                    </span>
+                  </div>
+                </div>
+
+                {order.trackingUrl && (
+                  <a
+                    href={order.trackingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs transition-colors shadow-xs"
+                  >
+                    <span>Track Shipment Live</span>
+                    <ExternalLink size={13} />
+                  </a>
+                )}
+              </div>
+            )}
+
+            {/* 1-Click Dispatch Courier Section (If eligible) */}
+            {isEligibleForTerminalDispatch && (
+              <div className="bg-gradient-to-br from-indigo-50/70 via-sky-50/50 to-white border border-indigo-100 rounded-2xl p-4 space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
+                      <Truck size={16} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#191c1d] text-xs">Dispatch Courier Pickup</h4>
+                      <p className="text-[11px] text-[#6b7280]">
+                        {order.courierName
+                          ? `Book pickup with ${order.courierName} via Terminal Africa`
+                          : "Book automatic courier pickup via Terminal Africa"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {dispatchError && (
+                  <div className="p-2.5 bg-red-50 border border-red-200 rounded-xl text-[11px] text-red-700 flex items-start gap-2">
+                    <AlertCircle size={14} className="shrink-0 mt-0.5" />
+                    <span>{dispatchError}</span>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => setIsConfirmDispatchOpen(true)}
+                  disabled={dispatchMutation.isPending}
+                  className="w-full py-2.5 px-4 bg-[#191c1d] hover:bg-black text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-xs"
+                >
+                  <Truck size={14} />
+                  <span>Dispatch with Terminal Africa</span>
+                </button>
+              </div>
+            )}
+
             {/* Customer & Delivery Information Card */}
             <div className="bg-[#fafaf9] border border-[#e5e7eb] rounded-2xl p-4 space-y-3">
               <div className="flex items-center gap-2 font-bold text-[#191c1d] text-xs">
@@ -152,6 +288,11 @@ export function OrderDetailsDrawer({ orderId, onClose }: OrderDetailsDrawerProps
                       </div>
                       <div>
                         <div className="font-semibold text-[#191c1d]">{item.productName}</div>
+                        {item.variantTitle && (
+                          <div className="text-[10px] text-[#6b7280]">
+                            Variant: {item.variantTitle}
+                          </div>
+                        )}
                         <div className="text-[10px] text-[#6b7280]">
                           <span className="font-sans font-bold tabular-nums">
                             {formatCurrency(Number(item.unitPrice))}
@@ -206,10 +347,10 @@ export function OrderDetailsDrawer({ orderId, onClose }: OrderDetailsDrawerProps
               </div>
             </div>
 
-            {/* Fulfillment Status Switcher */}
+            {/* Manual Fulfillment & Status Adjustments */}
             <div className="bg-white border border-[#e5e7eb] rounded-2xl p-4 space-y-3">
               <h3 className="font-bold text-xs uppercase tracking-wider text-[#191c1d] flex items-center gap-1.5">
-                <Truck size={14} /> Update Fulfillment
+                <Truck size={14} /> Manual Status Overrides
               </h3>
 
               <div className="grid grid-cols-2 gap-3">
@@ -281,6 +422,73 @@ export function OrderDetailsDrawer({ orderId, onClose }: OrderDetailsDrawerProps
               >
                 {updateMutation.isPending ? "Updating..." : "Save Status Changes"}
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* Confirmation Modal for Terminal Dispatch */}
+        {isConfirmDispatchOpen && (
+          <div className="absolute inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl p-5 max-w-sm w-full shadow-2xl border border-[#e5e7eb] space-y-4 animate-in zoom-in-95 duration-150">
+              <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center mx-auto">
+                <Truck size={20} />
+              </div>
+
+              <div className="text-center space-y-1">
+                <h4 className="font-bold text-[#191c1d] text-sm">Confirm Courier Pickup</h4>
+                <p className="text-xs text-[#6b7280] leading-relaxed">
+                  Is this parcel packed and ready today? Terminal Africa will notify the courier to
+                  pick up from your registered store address.
+                </p>
+              </div>
+
+              <div className="p-3 bg-gray-50 rounded-xl text-[11px] space-y-1 text-[#374151]">
+                <div className="flex justify-between">
+                  <span className="text-[#6b7280]">Recipient:</span>
+                  <span className="font-medium">{order?.customerName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#6b7280]">Destination:</span>
+                  <span className="font-medium">
+                    {order?.shippingAddress?.city}, {order?.shippingAddress?.state}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#6b7280]">Courier:</span>
+                  <span className="font-semibold text-indigo-700">
+                    {order?.courierName || "Terminal Africa Partner"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsConfirmDispatchOpen(false)}
+                  disabled={dispatchMutation.isPending}
+                  className="flex-1 py-2 text-xs font-semibold rounded-xl border border-[#e5e7eb] hover:bg-gray-100 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDispatchCourier}
+                  disabled={dispatchMutation.isPending}
+                  className="flex-1 py-2 text-xs font-semibold rounded-xl bg-[#191c1d] hover:bg-black text-white flex items-center justify-center gap-1.5 transition-colors shadow-xs disabled:opacity-50"
+                >
+                  {dispatchMutation.isPending ? (
+                    <>
+                      <Loader2 size={13} className="animate-spin" />
+                      Booking...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 size={13} />
+                      Confirm & Dispatch
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         )}

@@ -68,6 +68,8 @@ export interface Product {
   status: ProductStatus;
   isFeatured: boolean;
   attributes?: Record<string, unknown> | null;
+  requiresShipping?: boolean;
+  weightKg?: number | string | null;
   createdAt: string;
   updatedAt: string;
   category?: {
@@ -103,6 +105,8 @@ export interface ProductInput {
   status: ProductStatus;
   isFeatured: boolean;
   attributes?: Record<string, unknown> | null;
+  requiresShipping?: boolean;
+  weightKg?: number | null;
 }
 
 export interface CartItem {
