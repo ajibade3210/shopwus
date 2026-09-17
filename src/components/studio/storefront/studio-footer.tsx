@@ -39,7 +39,7 @@ export function StudioFooter({
                 color: primaryColor,
                 backgroundColor: secondaryColor,
               }}
-              className="w-10 h-10 rounded-full border flex items-center justify-center font-serif text-base overflow-hidden shadow-card shrink-0"
+              className="w-10 h-10 rounded-full border flex items-center justify-center font-sans font-bold text-base overflow-hidden shadow-card shrink-0"
             >
               {profile.logoUrl ? (
                 <Image
@@ -54,7 +54,7 @@ export function StudioFooter({
               )}
             </div>
             <div>
-              <div className="font-serif text-base text-on-surface font-medium">
+              <div className="font-sans text-base text-on-surface font-semibold tracking-tight">
                 {profile.businessName}
               </div>
               <div className="text-[11px] text-text-muted">

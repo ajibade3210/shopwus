@@ -70,7 +70,7 @@ export function StationeryCard({
                 color: primaryColor,
                 borderColor: primaryColor,
               }}
-              className="w-52 h-52 sm:w-60 sm:h-60 rounded-full border-2 flex items-center justify-center font-serif text-7xl sm:text-8xl font-normal overflow-hidden shadow-sm shrink-0"
+              className="w-52 h-52 sm:w-60 sm:h-60 rounded-full border-2 flex items-center justify-center font-sans text-7xl sm:text-8xl font-bold overflow-hidden shadow-sm shrink-0"
             >
               {profile.logoUrl ? (
                 <Image
@@ -90,7 +90,7 @@ export function StationeryCard({
             <div className="space-y-1.5 max-w-sm">
               <h2
                 style={{ color: textColor }}
-                className="font-serif text-2xl sm:text-3xl font-normal leading-tight"
+                className="font-sans text-2xl sm:text-3xl font-bold tracking-tight leading-tight"
               >
                 {profile.businessName}
               </h2>
@@ -115,7 +115,7 @@ export function StationeryCard({
                   color: primaryColor,
                   borderColor: primaryColor,
                 }}
-                className="w-10 h-10 rounded-full border flex items-center justify-center font-serif text-lg font-normal overflow-hidden shadow-2xs shrink-0"
+                className="w-10 h-10 rounded-full border flex items-center justify-center font-sans text-lg font-bold overflow-hidden shadow-2xs shrink-0"
               >
                 {profile.logoUrl ? (
                   <Image
@@ -132,7 +132,7 @@ export function StationeryCard({
               <div>
                 <div
                   style={{ color: textColor }}
-                  className="text-base font-serif font-semibold leading-tight"
+                  className="text-base font-sans font-semibold tracking-tight leading-tight"
                 >
                   {profile.businessName}
                 </div>

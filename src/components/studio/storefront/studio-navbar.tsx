@@ -106,7 +106,7 @@ export function StudioNavbar({
                 color: primaryColor,
                 borderColor: primaryColor,
               }}
-              className="w-10 h-10 rounded-full border flex items-center justify-center font-serif text-lg font-normal transition-transform group-hover:scale-105 shadow-card overflow-hidden shrink-0"
+              className="w-10 h-10 rounded-full border flex items-center justify-center font-sans text-lg font-bold transition-transform group-hover:scale-105 shadow-card overflow-hidden shrink-0"
             >
               {profile.logoUrl ? (
                 <img
@@ -120,7 +120,7 @@ export function StudioNavbar({
             </div>
             <span
               style={{ color: textColor }}
-              className="font-serif text-xl font-medium tracking-tight group-hover:opacity-80 transition-opacity"
+              className="font-sans text-xl font-bold tracking-tight group-hover:opacity-80 transition-opacity"
             >
               {profile.businessName}
             </span>
