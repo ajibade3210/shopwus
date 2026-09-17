@@ -212,11 +212,25 @@ export interface OrderDetailsDrawerProps {
   onUpdated?: () => void;
 }
 
+export type OrderTab = "all" | "unfulfilled" | "completed" | "abandoned";
+
 export interface OrdersTableProps {
   orders: Array<Order | CheckoutSession>;
   isAbandonedTab: boolean;
   isLoading: boolean;
   onSelectOrder: (id: string) => void;
+  summary?: OrderSummary;
+  tab: OrderTab;
+  onTabChange: (tab: OrderTab) => void;
+  searchQuery: string;
+  onSearch: (q: string) => void;
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+  totalRecords: number;
+  startIndex: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
 }
 
 export interface CheckoutDeliveryFormProps {
