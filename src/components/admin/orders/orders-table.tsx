@@ -13,8 +13,8 @@ export function OrdersTable({
 }: OrdersTableProps) {
   if (isLoading) {
     return (
-      <div className="p-12 text-center text-xs text-[#6b7280]">
-        <div className="animate-spin w-5 h-5 border-2 border-[#191c1d] border-t-transparent rounded-full mx-auto mb-2" />
+      <div className="p-12 text-center text-xs text-muted">
+        <div className="animate-spin w-5 h-5 border-2 border-primary border-t-transparent rounded-full mx-auto mb-2" />
         Loading orders...
       </div>
     );
@@ -22,12 +22,12 @@ export function OrdersTable({
 
   if (orders.length === 0) {
     return (
-      <div className="p-16 text-center text-[#6b7280]">
-        <ShoppingBag size={36} className="mx-auto mb-3 text-[#9ca3af]" />
-        <h3 className="text-sm font-bold text-[#191c1d]">
+      <div className="p-16 text-center text-muted">
+        <ShoppingBag size={36} className="mx-auto mb-3 text-muted" />
+        <h3 className="text-sm font-bold text-on-surface">
           {isAbandonedTab ? "No abandoned checkouts" : "No orders found"}
         </h3>
-        <p className="text-xs mt-1">
+        <p className="text-xs mt-1 text-muted">
           {isAbandonedTab
             ? "Great! All customers are completing their checkouts."
             : "Orders placed by buyers will automatically show up here."}
@@ -38,10 +38,10 @@ export function OrdersTable({
 
   if (isAbandonedTab) {
     return (
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs text-[#191c1d] border-collapse font-sans">
+      <div className="overflow-x-auto font-sans">
+        <table className="w-full text-left text-xs text-on-surface border-collapse font-sans">
           <thead>
-            <tr className="border-b border-[#eee7dc] bg-[#faf8f5] text-[#6b7280] font-bold text-[10px] uppercase tracking-wider">
+            <tr className="border-b border-border-hairline bg-surface text-muted font-semibold text-[11px] uppercase tracking-wider">
               <th className="py-3.5 px-4">Customer Contact</th>
               <th className="py-3.5 px-4">Cart Value</th>
               <th className="py-3.5 px-4">Items</th>
@@ -49,7 +49,7 @@ export function OrdersTable({
               <th className="py-3.5 px-4 text-right">Recovery Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#f0f0f0]">
+          <tbody className="divide-y divide-border-hairline">
             {(orders as CheckoutSession[]).map(session => {
               const phone = session.customerPhone ? session.customerPhone.replace(/\D/g, "") : "";
               const whatsappUrl = phone
@@ -57,28 +57,28 @@ export function OrdersTable({
                 : null;
 
               return (
-                <tr key={session.id} className="hover:bg-[#faf8f5]/60 transition-colors">
+                <tr key={session.id} className="hover:bg-surface/50 transition-colors">
                   <td className="py-3.5 px-4">
-                    <div className="font-semibold text-[#191c1d]">
+                    <div className="font-semibold text-on-surface">
                       {session.customerName || "Anonymous Guest"}
                     </div>
-                    <div className="text-[11px] text-[#6b7280] mt-0.5">
+                    <div className="text-[11px] text-muted mt-0.5 font-sans">
                       {session.customerEmail || "No email"}{" "}
                       {session.customerPhone ? `• ${session.customerPhone}` : ""}
                     </div>
                   </td>
 
-                  <td className="py-3.5 px-4 font-sans font-bold tabular-nums">
+                  <td className="py-3.5 px-4 font-sans font-bold tabular-nums text-on-surface">
                     {formatCurrency(Number(session.subtotal))}
                   </td>
 
-                  <td className="py-3.5 px-4 text-[#6b7280]">
+                  <td className="py-3.5 px-4 text-muted font-sans">
                     {session.cartSnapshot
                       ? `${session.cartSnapshot.length} item(s)`
                       : "Cart details"}
                   </td>
 
-                  <td className="py-3.5 px-4 text-[#6b7280]">
+                  <td className="py-3.5 px-4 text-muted font-sans">
                     {new Date(session.createdAt).toLocaleDateString()}
                   </td>
 
@@ -88,9 +88,9 @@ export function OrdersTable({
                         href={whatsappUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-[#fafaf9] text-[#1f2937] border border-[#d1d5db] hover:border-[#9ca3af] px-3 py-1.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs"
+                        className="inline-flex items-center justify-center gap-1.5 bg-card hover:bg-surface-low text-on-surface border border-border-hairline hover:border-border-subtle px-3 py-1.5 rounded-md text-xs font-semibold hover:shadow-xs transition-colors cursor-pointer shadow-2xs"
                       >
-                        <MessageCircle size={12} className="text-emerald-600" /> Contact on WhatsApp
+                        <MessageCircle size={12} className="text-tertiary" /> Contact on WhatsApp
                       </a>
                     )}
                   </td>
@@ -104,10 +104,10 @@ export function OrdersTable({
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-left text-xs text-[#191c1d] border-collapse font-sans">
+    <div className="overflow-x-auto font-sans">
+      <table className="w-full text-left text-xs text-on-surface border-collapse font-sans">
         <thead>
-          <tr className="border-b border-[#eee7dc] bg-[#faf8f5] text-[#6b7280] font-bold text-[10px] uppercase tracking-wider">
+          <tr className="border-b border-border-hairline bg-surface text-muted font-semibold text-[11px] uppercase tracking-wider">
             <th className="py-3.5 px-4">Order #</th>
             <th className="py-3.5 px-4">Date</th>
             <th className="py-3.5 px-4">Customer</th>
@@ -117,45 +117,45 @@ export function OrdersTable({
             <th className="py-3.5 px-4 text-right">Action</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#f0f0f0]">
+        <tbody className="divide-y divide-border-hairline">
           {(orders as Order[]).map(order => (
-            <tr key={order.id} className="hover:bg-[#faf8f5]/60 transition-colors group">
+            <tr key={order.id} className="hover:bg-surface/50 transition-colors group">
               <td className="py-3.5 px-4">
                 <button
                   type="button"
                   onClick={() => onSelectOrder(order.id)}
-                  className="font-mono font-bold text-[#191c1d] hover:underline cursor-pointer"
+                  className="font-mono font-bold text-primary hover:underline cursor-pointer"
                 >
                   {order.orderNumber}
                 </button>
               </td>
 
-              <td className="py-3.5 px-4 text-[#6b7280]">
+              <td className="py-3.5 px-4 text-muted font-sans">
                 {new Date(order.createdAt).toLocaleDateString()}
               </td>
 
               <td className="py-3.5 px-4">
-                <div className="font-semibold text-[#191c1d]">{order.customerName}</div>
-                <div className="text-[10px] text-[#6b7280]">{order.customerPhone}</div>
+                <div className="font-semibold text-on-surface">{order.customerName}</div>
+                <div className="text-[10px] text-muted font-sans">{order.customerPhone}</div>
               </td>
 
-              <td className="py-3.5 px-4 font-sans font-bold tabular-nums">
+              <td className="py-3.5 px-4 font-sans font-bold tabular-nums text-on-surface">
                 {formatCurrency(Number(order.total))}
               </td>
 
               <td className="py-3.5 px-4">
-                <StatusBadge status={order.paymentStatus} />
+                <StatusBadge status={order.paymentStatus} showGlyph />
               </td>
 
               <td className="py-3.5 px-4">
-                <StatusBadge status={order.fulfillmentStatus} />
+                <StatusBadge status={order.fulfillmentStatus} showGlyph />
               </td>
 
               <td className="py-3.5 px-4 text-right">
                 <button
                   type="button"
                   onClick={() => onSelectOrder(order.id)}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#191c1d] hover:bg-gray-100 px-3 py-1.5 rounded-xl transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-on-surface bg-card hover:bg-surface-low border border-border-hairline px-3 py-1.5 rounded-md transition-colors cursor-pointer shadow-2xs"
                 >
                   <Eye size={12} /> View
                 </button>

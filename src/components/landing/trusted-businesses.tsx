@@ -32,7 +32,7 @@ function LogoRow({ organizations, reverse = false }: LogoRowProps) {
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <span className="font-serif font-bold text-base tracking-wider text-[#5c5f60] group-hover:text-[#191c1d] transition-colors px-4 text-center">
+              <span className="font-sans font-bold text-base tracking-wider text-on-surface-variant group-hover:text-on-surface transition-colors px-4 text-center">
                 {org.name}
               </span>
             )}

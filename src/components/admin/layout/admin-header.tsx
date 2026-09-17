@@ -19,7 +19,7 @@ export function AdminHeader({ onMenu, onToast, path }: AdminHeaderProps) {
   return (
     <header className="h-[76px] max-[750px]:h-[65px] px-3.5 sm:px-8 lg:px-10 flex items-center justify-between border-b border-transparent">
       <button
-        className="hidden max-[750px]:grid place-items-center bg-transparent border-0 text-[#8c827a] hover:text-[#191c1d] cursor-pointer p-1 rounded-md"
+        className="hidden max-[750px]:grid place-items-center bg-transparent border-0 text-muted hover:text-on-surface cursor-pointer p-1.5 rounded-md hover:bg-surface-high transition-colors"
         onClick={onMenu}
         type="button"
         aria-label="Open navigation menu"
@@ -27,13 +27,16 @@ export function AdminHeader({ onMenu, onToast, path }: AdminHeaderProps) {
         <Menu size={20} />
       </button>
 
-      <div className="flex items-center gap-2 w-[250px] max-[750px]:flex-1 max-[750px]:min-w-0 max-[750px]:max-w-[140px] sm:max-w-[250px] max-[750px]:ml-2 text-[#8c827a]">
-        <Search size={16} className="shrink-0 text-[#8c827a]" />
+      <div className="h-10 px-3 flex items-center gap-2.5 w-[280px] max-[750px]:flex-1 max-[750px]:min-w-0 max-[750px]:max-w-[170px] sm:max-w-[280px] max-[750px]:ml-2 bg-surface border border-border-hairline rounded-lg text-muted focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+        <Search size={15} className="shrink-0 text-muted" />
         <input
           aria-label="Search"
           placeholder="Search..."
-          className="border-0 bg-transparent py-2 text-xs text-[#191c1d] focus:outline-none w-full placeholder:text-[#9ca3af]/40 sm:placeholder:text-[#9ca3af] truncate"
+          className="border-0 bg-transparent py-1.5 text-xs text-on-surface focus:outline-none w-full placeholder:text-muted truncate"
         />
+        <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-medium text-muted bg-surface-high rounded border border-border-hairline select-none pointer-events-none">
+          ⌘K
+        </kbd>
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -43,15 +46,15 @@ export function AdminHeader({ onMenu, onToast, path }: AdminHeaderProps) {
               href={`/${slug}?from=settings`}
               target="_blank"
               rel="noreferrer"
-              className="h-9 px-2.5 sm:px-3.5 inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#e5e7eb] hover:border-[#191c1d] bg-white text-[#191c1d] text-xs font-semibold transition-all shrink-0 whitespace-nowrap shadow-2xs hover:bg-neutral-50"
+              className="h-9 px-2.5 sm:px-3.5 inline-flex items-center justify-center gap-1.5 rounded-md border border-border-hairline bg-card hover:bg-surface text-on-surface text-xs font-semibold transition-colors shrink-0 whitespace-nowrap shadow-2xs"
               title="View Online Store"
             >
-              <Eye size={14} className="text-[#191c1d] shrink-0" />
+              <Eye size={14} className="text-on-surface shrink-0" />
               <span>View Store</span>
             </a>
             <button
               type="button"
-              className="h-9 px-3 sm:px-4 inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#000000] hover:bg-[#262626] text-white text-xs font-semibold transition-all shrink-0 whitespace-nowrap shadow-2xs cursor-pointer disabled:opacity-60"
+              className="h-9 px-3 sm:px-4 inline-flex items-center justify-center gap-1.5 rounded-md bg-primary hover:bg-primary-hover text-white text-xs font-semibold transition-colors shrink-0 whitespace-nowrap shadow-2xs cursor-pointer disabled:opacity-60"
               disabled={busy}
               onClick={async () => {
                 setBusy(true);
@@ -74,12 +77,12 @@ export function AdminHeader({ onMenu, onToast, path }: AdminHeaderProps) {
           </>
         )}
         <button
-          className="hidden sm:grid place-items-center bg-transparent border-0 text-[#8c827a] hover:text-[#191c1d] p-1.5 rounded-lg cursor-pointer transition-colors"
+          className="hidden sm:grid place-items-center w-9 h-9 rounded-md bg-surface-low hover:bg-surface-high text-muted hover:text-on-surface transition-colors cursor-pointer border-0"
           aria-label="Notifications"
           title="Notifications"
           type="button"
         >
-          <Bell size={17} />
+          <Bell size={16} />
         </button>
       </div>
     </header>

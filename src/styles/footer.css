@@ -2,8 +2,8 @@
    Shopwus Luxury Site Footer
    ========================================================================== */
 .site-footer {
-  background: #faf8f5;
-  border-top: 1px solid #eae3d7;
+  background: var(--surface);
+  border-top: 1px solid var(--border-hairline);
   color: var(--on-surface);
   padding: 64px 40px 32px;
   position: relative;
@@ -21,7 +21,7 @@
   gap: 40px;
   align-items: start;
   padding-bottom: 48px;
-  border-bottom: 1px solid #eae3d7;
+  border-bottom: 1px solid var(--border-hairline);
 }
 
 /* Left Block: Brand, Mission & Companion App */
@@ -32,7 +32,7 @@
 }
 
 .footer-mission-text {
-  color: #5c5f60;
+  color: var(--text-muted);
   font-size: 14px;
   line-height: 1.65;
   margin-top: 16px;
@@ -44,11 +44,11 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background: #ffffff;
-  border: 1px solid #e8dfd3;
-  border-radius: 16px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
   padding: 14px 18px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--shadow-card);
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -59,16 +59,16 @@
 
 .footer-app-card:hover {
   transform: translateY(-2px);
-  border-color: #d6caa7;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-card-elevated);
 }
 
 .footer-app-qr {
   width: 54px;
   height: 54px;
-  background: #fdfcfa;
-  border: 1px solid #ded5c6;
-  border-radius: 10px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
   padding: 5px;
   display: flex;
   align-items: center;
@@ -89,14 +89,14 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #855e2e;
+  color: var(--primary);
 }
 
 .footer-app-title {
   display: block;
   font-size: 14px;
   font-weight: 600;
-  color: #191c1d;
+  color: var(--on-surface);
   margin-top: 3px;
   letter-spacing: -0.01em;
 }
@@ -104,7 +104,7 @@
 .footer-app-desc {
   display: block;
   font-size: 12px;
-  color: #747878;
+  color: var(--text-muted);
   margin-top: 3px;
   line-height: 1.4;
 }
@@ -131,7 +131,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #855e2e;
+  color: var(--primary);
   margin-bottom: 16px;
 }
 
@@ -145,7 +145,7 @@
 }
 
 .footer-nav-link {
-  color: #525556;
+  color: var(--on-surface-variant);
   font-size: 13.5px;
   text-decoration: none;
   transition:
@@ -155,7 +155,7 @@
 }
 
 .footer-nav-link:hover {
-  color: #191c1d;
+  color: var(--primary);
   transform: translateX(2px);
 }
 
@@ -167,7 +167,7 @@
   gap: 20px;
   padding-top: 24px;
   font-size: 12px;
-  color: #747878;
+  color: var(--text-muted);
   flex-wrap: wrap;
 }
 
@@ -181,22 +181,22 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #ffffff;
-  border: 1px solid #ded5c6;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-hairline);
   border-radius: 9999px;
   padding: 6px 14px;
   font-size: 12px;
   font-weight: 500;
-  color: #444748;
+  color: var(--on-surface);
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   transition: all 0.2s ease;
 }
 
 .footer-back-to-top:hover {
-  background: #191c1d;
+  background: var(--primary);
   color: #ffffff;
-  border-color: #191c1d;
+  border-color: var(--primary);
   transform: translateY(-1px);
 }
 

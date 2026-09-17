@@ -49,7 +49,7 @@ export function BrandLogo({
     >
       <div
         className={cn(
-          "flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 shrink-0 rounded-lg shadow-2xs relative bg-[#111827]",
+          "flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 shrink-0 rounded-lg shadow-2xs relative bg-secondary",
           sizeClasses.box,
           monogramClassName
         )}
@@ -66,7 +66,7 @@ export function BrandLogo({
       <div className="flex flex-col">
         <span
           className={cn(
-            "text-[#191c1d] group-hover:text-[#855e2e] transition-colors leading-tight font-bold tracking-tight",
+            "text-on-surface group-hover:text-primary transition-colors leading-tight font-bold tracking-tight",
             sizeClasses.text,
             textClassName
           )}

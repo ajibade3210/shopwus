@@ -79,7 +79,7 @@ function AdminLayoutInner({ children, path, onToast }: AdminLayoutProps) {
   }, [open]);
 
   return (
-    <div className="flex min-h-screen w-full max-w-full bg-[#f8f9fa] overflow-x-hidden">
+    <div className="flex min-h-screen w-full max-w-full bg-surface overflow-x-hidden">
       {/* Mobile backdrop overlay to dismiss sidebar */}
       {open && (
         <button

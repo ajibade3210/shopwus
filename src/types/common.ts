@@ -92,6 +92,17 @@ export interface MetricProps {
   isLoading?: boolean;
 }
 
+export interface ExtendedMetricProps extends MetricProps {
+  className?: string;
+  variant?: "standard" | "hero-radial";
+  trend?: {
+    value: string;
+    isPositive?: boolean;
+  };
+  percentage?: number;
+  icon?: ReactNode;
+}
+
 export interface PageTitleProps {
   title: string;
   description?: string;

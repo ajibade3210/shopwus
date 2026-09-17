@@ -27,25 +27,25 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
 
   if (!valuation) {
     return (
-      <div className="bg-white border border-[#eee7dc] rounded-2xl p-4 sm:p-6 lg:p-7 relative overflow-hidden flex flex-col justify-between min-h-[170px] shadow-2xs animate-pulse">
+      <div className="bg-card border border-border-hairline rounded-xl p-4 sm:p-6 lg:p-7 relative overflow-hidden flex flex-col justify-between min-h-[170px] shadow-card animate-pulse">
         <div className="relative z-10 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <div className="h-3 w-56 bg-[#f0ebe3] rounded-md" />
-              <div className="w-5 h-5 rounded-full bg-[#f0ebe3]" />
+              <div className="h-3 w-56 bg-surface-high rounded-md" />
+              <div className="w-5 h-5 rounded-full bg-surface-high" />
             </div>
             <div className="flex items-center gap-2">
-              <div className="h-5 w-24 bg-[#f0ebe3] rounded-lg" />
-              <div className="h-3 w-28 bg-[#f0ebe3] rounded-md" />
+              <div className="h-5 w-24 bg-surface-high rounded-md" />
+              <div className="h-3 w-28 bg-surface-high rounded-md" />
             </div>
           </div>
-          <div className="h-10 sm:h-12 w-64 sm:w-80 bg-[#e8dfd2] rounded-xl" />
-          <div className="h-3.5 w-full max-w-md bg-[#f0ebe3] rounded-md" />
+          <div className="h-10 sm:h-12 w-64 sm:w-80 bg-surface-high rounded-md" />
+          <div className="h-3.5 w-full max-w-md bg-surface-high rounded-md" />
         </div>
         <Landmark
           size={120}
           strokeWidth={1}
-          className="absolute right-6 top-1/2 -translate-y-1/2 text-[#191c1d]/[0.03] pointer-events-none select-none"
+          className="absolute right-6 top-1/2 -translate-y-1/2 text-on-surface/[0.03] pointer-events-none select-none"
         />
       </div>
     );
@@ -61,11 +61,11 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
 
   return (
     <>
-      <div className="bg-white border border-[#eee7dc] rounded-2xl p-4 sm:p-6 lg:p-7 relative flex flex-col justify-between min-h-[170px] shadow-2xs">
+      <div className="bg-card border border-border-hairline rounded-xl p-4 sm:p-6 lg:p-7 relative flex flex-col justify-between min-h-[170px] shadow-card">
         <div className="relative z-10 space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#6b7280] block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted block">
                 ESTIMATED VALUATION RANGE FOR YOUR STORE{" "}
               </span>
               <span className="relative inline-flex items-center group">
@@ -75,7 +75,7 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
                     e.stopPropagation();
                     setShowTooltip(prev => !prev);
                   }}
-                  className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#fef2f2] text-[#ef4444] border border-[#fca5a5] hover:bg-[#fee2e2] hover:scale-110 transition-all cursor-pointer shadow-xs"
+                  className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:scale-110 transition-all cursor-pointer shadow-xs"
                   aria-label={VALUATION_HEALTH_MODAL_CONFIG.auditChecklistTooltip}
                 >
                   <Info size={16} className="stroke-[2.5]" />
@@ -83,24 +83,24 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
                 {/* Instant Tooltip Popover */}
                 <span
                   role="tooltip"
-                  className={`absolute right-0 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-3rem)] p-3.5 bg-[#191c1d] text-white text-[11px] leading-relaxed rounded-xl shadow-2xl border border-white/10 transition-all duration-150 z-50 text-left font-normal ${
+                  className={`absolute right-0 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-3rem)] p-3.5 bg-inverse-surface text-inverse-on-surface text-[11px] leading-relaxed rounded-xl shadow-popover border border-white/10 transition-all duration-150 z-50 text-left font-normal ${
                     showTooltip
                       ? "opacity-100 visible pointer-events-auto"
                       : "opacity-0 invisible group-hover:opacity-100 group-hover:visible pointer-events-none"
                   }`}
                 >
                   {VALUATION_DISCLAIMER_NOTE}
-                  <span className="absolute right-2 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto -top-1 border-4 border-transparent border-b-[#191c1d]" />
+                  <span className="absolute right-2 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto -top-1 border-4 border-transparent border-b-inverse-surface" />
                 </span>
               </span>
             </div>
 
             {/* Date & Refresh / Audit Checklist Trigger inside card header */}
-            <div className="flex items-center gap-2.5 text-[11px] text-[#6b7280]">
+            <div className="flex items-center gap-2.5 text-[11px] text-on-surface-variant">
               <button
                 type="button"
                 onClick={() => setShowHealthModal(true)}
-                className="px-2.5 py-1 rounded-lg bg-[#faf7f2] hover:bg-[#f0ebe3] text-[#855e2e] hover:text-[#191c1d] border border-[#e8dfd2] text-[11px] font-semibold transition-all cursor-pointer shadow-2xs"
+                className="px-2.5 py-1 rounded-md bg-surface-low hover:bg-surface-high text-on-surface border border-border-hairline text-[11px] font-semibold transition-all cursor-pointer shadow-2xs"
                 title={VALUATION_HEALTH_MODAL_CONFIG.auditChecklistTooltip}
                 aria-label={VALUATION_HEALTH_MODAL_CONFIG.auditChecklistTooltip}
               >
@@ -108,14 +108,14 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
               </button>
 
               <span>
-                Data as of: <strong className="text-[#191c1d] font-semibold">{asOfDate}</strong>
+                Data as of: <strong className="text-on-surface font-semibold">{asOfDate}</strong>
               </span>
               {onRefresh && (
                 <button
                   type="button"
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  className="w-6 h-6 rounded-md bg-[#faf7f2] hover:bg-[#f0ebe3] flex items-center justify-center text-[#665e57] hover:text-[#191c1d] transition-colors cursor-pointer disabled:opacity-50"
+                  className="w-6 h-6 rounded-md bg-surface-low hover:bg-surface-high flex items-center justify-center text-outline hover:text-on-surface transition-colors cursor-pointer disabled:opacity-50"
                   title="Recalculate valuation"
                   aria-label="Recalculate valuation"
                 >
@@ -125,7 +125,7 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
             </div>
           </div>
 
-          <div className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#191c1d] font-sans tabular-nums pt-1">
+          <div className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-on-surface font-sans tabular-nums pt-1">
             {valuation.estimatedHigh <= 0
               ? formatCompactMoney(0)
               : `${formatCompactMoney(valuation.estimatedLow)} – ${formatCompactMoney(valuation.estimatedHigh)}`}
@@ -133,25 +133,25 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
 
           {valuation.estimatedHigh <= 0 ? (
             <div className="space-y-1">
-              <span className="text-xs font-bold text-[#191c1d] block">Unlock Live Valuation</span>
-              <p className="text-xs text-[#665e57] font-normal max-w-xl leading-relaxed">
+              <span className="text-xs font-bold text-on-surface block">Unlock Live Valuation</span>
+              <p className="text-xs text-on-surface-variant font-normal max-w-xl leading-relaxed">
                 Log your first paid invoices and operating expenses to calculate an automated
                 real-time valuation model.
               </p>
             </div>
           ) : (
-            <p className="text-xs text-[#665e57] font-normal max-w-xl leading-relaxed">
+            <p className="text-xs text-on-surface-variant font-normal max-w-xl leading-relaxed">
               {valuation.tierDescription}
             </p>
           )}
         </div>
 
         {/* Architectural Landmark Pantheon Watermark */}
-        <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none select-none">
+        <div className="absolute inset-0 overflow-hidden rounded-xl pointer-events-none select-none">
           <Landmark
             size={120}
             strokeWidth={1}
-            className="absolute right-6 top-1/2 -translate-y-1/2 text-[#191c1d]/[0.04]"
+            className="absolute right-6 top-1/2 -translate-y-1/2 text-on-surface/[0.03]"
           />
         </div>
       </div>

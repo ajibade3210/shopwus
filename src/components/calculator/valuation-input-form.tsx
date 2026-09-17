@@ -16,12 +16,12 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
   const sym = CURRENCY_SYMBOLS[values.currency] || "₦";
 
   return (
-    <div className="bg-white border border-[#eee7dc] rounded-2xl p-6 sm:p-7 shadow-[0_2px_12px_rgba(70,50,30,0.02)] space-y-5">
+    <div className="bg-card border border-border-hairline rounded-2xl p-6 sm:p-7 shadow-card space-y-5">
       {/* Header with Currency Switch */}
-      <div className="flex items-center justify-between border-b border-[#f4eee6] pb-4">
-        <h2 className="text-lg sm:text-xl font-serif font-bold text-[#1f1d1a]">Financial Inputs</h2>
+      <div className="flex items-center justify-between border-b border-border-hairline pb-4">
+        <h2 className="text-lg sm:text-xl font-bold text-on-surface">Financial Inputs</h2>
 
-        <div className="flex items-center gap-1 bg-[#faf7f2] border border-[#e8dfd2] p-1 rounded-xl">
+        <div className="flex items-center gap-1 bg-surface-container-lowest border border-border-hairline p-1 rounded-xl">
           {CURRENCIES.map(c => (
             <button
               key={c.code}
@@ -29,8 +29,8 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
               onClick={() => onChange("currency", c.code)}
               className={`px-3 py-1 text-xs font-bold font-sans tabular-nums rounded-lg transition-all cursor-pointer ${
                 values.currency === c.code
-                  ? "bg-white text-[#1f1d1a] shadow-xs border border-[#ded5c8]"
-                  : "text-[#8c827a] hover:text-[#1f1d1a]"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-text-muted hover:text-on-surface"
               }`}
             >
               {c.symbol} {c.code}
@@ -41,13 +41,13 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
 
       {/* Industry Sector Dropdown */}
       <div className="space-y-1.5">
-        <label className="text-xs sm:text-sm font-bold text-[#1f1d1a] block">Industry</label>
+        <label className="text-xs sm:text-sm font-bold text-on-surface block">Industry</label>
         <div className="relative">
           <select
             value={values.industry}
             onChange={e => onChange("industry", e.target.value as IndustrySector)}
             aria-label="Select industry sector"
-            className="w-full appearance-none bg-[#faf7f2] hover:bg-[#f6f2ea] border border-[#e8dfd2] rounded-xl px-4 py-3 pr-10 text-xs sm:text-sm font-medium text-[#1f1d1a] transition-all outline-hidden cursor-pointer"
+            className="w-full appearance-none bg-surface-container-lowest hover:bg-surface-container-low border border-border-hairline rounded-xl px-4 py-3 pr-10 text-xs sm:text-sm font-medium text-on-surface transition-all outline-hidden cursor-pointer focus:border-primary"
           >
             {Object.entries(INDUSTRY_SECTORS).map(([key, item]) => (
               <option key={key} value={key}>
@@ -57,7 +57,7 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
           </select>
           <ChevronDown
             size={16}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8c827a] pointer-events-none"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
           />
         </div>
       </div>
@@ -66,11 +66,11 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Annual Revenue */}
         <div className="space-y-1.5">
-          <label className="text-xs sm:text-sm font-bold text-[#1f1d1a] block">
+          <label className="text-xs sm:text-sm font-bold text-on-surface block">
             Annual Revenue
           </label>
-          <div className="flex items-center w-full bg-[#faf7f2] hover:bg-[#f6f2ea] border border-[#e8dfd2] rounded-xl px-4 py-3 transition-all">
-            <span className="text-xs sm:text-sm font-bold text-[#8c827a] font-sans mr-2.5 select-none shrink-0">
+          <div className="flex items-center w-full bg-surface-container-lowest hover:bg-surface-container-low border border-border-hairline rounded-xl px-4 py-3 transition-all focus-within:border-primary">
+            <span className="text-xs sm:text-sm font-bold text-text-muted font-sans mr-2.5 select-none shrink-0">
               {sym}
             </span>
             <input
@@ -86,7 +86,7 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
                 )
               }
               aria-label="Annual Revenue"
-              className="w-full bg-transparent text-xs sm:text-sm font-bold font-sans tabular-nums text-[#1f1d1a] outline-hidden p-0 border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              className="w-full bg-transparent text-xs sm:text-sm font-bold font-sans tabular-nums text-on-surface outline-hidden p-0 border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="50000"
             />
           </div>
@@ -94,11 +94,11 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
 
         {/* Annual Expenses */}
         <div className="space-y-1.5">
-          <label className="text-xs sm:text-sm font-bold text-[#1f1d1a] block">
+          <label className="text-xs sm:text-sm font-bold text-on-surface block">
             Annual Expenses
           </label>
-          <div className="flex items-center w-full bg-[#faf7f2] hover:bg-[#f6f2ea] border border-[#e8dfd2] rounded-xl px-4 py-3 transition-all">
-            <span className="text-xs sm:text-sm font-bold text-[#8c827a] font-sans mr-2.5 select-none shrink-0">
+          <div className="flex items-center w-full bg-surface-container-lowest hover:bg-surface-container-low border border-border-hairline rounded-xl px-4 py-3 transition-all focus-within:border-primary">
+            <span className="text-xs sm:text-sm font-bold text-text-muted font-sans mr-2.5 select-none shrink-0">
               {sym}
             </span>
             <input
@@ -114,7 +114,7 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
                 )
               }
               aria-label="Annual Expenses"
-              className="w-full bg-transparent text-xs sm:text-sm font-bold font-sans tabular-nums text-[#1f1d1a] outline-hidden p-0 border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              className="w-full bg-transparent text-xs sm:text-sm font-bold font-sans tabular-nums text-on-surface outline-hidden p-0 border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="40000"
             />
           </div>
@@ -123,11 +123,11 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
 
       {/* Net Assets */}
       <div className="space-y-1.5">
-        <label className="text-xs sm:text-sm font-bold text-[#1f1d1a] block">
+        <label className="text-xs sm:text-sm font-bold text-on-surface block">
           Net Assets (Cash, Stock & Equipment)
         </label>
-        <div className="flex items-center w-full bg-[#faf7f2] hover:bg-[#f6f2ea] border border-[#e8dfd2] rounded-xl px-4 py-3 transition-all">
-          <span className="text-xs sm:text-sm font-bold text-[#8c827a] font-sans mr-2.5 select-none shrink-0">
+        <div className="flex items-center w-full bg-surface-container-lowest hover:bg-surface-container-low border border-border-hairline rounded-xl px-4 py-3 transition-all focus-within:border-primary">
+          <span className="text-xs sm:text-sm font-bold text-text-muted font-sans mr-2.5 select-none shrink-0">
             {sym}
           </span>
           <input
@@ -143,19 +143,19 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
               )
             }
             aria-label="Net Assets"
-            className="w-full bg-transparent text-xs sm:text-sm font-bold font-sans tabular-nums text-[#1f1d1a] outline-hidden p-0 border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="w-full bg-transparent text-xs sm:text-sm font-bold font-sans tabular-nums text-on-surface outline-hidden p-0 border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder="15000"
           />
         </div>
       </div>
 
       {/* Repeat Customer Rate Slider */}
-      <div className="space-y-3 bg-[#faf7f2] border border-[#e8dfd2] rounded-xl p-4 sm:p-5">
+      <div className="space-y-3 bg-surface-container-lowest border border-border-hairline rounded-xl p-4 sm:p-5">
         <div className="flex items-center justify-between">
-          <label className="text-xs sm:text-sm font-bold text-[#1f1d1a] block">
+          <label className="text-xs sm:text-sm font-bold text-on-surface block">
             Repeat Customer Rate
           </label>
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold font-sans tabular-nums bg-white border border-[#ded5c8] text-[#1f1d1a]">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold font-sans tabular-nums bg-card border border-border-hairline text-on-surface">
             {values.customerRetentionRate}% Repeat
           </span>
         </div>
@@ -167,9 +167,9 @@ export function ValuationInputForm({ values, onChange }: ValuationInputFormProps
           value={values.customerRetentionRate}
           onChange={e => onChange("customerRetentionRate", Number(e.target.value))}
           aria-label="Repeat Customer Rate slider"
-          className="w-full accent-[#9e633d] cursor-pointer"
+          className="w-full accent-primary cursor-pointer"
         />
-        <div className="flex justify-between text-xs font-medium text-[#8c827a]">
+        <div className="flex justify-between text-xs font-medium text-text-muted">
           <span>0% (All new clients)</span>
           <span>50% (Good retention)</span>
           <span>100% (High loyalty)</span>

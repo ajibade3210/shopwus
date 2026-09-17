@@ -85,17 +85,17 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
   }, [isPreferencesActive]);
 
   const navLinkClass = (isActive: boolean) =>
-    `flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium font-sans rounded-lg transition-all w-full cursor-pointer text-decoration-none ${
+    `flex items-center gap-3 px-3 py-2.5 text-[13px] font-sans rounded-lg transition-all w-full cursor-pointer text-decoration-none ${
       isActive
-        ? "bg-white text-[#191c1d] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
-        : "text-[#6b7280] hover:text-[#191c1d] hover:bg-[#edeeef]"
+        ? "bg-card text-primary font-semibold shadow-xs border border-border-hairline/60"
+        : "text-muted hover:text-on-surface hover:bg-surface-high font-medium"
     }`;
 
   return (
     <>
       <aside
         ref={sidebarRef}
-        className={`fixed top-0 left-0 bottom-0 h-screen max-h-screen w-[240px] flex flex-col bg-[#f3f4f5] border-r border-[#e5e7eb] p-[28px_18px_22px] z-40 transition-transform duration-200 font-sans max-[750px]:w-[280px] max-[750px]:z-50 max-[750px]:-translate-x-full ${
+        className={`fixed top-0 left-0 bottom-0 h-screen max-h-screen w-[240px] flex flex-col bg-surface-low border-r border-border-hairline p-[28px_18px_22px] z-40 transition-transform duration-200 font-sans max-[750px]:w-[280px] max-[750px]:z-50 max-[750px]:-translate-x-full ${
           open ? "max-[750px]:!translate-x-0 max-[750px]:shadow-[10px_0_30px_rgba(0,0,0,0.12)]" : ""
         }`}
         onClick={e => e.stopPropagation()}
@@ -103,7 +103,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
         <div className="flex justify-between items-center">
           <BrandLogo className="brand" href="/" />
           <button
-            className="hidden max-[750px]:grid place-items-center bg-transparent border-0 text-[#6b7280] hover:text-[#191c1d] cursor-pointer p-1 rounded-md font-sans"
+            className="hidden max-[750px]:grid place-items-center bg-transparent border-0 text-muted hover:text-on-surface cursor-pointer p-1 rounded-md font-sans"
             onClick={onClose}
             type="button"
             aria-label="Close sidebar"
@@ -129,7 +129,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           >
             <ShoppingBag size={16} /> Orders{" "}
             {unfulfilledOrderCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-[#e7e8e9] text-[#191c1d] px-1.5 py-0.5 rounded">
+              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
                 {unfulfilledOrderCount}
               </span>
             )}
@@ -141,7 +141,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           >
             <Package size={16} /> Products{" "}
             {productCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-[#e7e8e9] text-[#191c1d] px-1.5 py-0.5 rounded">
+              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
                 {productCount}
               </span>
             )}
@@ -153,7 +153,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           >
             <Users size={16} /> Leads{" "}
             {leadCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-[#e7e8e9] text-[#191c1d] px-1.5 py-0.5 rounded">
+              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
                 {leadCount}
               </span>
             )}
@@ -165,7 +165,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           >
             <Users size={16} /> Customers{" "}
             {customerCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-[#e7e8e9] text-[#191c1d] px-1.5 py-0.5 rounded">
+              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
                 {customerCount}
               </span>
             )}
@@ -177,7 +177,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           >
             <FileText size={16} /> Invoices{" "}
             {invoiceCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-[#e7e8e9] text-[#191c1d] px-1.5 py-0.5 rounded">
+              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
                 {invoiceCount}
               </span>
             )}
@@ -189,7 +189,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           >
             <Receipt size={16} /> Expenses{" "}
             {expenseCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-[#e7e8e9] text-[#191c1d] px-1.5 py-0.5 rounded">
+              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
                 {expenseCount}
               </span>
             )}
@@ -201,8 +201,8 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
               type="button"
               className={`w-full flex items-center justify-between px-3 py-2 text-[13px] font-medium font-sans rounded-lg transition-all cursor-pointer ${
                 onlineStoreExpanded
-                  ? "text-[#191c1d] hover:bg-[#edeeef]"
-                  : "text-[#6b7280] hover:text-[#191c1d] hover:bg-[#edeeef]"
+                  ? "text-on-surface hover:bg-surface-high"
+                  : "text-muted hover:text-on-surface hover:bg-surface-high"
               }`}
               onClick={() => setOnlineStoreExpanded(prev => !prev)}
             >
@@ -219,7 +219,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
                   e.stopPropagation();
                   onClose();
                 }}
-                className="p-1 text-[#6b7280] hover:text-[#191c1d] transition-colors shrink-0 ml-auto flex items-center justify-center rounded"
+                className="p-1 text-muted hover:text-on-surface transition-colors shrink-0 ml-auto flex items-center justify-center rounded"
                 title="View Online Store"
                 aria-label="View Online Store"
               >
@@ -232,7 +232,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
                 {/* Curved branch line connecting parent to child */}
                 <div
                   aria-hidden="true"
-                  className="absolute left-[20px] -top-2.5 h-[27px] w-3.5 border-l-2 border-b-2 border-[#cbd5e1] rounded-bl-lg pointer-events-none"
+                  className="absolute left-[20px] -top-2.5 h-[27px] w-3.5 border-l-2 border-b-2 border-border-hairline rounded-bl-lg pointer-events-none"
                 />
                 <Link
                   href="/vendor/settings"
@@ -246,12 +246,12 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           </div>
         </nav>
 
-        <div className="mt-auto pt-3 border-t border-[#e5e7eb]">
+        <div className="mt-auto pt-3 border-t border-border-hairline">
           <div
             className={`group relative flex items-center justify-between p-2 rounded-xl transition-all ${
               path === "/vendor/profile"
-                ? "bg-white text-[#191c1d] shadow-2xs border border-[#e5e7eb]"
-                : "hover:bg-white/90 hover:shadow-2xs border border-transparent hover:border-[#e5e7eb]/80"
+                ? "bg-card text-on-surface shadow-2xs border border-border-hairline"
+                : "hover:bg-card/90 hover:shadow-2xs border border-transparent hover:border-border-hairline/80"
             }`}
           >
             <Link
@@ -262,16 +262,16 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
               onClick={onClose}
             >
               <div className="relative shrink-0">
-                <div className="w-8 h-8 rounded-lg bg-[#191c1d] text-white flex items-center justify-center font-serif text-xs italic font-bold shadow-2xs">
+                <div className="w-8 h-8 rounded-lg bg-secondary text-white flex items-center justify-center font-sans text-xs font-bold shadow-2xs">
                   {initials}
                 </div>
-                <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#16a34a] ring-2 ring-white" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-tertiary ring-2 ring-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <b className="text-xs font-semibold text-[#191c1d] block leading-tight truncate capitalize">
+                <b className="text-xs font-semibold text-on-surface block leading-tight truncate capitalize">
                   {userName}
                 </b>
-                <span className="text-[10px] text-[#6b7280] block leading-tight mt-0.5 truncate">
+                <span className="text-[10px] text-muted block leading-tight mt-0.5 truncate">
                   {userRole}
                 </span>
               </div>
@@ -280,7 +280,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
             <button
               type="button"
               onClick={() => setShowLogoutModal(true)}
-              className="w-7 h-7 rounded-lg flex items-center justify-center text-[#9ca3af] hover:text-[#ef4444] hover:bg-red-50/80 transition-all shrink-0 cursor-pointer ml-1"
+              className="w-7 h-7 rounded-lg flex items-center justify-center text-muted hover:text-error hover:bg-error-container/40 transition-all shrink-0 cursor-pointer ml-1"
               aria-label="Log out"
               title="Log out"
             >

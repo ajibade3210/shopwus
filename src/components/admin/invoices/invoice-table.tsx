@@ -33,7 +33,7 @@ export function InvoiceTable({
   onPageSizeChange,
 }: InvoiceTableProps) {
   return (
-    <div className="table-card">
+    <div className="table-card font-sans">
       <div className="table-head justify-end">
         <div className="flex items-center gap-3 ml-auto">
           {/* Status Filter Dropdown matching Expenses */}
@@ -42,7 +42,7 @@ export function InvoiceTable({
               value={statusFilter}
               onChange={e => onStatusFilterChange(e.target.value as InvoiceStatusFilter)}
               aria-label="Filter invoices by status"
-              className="h-9 appearance-none pl-3 pr-7 bg-white border border-[#ded7cb] rounded-xl text-[11px] font-medium text-[#191c1d] hover:bg-[#faf8f5] focus:outline-none transition-colors cursor-pointer shadow-2xs"
+              className="h-9 appearance-none pl-3 pr-7 bg-card border border-border-hairline rounded-xl text-[11px] font-medium text-on-surface hover:bg-surface-container-low focus:outline-hidden transition-colors cursor-pointer shadow-2xs font-sans"
             >
               {INVOICE_STATUS_FILTERS.map(f => (
                 <option key={f.key} value={f.key} className="text-[11px]">
@@ -52,7 +52,7 @@ export function InvoiceTable({
             </select>
             <ChevronDown
               size={12}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8c827a] pointer-events-none"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
             />
           </div>
 
@@ -70,31 +70,31 @@ export function InvoiceTable({
       </div>
 
       <div className="overflow-x-auto flex-1 min-h-0">
-        <table className="w-full border-collapse sm:min-w-[680px] text-left">
+        <table className="w-full border-collapse sm:min-w-[680px] text-left font-sans">
           <thead>
             <tr>
-              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Invoice #
               </th>
-              <th className="px-3 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="px-3 sm:px-5 py-3 sm:py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Customer
               </th>
-              <th className="hidden md:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden md:table-cell px-5 py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Date Issued
               </th>
-              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Due Date
               </th>
-              <th className="px-2 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="px-2 sm:px-5 py-3 sm:py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Amount
               </th>
-              <th className="text-right sm:text-left px-2 sm:px-5 py-3 sm:py-3.5 text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="text-right sm:text-left px-2 sm:px-5 py-3 sm:py-3.5 text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Status
               </th>
-              <th className="hidden sm:table-cell text-right px-5 py-3.5 text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell text-right px-5 py-3.5 text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Actions
               </th>
-              <th className="sm:hidden w-5 px-2 sm:px-5 py-3 sm:py-3.5 bg-[#faf8f5] border-b border-[#eee7dc]" />
+              <th className="sm:hidden w-5 px-2 sm:px-5 py-3 sm:py-3.5 bg-surface-container-low border-b border-border-hairline" />
             </tr>
           </thead>
           <tbody className="align-middle">
@@ -102,61 +102,61 @@ export function InvoiceTable({
               <tr
                 key={inv.id}
                 onClick={() => onSelectInvoice(inv)}
-                className="cursor-pointer hover:bg-[#faf8f5]/60 transition-colors"
+                className="cursor-pointer hover:bg-surface-container-low/50 transition-colors"
               >
-                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
-                  <b className="font-mono text-xs font-semibold text-[#191c1d] block">
+                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-muted border-b border-border-hairline align-middle">
+                  <b className="font-mono text-xs font-semibold text-on-surface block">
                     {inv.invoiceNumber}
                   </b>
-                  <small className="text-[#8c827a] text-[11px] mt-0.5 block">
+                  <small className="text-muted text-[11px] mt-0.5 block font-sans">
                     {inv.items.length} {inv.items.length === 1 ? "item" : "items"}
                   </small>
                 </td>
-                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
-                  <b className="text-xs sm:text-sm font-semibold text-[#191c1d] block">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-xs text-muted border-b border-border-hairline align-middle">
+                  <b className="text-xs sm:text-sm font-semibold text-on-surface block">
                     {inv.customerName}
                   </b>
                   {/* Mobile Invoice # & item count */}
-                  <span className="sm:hidden font-mono text-[10px] text-[#855e2e] block mt-0.5">
+                  <span className="sm:hidden font-mono text-[10px] text-primary block mt-0.5">
                     {inv.invoiceNumber} · {inv.items.length} item{inv.items.length === 1 ? "" : "s"}
                   </span>
-                  <small className="text-[10px] sm:text-xs text-[#8c827a] truncate block max-w-[140px] sm:max-w-none mt-0.5">
+                  <small className="text-[10px] sm:text-xs text-muted truncate block max-w-[140px] sm:max-w-none mt-0.5 font-sans">
                     {inv.customerEmail}
                   </small>
                 </td>
-                <td className="hidden md:table-cell px-5 py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                <td className="hidden md:table-cell px-5 py-3.5 text-xs text-muted border-b border-border-hairline align-middle font-sans">
                   {formatDate(inv.issueDate)}
                 </td>
-                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-muted border-b border-border-hairline align-middle font-sans">
                   {formatDate(inv.dueDate)}
                 </td>
-                <td className="whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
-                  <span className="font-sans font-bold text-xs sm:text-sm text-[#191c1d] tabular-nums">
+                <td className="whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs text-muted border-b border-border-hairline align-middle">
+                  <span className="font-sans font-bold text-xs sm:text-sm text-on-surface tabular-nums">
                     {formatMoney(inv.total, inv.currency || "NGN")}
                   </span>
                 </td>
-                <td className="text-right sm:text-left whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                <td className="text-right sm:text-left whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs border-b border-border-hairline align-middle">
                   {/* Mobile: clean text label */}
                   <span
                     className={`sm:hidden text-[11px] font-semibold capitalize ${
                       inv.status === "paid"
-                        ? "text-[#047857]"
+                        ? "text-tertiary"
                         : inv.status === "sent"
-                          ? "text-[#b45309]"
+                          ? "text-primary"
                           : inv.status === "cancelled"
-                            ? "text-[#b91c1c]"
-                            : "text-[#6b7280]"
+                            ? "text-error"
+                            : "text-muted"
                     }`}
                   >
                     {formatStatusLabel(inv.status)}
                   </span>
                   {/* Desktop: standard StatusBadge pill */}
                   <span className="hidden sm:inline-block">
-                    <StatusBadge status={inv.status} />
+                    <StatusBadge status={inv.status} showGlyph />
                   </span>
                 </td>
                 <td
-                  className="hidden sm:table-cell text-right px-5 py-3.5 border-b border-[#eee7dc] align-middle"
+                  className="hidden sm:table-cell text-right px-5 py-3.5 border-b border-border-hairline align-middle"
                   onClick={e => e.stopPropagation()}
                 >
                   <div className="inline-flex items-center gap-1.5 justify-end">
@@ -164,7 +164,7 @@ export function InvoiceTable({
                       <button
                         type="button"
                         onClick={() => onMarkPaid(inv.id)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] text-[#065f46] border border-[#a7f3d0] text-xs font-semibold transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-tertiary-container hover:bg-tertiary-container/80 text-on-tertiary-container border border-tertiary/20 text-xs font-semibold transition-colors cursor-pointer"
                         title="Mark invoice as paid"
                         aria-label="Mark invoice as paid"
                       >
@@ -177,7 +177,7 @@ export function InvoiceTable({
                       <button
                         type="button"
                         onClick={() => onMarkUnpaid(inv.id)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#faf7f2] hover:bg-[#f0ebe3] text-[#5c5f60] border border-[#ded7cb] text-xs font-semibold transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-surface-container-low hover:bg-surface-container text-muted border border-border-hairline text-xs font-semibold transition-colors cursor-pointer"
                         title="Revert invoice to unpaid"
                         aria-label="Revert invoice to unpaid"
                       >
@@ -189,7 +189,7 @@ export function InvoiceTable({
                     <button
                       type="button"
                       onClick={() => onSelectInvoice(inv)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white hover:bg-[#faf7f2] text-[#191c1d] border border-[#ded7cb] hover:border-[#c59a78] text-xs font-semibold transition-all cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-surface-container-lowest hover:bg-surface-container text-on-surface border border-border-hairline hover:border-primary text-xs font-semibold transition-colors cursor-pointer"
                       title="View and edit invoice details"
                       aria-label="View and edit invoice details"
                     >
@@ -198,8 +198,8 @@ export function InvoiceTable({
                     </button>
                   </div>
                 </td>
-                <td className="sm:hidden w-5 text-right px-2 py-3 border-b border-[#eee7dc] align-middle">
-                  <ChevronRight size={14} className="text-[#8c827a] ml-auto" />
+                <td className="sm:hidden w-5 text-right px-2 py-3 border-b border-border-hairline align-middle">
+                  <ChevronRight size={14} className="text-muted ml-auto" />
                 </td>
               </tr>
             ))}
@@ -216,19 +216,19 @@ export function InvoiceTable({
       </div>
 
       {/* Pagination Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-[#f0e8dc] bg-[#fdfbf7] text-xs text-[#5c5f60] rounded-b-3xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-border-hairline bg-surface-container-low text-xs text-muted rounded-b-2xl font-sans">
         <div className="flex items-center gap-2">
           <span>
-            Showing <b className="text-[#191c1d]">{items.length === 0 ? 0 : startIndex + 1}</b>–
-            <b className="text-[#191c1d]">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
-            <b className="text-[#191c1d]">{items.length}</b> records
+            Showing <b className="text-on-surface">{items.length === 0 ? 0 : startIndex + 1}</b>–
+            <b className="text-on-surface">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
+            <b className="text-on-surface">{items.length}</b> records
           </span>
-          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-[#ded7cb] pl-3">
-            <span className="text-[11px] text-[#8c827a]">Per page:</span>
+          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-border-hairline pl-3">
+            <span className="text-[11px] text-muted">Per page:</span>
             <select
               value={pageSize}
               onChange={e => onPageSizeChange(Number(e.target.value))}
-              className="bg-white border border-[#ded7cb] rounded-lg px-2 py-0.5 text-[11px] text-[#191c1d] focus:outline-none"
+              className="bg-card border border-border-hairline rounded-xl px-2 py-0.5 text-[11px] text-on-surface focus:outline-hidden"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -243,19 +243,19 @@ export function InvoiceTable({
             type="button"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage <= 1}
-            className="p-1.5 rounded-lg border border-[#ded7cb] bg-white hover:bg-[#faf7f2] disabled:opacity-40 disabled:cursor-not-allowed text-[#191c1d] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl border border-border-hairline bg-card hover:bg-surface-container-low disabled:opacity-40 disabled:cursor-not-allowed text-on-surface transition-colors cursor-pointer"
             aria-label="Previous page"
           >
             <ChevronLeft size={14} />
           </button>
-          <span className="px-2 text-xs font-semibold text-[#191c1d]">
+          <span className="px-2 text-xs font-semibold text-on-surface font-sans">
             {currentPage} / {totalPages}
           </span>
           <button
             type="button"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage >= totalPages}
-            className="p-1.5 rounded-lg border border-[#ded7cb] bg-white hover:bg-[#faf7f2] disabled:opacity-40 disabled:cursor-not-allowed text-[#191c1d] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl border border-border-hairline bg-card hover:bg-surface-container-low disabled:opacity-40 disabled:cursor-not-allowed text-on-surface transition-colors cursor-pointer"
             aria-label="Next page"
           >
             <ChevronRight size={14} />

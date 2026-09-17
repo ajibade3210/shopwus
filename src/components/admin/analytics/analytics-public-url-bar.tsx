@@ -16,16 +16,16 @@ export function AnalyticsPublicUrlBar({ slug, onNotify }: AnalyticsPublicUrlBarP
   };
 
   return (
-    <div className="bg-white border border-[#eee7dc] rounded-2xl p-4 sm:p-4.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
+    <div className="bg-card border border-border-hairline rounded-2xl p-4 sm:p-4.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-card">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="w-8 h-8 rounded-lg bg-[#faf8f5] border border-[#e8e2d8] flex items-center justify-center shrink-0 text-[#855e2e]">
+        <div className="w-8 h-8 rounded-lg bg-surface-container-low border border-border-hairline flex items-center justify-center shrink-0 text-primary">
           <Globe size={15} />
         </div>
         <div className="min-w-0">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#855e2e] block">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
             Public Shop URL
           </span>
-          <span className="text-xs text-[#444748] font-mono block truncate max-w-xs sm:max-w-md">
+          <span className="text-xs text-on-surface-variant font-mono block truncate max-w-xs sm:max-w-md">
             {publicUrl}
           </span>
         </div>
@@ -35,12 +35,12 @@ export function AnalyticsPublicUrlBar({ slug, onNotify }: AnalyticsPublicUrlBarP
         <button
           type="button"
           onClick={copyUrl}
-          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-[#faf8f5] hover:bg-[#f2ece3] text-[#191c1d] border border-[#ded7cb] px-4 h-9 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-2xs"
+          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface border border-border-hairline px-4 h-9 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-2xs"
         >
           {copied ? (
             <>
-              <Check size={13} className="text-[#059669]" />
-              <span className="text-[#059669]">Copied</span>
+              <Check size={13} className="text-tertiary" />
+              <span className="text-tertiary">Copied</span>
             </>
           ) : (
             <>
@@ -53,7 +53,7 @@ export function AnalyticsPublicUrlBar({ slug, onNotify }: AnalyticsPublicUrlBarP
           href={`/${slug}?from=analytics`}
           target="_blank"
           rel="noreferrer"
-          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-[#191c1d] hover:bg-black !text-white px-4 h-9 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-2xs"
+          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-4 h-9 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-2xs"
         >
           <span>View Live</span>
           <ExternalLink size={12} className="text-white" />

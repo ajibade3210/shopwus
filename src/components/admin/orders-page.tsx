@@ -32,23 +32,23 @@ export function OrdersPage() {
   const isAbandonedTab = tab === "abandoned";
 
   return (
-    <section className="content">
+    <section className="content font-sans">
       <PageTitle
         title="Orders & Fulfillment"
         action={
           <button
             type="button"
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-3.5 py-2 bg-[#191c1d] hover:bg-black text-white text-xs font-semibold rounded-xl transition-all shadow-xs flex items-center gap-1.5"
+            className="px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-md transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
           >
-            <Plus size={15} />
+            <Plus size={14} />
             Record Sale / Order
           </button>
         }
       />
 
       {/* Top Metric Strip */}
-      <div className="metrics">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-7">
         <Metric label="Total Orders" value={String(summary?.totalOrders || 0)} />
         <Metric label="Unfulfilled Orders" value={String(summary?.unfulfilled || 0)} />
         <Metric label="Total Sales Revenue" value={formatMoney(summary?.totalRevenue || 0)} />
@@ -56,19 +56,19 @@ export function OrdersPage() {
       </div>
 
       {/* Main Register Box */}
-      <div className="bg-white border border-[#e5e7eb] rounded-2xl p-3 sm:p-4 shadow-2xs space-y-3">
+      <div className="bg-card border border-border-hairline rounded-xl p-3 sm:p-4 shadow-card space-y-3">
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1 border-b border-[#f0f0f0] pb-2 overflow-x-auto">
+        <div className="flex items-center gap-1 border-b border-border-hairline pb-2 overflow-x-auto">
           <button
             type="button"
             onClick={() => {
               setTab("all");
               setPage(1);
             }}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer ${
               tab === "all"
-                ? "bg-[#191c1d] text-white"
-                : "text-[#6b7280] hover:bg-gray-100 hover:text-[#191c1d]"
+                ? "bg-primary text-white shadow-2xs"
+                : "text-muted hover:bg-surface-low hover:text-on-surface"
             }`}
           >
             All Orders ({summary?.totalOrders || 0})
@@ -80,10 +80,10 @@ export function OrdersPage() {
               setTab("unfulfilled");
               setPage(1);
             }}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer ${
               tab === "unfulfilled"
-                ? "bg-[#191c1d] text-white"
-                : "text-[#6b7280] hover:bg-gray-100 hover:text-[#191c1d]"
+                ? "bg-primary text-white shadow-2xs"
+                : "text-muted hover:bg-surface-low hover:text-on-surface"
             }`}
           >
             Unfulfilled ({summary?.unfulfilled || 0})
@@ -95,10 +95,10 @@ export function OrdersPage() {
               setTab("completed");
               setPage(1);
             }}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer ${
               tab === "completed"
-                ? "bg-[#191c1d] text-white"
-                : "text-[#6b7280] hover:bg-gray-100 hover:text-[#191c1d]"
+                ? "bg-primary text-white shadow-2xs"
+                : "text-muted hover:bg-surface-low hover:text-on-surface"
             }`}
           >
             Completed
@@ -110,10 +110,10 @@ export function OrdersPage() {
               setTab("abandoned");
               setPage(1);
             }}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer ${
               tab === "abandoned"
-                ? "bg-[#191c1d] text-white"
-                : "text-[#6b7280] hover:bg-gray-100 hover:text-[#191c1d]"
+                ? "bg-primary text-white shadow-2xs"
+                : "text-muted hover:bg-surface-low hover:text-on-surface"
             }`}
           >
             Abandoned Checkouts ({summary?.abandonedCount || 0})
@@ -122,7 +122,7 @@ export function OrdersPage() {
 
         {/* Search */}
         <div className="relative">
-          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9ca3af]" />
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input
             type="text"
             placeholder={
@@ -135,7 +135,7 @@ export function OrdersPage() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-9 pr-4 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl transition-all"
+            className="w-full pl-9 pr-4 py-2 text-xs bg-surface border border-border-hairline rounded-md transition-all text-on-surface placeholder:text-muted focus:outline-none focus:border-primary"
           />
         </div>
 
@@ -149,16 +149,17 @@ export function OrdersPage() {
 
         {/* Pagination */}
         {meta && meta.totalPages > 1 && (
-          <div className="flex items-center justify-between pt-3 border-t border-[#f0f0f0] text-xs text-[#6b7280]">
+          <div className="flex items-center justify-between pt-3 border-t border-border-hairline text-xs text-muted font-sans">
             <div>
-              Showing Page <b>{meta.page}</b> of <b>{meta.totalPages}</b> ({meta.total} records)
+              Showing Page <b className="text-on-surface">{meta.page}</b> of{" "}
+              <b className="text-on-surface">{meta.totalPages}</b> ({meta.total} records)
             </div>
             <div className="flex items-center gap-1">
               <button
                 type="button"
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="p-1.5 rounded-lg border border-[#e5e7eb] hover:bg-gray-50 disabled:opacity-40"
+                className="p-1.5 rounded-md border border-border-hairline bg-card hover:bg-surface-low text-on-surface disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
               >
                 <ChevronLeft size={14} />
               </button>
@@ -166,7 +167,7 @@ export function OrdersPage() {
                 type="button"
                 disabled={page >= meta.totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="p-1.5 rounded-lg border border-[#e5e7eb] hover:bg-gray-50 disabled:opacity-40"
+                className="p-1.5 rounded-md border border-border-hairline bg-card hover:bg-surface-low text-on-surface disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
               >
                 <ChevronRight size={14} />
               </button>

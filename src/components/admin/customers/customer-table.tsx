@@ -31,7 +31,7 @@ export function CustomerTable({
       <div className="table-head">
         <div className="flex items-center gap-3">
           {selectedCustomerIds.length > 0 && (
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#faf7f2] text-[#855e2e] border border-[#e8ded1]">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high text-muted border border-border-hairline">
               {selectedCustomerIds.length} selected
             </span>
           )}
@@ -43,7 +43,7 @@ export function CustomerTable({
               <button
                 type="button"
                 onClick={onOpenBroadcast}
-                className="px-3.5 py-2 rounded-xl bg-[#111827] hover:bg-black text-white text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs"
+                className="px-3.5 py-2 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold shadow-xs hover:shadow-sm transition-all cursor-pointer"
               >
                 Broadcast ({selectedCustomerIds.length})
               </button>
@@ -51,7 +51,7 @@ export function CustomerTable({
               <button
                 type="button"
                 onClick={onClearSelection}
-                className="px-3 py-2 rounded-xl border border-[#d1d5db] hover:border-[#9ca3af] bg-white hover:bg-[#fafaf9] text-[#1f2937] text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs"
+                className="px-3 py-2 rounded-xl border border-border-hairline bg-card hover:bg-surface-container-low text-on-surface text-xs font-semibold transition-all cursor-pointer shadow-2xs"
               >
                 Clear
               </button>
@@ -74,26 +74,26 @@ export function CustomerTable({
         <table className="w-full border-collapse sm:min-w-[680px] text-left">
           <thead>
             <tr>
-              <th className="w-8 sm:w-10 px-3 sm:px-5 py-3 sm:py-3.5 bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="w-8 sm:w-10 px-3 sm:px-5 py-3 sm:py-3.5 bg-surface-container-low border-b border-border-hairline">
                 <input
                   type="checkbox"
                   checked={isAllActiveSelected}
                   onChange={onSelectAllActive}
                   title="Select all active customers"
                   aria-label="Select all active customers"
-                  className="rounded border-[#ded7cb] text-[#855e2e] focus:ring-[#855e2e] cursor-pointer"
+                  className="rounded border-border-hairline text-primary focus:ring-primary/30 cursor-pointer"
                 />
               </th>
-              <th className="px-2.5 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="px-2.5 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Customer
               </th>
-              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Service
               </th>
-              <th className="text-right sm:text-left px-2 sm:px-5 py-3 sm:py-3.5 text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="text-right sm:text-left px-2 sm:px-5 py-3 sm:py-3.5 text-[10px] font-bold tracking-[0.08em] uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Status
               </th>
-              <th className="w-5 sm:w-10 px-2 sm:px-5 py-3 sm:py-3.5 bg-[#faf8f5] border-b border-[#eee7dc]" />
+              <th className="w-5 sm:w-10 px-2 sm:px-5 py-3 sm:py-3.5 bg-surface-container-low border-b border-border-hairline" />
             </tr>
           </thead>
           <tbody className="align-middle">
@@ -107,47 +107,47 @@ export function CustomerTable({
                 <tr
                   key={c.id}
                   onClick={() => onSelectCustomer(c.id)}
-                  className={`cursor-pointer hover:bg-[#faf8f5]/60 transition-colors ${
-                    isSelected ? "bg-[#faf7f2]/60" : ""
+                  className={`cursor-pointer hover:bg-surface-container-low/50 transition-colors ${
+                    isSelected ? "bg-surface-container-low" : ""
                   }`}
                 >
                   <td
                     onClick={e => e.stopPropagation()}
-                    className="w-8 sm:w-10 px-3 sm:px-5 py-3 sm:py-3.5 border-b border-[#eee7dc] align-middle"
+                    className="w-8 sm:w-10 px-3 sm:px-5 py-3 sm:py-3.5 border-b border-border-hairline align-middle"
                   >
                     <input
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => onToggleSelect(c.id)}
                       aria-label={`Select customer ${c.name}`}
-                      className="rounded border-[#ded7cb] text-[#855e2e] focus:ring-[#855e2e] cursor-pointer"
+                      className="rounded border-border-hairline text-primary focus:ring-primary/30 cursor-pointer"
                     />
                   </td>
-                  <td className="px-2.5 sm:px-5 py-3 sm:py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
-                    <b className="text-xs sm:text-sm font-semibold text-[#191c1d] block">
+                  <td className="px-2.5 sm:px-5 py-3 sm:py-3.5 text-xs text-muted border-b border-border-hairline align-middle">
+                    <b className="text-xs sm:text-sm font-semibold text-on-surface block">
                       {c.name}
                     </b>
                     {/* Mobile service subtitle */}
                     {s && (
-                      <span className="sm:hidden text-[10px] text-[#855e2e] font-medium block truncate mt-0.5">
+                      <span className="sm:hidden text-[10px] text-primary font-medium block truncate mt-0.5">
                         {s.name}
                         {servicesList.length > 1 && ` (+${servicesList.length - 1})`}
                       </span>
                     )}
-                    <small className="text-[10px] sm:text-xs text-[#8c827a] truncate block max-w-[150px] sm:max-w-none mt-0.5">
+                    <small className="text-[10px] sm:text-xs text-outline truncate block max-w-[150px] sm:max-w-none mt-0.5">
                       {c.email}
                       {c.phone ? ` · ${c.phone}` : ""}
                     </small>
                   </td>
-                  <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                  <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-muted border-b border-border-hairline align-middle">
                     {s ? (
                       <div className="flex items-center">
-                        <b className="truncate max-w-[220px] font-semibold text-[#191c1d]">
+                        <b className="truncate max-w-[220px] font-semibold text-on-surface">
                           {s.name}
                         </b>
                         {servicesList.length > 1 && (
                           <span
-                            className="ml-1.5 px-1.5 py-0.5 rounded text-[10px] bg-[#f4ece1] text-[#855e2e] font-mono font-bold shrink-0"
+                            className="ml-1.5 px-1.5 py-0.5 rounded text-[10px] bg-surface-container-high text-muted font-mono font-bold shrink-0"
                             title={`${servicesList.length} connected services / scopes`}
                           >
                             +{servicesList.length - 1}
@@ -156,40 +156,40 @@ export function CustomerTable({
                       </div>
                     ) : (
                       <div className="flex items-center min-h-[38px]">
-                        <span className="text-sm font-semibold text-[#9ca3af] leading-none select-none">
+                        <span className="text-sm font-semibold text-outline leading-none select-none">
                           —
                         </span>
                       </div>
                     )}
                   </td>
-                  <td className="text-right sm:text-left whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs border-b border-[#eee7dc] align-middle">
+                  <td className="text-right sm:text-left whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs border-b border-border-hairline align-middle">
                     <div className="flex items-center justify-end sm:justify-start">
                       {/* Mobile: clean green/gray dot indicator */}
                       <span
                         className={`sm:hidden inline-block w-2.5 h-2.5 rounded-full ${
-                          c.isActive ? "bg-[#10b981]" : "bg-[#9ca3af]"
+                          c.isActive ? "bg-tertiary" : "bg-outline"
                         }`}
                         title={c.isActive ? "Active" : "Inactive"}
                       />
                       {/* Desktop: full pill badge */}
                       <span
-                        className={`hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold border ${
+                        className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold border ${
                           c.isActive
-                            ? "bg-[#ecfdf5] text-[#047857] border-[#a7f3d0]"
-                            : "bg-[#f4f4f5] text-[#71717a] border-[#e4e4e7]"
+                            ? "bg-tertiary-container text-on-tertiary-container border-tertiary/20"
+                            : "bg-surface-container-high text-muted border-border-hairline"
                         }`}
                       >
                         <span
                           className={`w-1.5 h-1.5 rounded-full ${
-                            c.isActive ? "bg-[#059669]" : "bg-[#a1a1aa]"
+                            c.isActive ? "bg-tertiary" : "bg-outline"
                           }`}
                         />
                         {c.isActive ? "Active" : "Inactive"}
                       </span>
                     </div>
                   </td>
-                  <td className="w-5 sm:w-10 text-right px-2 sm:px-5 py-3 sm:py-3.5 border-b border-[#eee7dc] align-middle">
-                    <ChevronRight size={14} className="text-[#8c827a] ml-auto" />
+                  <td className="w-5 sm:w-10 text-right px-2 sm:px-5 py-3 sm:py-3.5 border-b border-border-hairline align-middle">
+                    <ChevronRight size={14} className="text-outline ml-auto" />
                   </td>
                 </tr>
               );
@@ -206,19 +206,19 @@ export function CustomerTable({
       </div>
 
       {/* Pagination Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-[#f0e8dc] bg-[#fdfbf7] text-xs text-[#5c5f60] rounded-b-3xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-border-hairline bg-surface-container-low text-xs text-muted rounded-b-2xl">
         <div className="flex items-center gap-2">
           <span>
-            Showing <b className="text-[#191c1d]">{items.length === 0 ? 0 : startIndex + 1}</b>–
-            <b className="text-[#191c1d]">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
-            <b className="text-[#191c1d]">{items.length}</b> records
+            Showing <b className="text-on-surface">{items.length === 0 ? 0 : startIndex + 1}</b>–
+            <b className="text-on-surface">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
+            <b className="text-on-surface">{items.length}</b> records
           </span>
-          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-[#ded7cb] pl-3">
-            <span className="text-[11px] text-[#8c827a]">Per page:</span>
+          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-border-hairline pl-3">
+            <span className="text-[11px] text-outline">Per page:</span>
             <select
               value={pageSize}
               onChange={e => onPageSizeChange(Number(e.target.value))}
-              className="bg-white border border-[#ded7cb] rounded-lg px-2 py-0.5 text-[11px] text-[#191c1d] focus:outline-none"
+              className="bg-card border border-border-hairline rounded-xl px-2 py-0.5 text-[11px] text-on-surface focus:outline-hidden focus:border-primary"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -232,7 +232,7 @@ export function CustomerTable({
             type="button"
             disabled={currentPage <= 1}
             onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#ded7cb] bg-white text-xs font-semibold text-[#191c1d] hover:bg-[#faf8f5] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-border-hairline bg-card text-xs font-semibold text-on-surface hover:bg-surface-container-low disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
           >
             <ChevronLeft size={13} />
             <span>Previous</span>
@@ -244,10 +244,10 @@ export function CustomerTable({
                 key={page}
                 type="button"
                 onClick={() => onPageChange(page)}
-                className={`w-7 h-7 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`w-7 h-7 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                   page === currentPage
-                    ? "bg-[#191c1d] text-white shadow-2xs"
-                    : "bg-white border border-[#ded7cb] text-[#5c5f60] hover:bg-[#faf8f5] hover:text-[#191c1d]"
+                    ? "bg-primary text-white shadow-xs"
+                    : "bg-card border border-border-hairline text-muted hover:bg-surface-container-low hover:text-on-surface"
                 }`}
               >
                 {page}
@@ -259,7 +259,7 @@ export function CustomerTable({
             type="button"
             disabled={currentPage >= totalPages}
             onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#ded7cb] bg-white text-xs font-semibold text-[#191c1d] hover:bg-[#faf8f5] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-border-hairline bg-card text-xs font-semibold text-on-surface hover:bg-surface-container-low disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
           >
             <span>Next</span>
             <ChevronRight size={13} />

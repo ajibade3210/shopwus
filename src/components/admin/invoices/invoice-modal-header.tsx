@@ -93,29 +93,29 @@ export function InvoiceModalHeader({
                     : "";
 
   return (
-    <div className="bg-white border-b border-[#e5e7eb] px-6 sm:px-8 py-4.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
+    <div className="bg-card border-b border-border-hairline px-6 sm:px-8 py-4.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0 font-sans">
       <div>
         <button
           type="button"
           onClick={onClose}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#6b7280] hover:text-[#111827] transition-colors cursor-pointer mb-1"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted hover:text-on-surface transition-colors cursor-pointer mb-1"
         >
           <ArrowLeft size={13} />
           <span>Back to customers</span>
         </button>
         <div className="flex items-center gap-2.5 flex-wrap">
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#111827] tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-bold text-on-surface tracking-tight">
             {existingInvoice ? `Invoice ${existingInvoice.invoiceNumber}` : "Create New Invoice"}
           </h1>
           {existingInvoice?.status === "paid" && (
-            <span className="inline-flex items-center gap-1 bg-[#ecfdf5] text-[#065f46] border border-[#a7f3d0] px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1 bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
               <Check size={11} />
               <span>Payment Received</span>
             </span>
           )}
           {isBusy && busyLabel && (
-            <span className="inline-flex items-center gap-1.5 bg-[#fefce8] text-[#854d0e] border border-[#fef08a] px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide animate-pulse">
-              <Loader2 size={11} className="animate-spin text-[#854d0e]" />
+            <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-600 border border-amber-500/20 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide animate-pulse">
+              <Loader2 size={11} className="animate-spin text-amber-600" />
               <span>{busyLabel}</span>
             </span>
           )}
@@ -129,11 +129,11 @@ export function InvoiceModalHeader({
             type="button"
             onClick={onResendInvoice}
             disabled={isBusy}
-            className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-[#fafaf9] text-[#1f2937] border border-[#d1d5db] hover:border-[#9ca3af] px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface border border-border-hairline hover:border-outline-variant px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs disabled:opacity-50"
           >
             {isResending ? (
               <>
-                <Loader2 size={13} className="animate-spin text-[#6b7280]" />
+                <Loader2 size={13} className="animate-spin text-muted" />
                 <span>Resending…</span>
               </>
             ) : (
@@ -148,7 +148,7 @@ export function InvoiceModalHeader({
             type="button"
             onClick={onSendInvoice}
             disabled={isBusy}
-            className="inline-flex items-center justify-center gap-1.5 bg-[#111827] hover:bg-black text-white px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
           >
             {isSending ? (
               <>
@@ -169,14 +169,14 @@ export function InvoiceModalHeader({
           <button
             type="button"
             onClick={() => setShowMoreMenu(prev => !prev)}
-            className="inline-flex items-center justify-center w-9 h-9 bg-white hover:bg-[#faf7f2] text-[#191c1d] border border-[#d1d5db] hover:border-[#855e2e] rounded-xl transition-all cursor-pointer shadow-2xs"
+            className="inline-flex items-center justify-center w-9 h-9 bg-surface-container-low hover:bg-surface-container text-on-surface border border-border-hairline hover:border-outline-variant rounded-xl transition-all cursor-pointer shadow-2xs"
             title="More actions"
           >
             <MoreHorizontal size={15} />
           </button>
 
           {showMoreMenu && (
-            <div className="absolute right-0 top-full mt-2 w-58 bg-white border border-[#e5e7eb] rounded-2xl shadow-xl z-50 p-2 space-y-1 text-sm animate-in fade-in zoom-in-95 duration-100">
+            <div className="absolute right-0 top-full mt-2 w-58 bg-card border border-border-hairline rounded-2xl shadow-popover z-50 p-2 space-y-1 text-sm animate-in fade-in zoom-in-95 duration-100">
               {/* Save as Draft (if draft/new) */}
               {(!existingInvoice || existingInvoice.status === "draft") && (
                 <button
@@ -185,10 +185,10 @@ export function InvoiceModalHeader({
                     onSaveDraft();
                   }}
                   disabled={isBusy}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-[#faf7f2] text-[#374151] hover:text-[#111827] flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
                 >
                   {isSavingDraft ? (
-                    <Loader2 size={15} className="animate-spin text-[#855e2e]" />
+                    <Loader2 size={15} className="animate-spin text-primary" />
                   ) : (
                     <FileText size={15} />
                   )}
@@ -203,12 +203,12 @@ export function InvoiceModalHeader({
                   onSendWhatsApp();
                 }}
                 disabled={isBusy}
-                className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-[#f0fdf4] text-[#15803d] flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
+                className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-500/10 text-emerald-600 flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
               >
                 {isSendingWhatsApp ? (
-                  <Loader2 size={16} className="animate-spin text-[#25D366] shrink-0" />
+                  <Loader2 size={16} className="animate-spin text-emerald-500 shrink-0" />
                 ) : (
-                  <WhatsAppIcon className="w-4 h-4 text-[#25D366] shrink-0" />
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-500 shrink-0" />
                 )}
                 <span>{isSendingWhatsApp ? "Opening WhatsApp..." : "Send via WhatsApp"}</span>
               </button>
@@ -220,10 +220,10 @@ export function InvoiceModalHeader({
                   onDownloadPdf();
                 }}
                 disabled={isBusy}
-                className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-[#faf7f2] text-[#374151] hover:text-[#111827] flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
+                className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
               >
                 {isDownloadingPdf ? (
-                  <Loader2 size={15} className="animate-spin text-[#855e2e]" />
+                  <Loader2 size={15} className="animate-spin text-primary" />
                 ) : (
                   <Download size={15} />
                 )}
@@ -238,12 +238,12 @@ export function InvoiceModalHeader({
                     onCopyLink();
                   }}
                   disabled={isBusy}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-[#faf7f2] text-[#374151] hover:text-[#111827] flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
                 >
                   {isCopyingLink ? (
-                    <Loader2 size={15} className="animate-spin text-[#855e2e]" />
+                    <Loader2 size={15} className="animate-spin text-primary" />
                   ) : copiedLink ? (
-                    <Check size={15} className="text-[#15803d]" />
+                    <Check size={15} className="text-emerald-600" />
                   ) : (
                     <Copy size={15} />
                   )}
@@ -266,10 +266,10 @@ export function InvoiceModalHeader({
                     onMarkAsPaid();
                   }}
                   disabled={isBusy}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-[#ecfdf5] text-[#065f46] flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-500/10 text-emerald-600 flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
                 >
                   {isMarkingPaid ? (
-                    <Loader2 size={15} className="animate-spin text-[#065f46]" />
+                    <Loader2 size={15} className="animate-spin text-emerald-600" />
                   ) : (
                     <Check size={15} />
                   )}
@@ -284,10 +284,10 @@ export function InvoiceModalHeader({
                     onMarkAsUnpaid();
                   }}
                   disabled={isBusy}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-[#fefce8] text-[#854d0e] flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-amber-500/10 text-amber-600 flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
                 >
                   {isMarkingUnpaid ? (
-                    <Loader2 size={15} className="animate-spin text-[#854d0e]" />
+                    <Loader2 size={15} className="animate-spin text-amber-600" />
                   ) : (
                     <RotateCcw size={15} />
                   )}
@@ -304,10 +304,10 @@ export function InvoiceModalHeader({
                     onDeleteInvoice();
                   }}
                   disabled={isBusy}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-[#fef2f2] text-[#b91c1c] flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-rose-500/10 text-rose-600 flex items-center gap-3 font-medium cursor-pointer transition-colors disabled:opacity-50"
                 >
                   {isDeleting ? (
-                    <Loader2 size={15} className="animate-spin text-[#b91c1c]" />
+                    <Loader2 size={15} className="animate-spin text-rose-600" />
                   ) : (
                     <Trash2 size={15} />
                   )}

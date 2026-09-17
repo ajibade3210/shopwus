@@ -5,7 +5,7 @@ import type { BlogGraphicCardProps } from "@/types";
 export function RetentionFlywheelGraphic({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`relative w-full rounded-2xl overflow-hidden border border-[#eee7dc] bg-gradient-to-br from-[#faf7f2] via-[#fcfbf9] to-[#f4eee6] p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
+      className={`relative w-full rounded-2xl overflow-hidden border border-border-hairline bg-surface-container-low p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
     >
       <svg
         viewBox="0 0 800 420"
@@ -352,7 +352,7 @@ export function RetentionFlywheelGraphic({ className = "" }: { className?: strin
 export function WhatsAppVsAtelierGraphic({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`relative w-full rounded-2xl overflow-hidden border border-[#eee7dc] bg-gradient-to-br from-[#faf7f2] via-[#fcfbf9] to-[#f4eee6] p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
+      className={`relative w-full rounded-2xl overflow-hidden border border-border-hairline bg-surface-container-low p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
     >
       <svg
         viewBox="0 0 800 420"
@@ -611,7 +611,7 @@ export function WhatsAppVsAtelierGraphic({ className = "" }: { className?: strin
 export function ShoeboxVsDashboardGraphic({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`relative w-full rounded-2xl overflow-hidden border border-[#eee7dc] bg-gradient-to-br from-[#faf7f2] via-[#fcfbf9] to-[#f4eee6] p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
+      className={`relative w-full rounded-2xl overflow-hidden border border-border-hairline bg-surface-container-low p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
     >
       <svg
         viewBox="0 0 800 420"
