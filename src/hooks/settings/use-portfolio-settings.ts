@@ -10,8 +10,12 @@ import {
   MAX_PORTFOLIO_CATEGORIES,
   MAX_PORTFOLIO_PROJECTS,
 } from "@/constants";
-import { uploadBusinessLogo, uploadPortfolioImage } from "@/lib/api";
-import type { PortfolioProject, UsePortfolioSettingsOptions } from "@/types";
+import { uploadBusinessLogo, uploadMultipleMediaFiles, uploadPortfolioImage } from "@/lib/api";
+import type { PortfolioProject } from "@/types";
+
+interface UsePortfolioSettingsOptions {
+  notify: (message: string) => void;
+}
 
 export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
   const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);
@@ -72,19 +76,26 @@ export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
 
   const handleAddProject = (e: React.FormEvent): PortfolioProject | null => {
     e.preventDefault();
-    if (!newProject.title) return null;
+    if (isUploadingProjectImage || isUploadingGalleryImages) {
+      notify("Please wait for all images to finish uploading");
+      return null;
+    }
+    if (!newProject.title?.trim()) {
+      notify("Project title is required");
+      return null;
+    }
     if (portfolio.length >= MAX_PORTFOLIO_PROJECTS) {
       notify(`Maximum limit of ${MAX_PORTFOLIO_PROJECTS} portfolio projects reached`);
       return null;
     }
-    const coverImage = newProject.image || newProject.gallery?.[0] || DEFAULT_PORTFOLIO_IMAGE;
 
+    const coverImage = newProject.image || newProject.gallery?.[0] || DEFAULT_PORTFOLIO_IMAGE;
     const galleryImages =
       newProject.gallery && newProject.gallery.length > 0 ? newProject.gallery : [coverImage];
 
     const proj: PortfolioProject = {
       id: `p-${Date.now()}`,
-      title: newProject.title || "Untitled Project",
+      title: newProject.title.trim(),
       category: newProject.category || "Brand Identity",
       location: newProject.location || "Lagos & London",
       description: newProject.description || "",
@@ -116,6 +127,7 @@ export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
       return null;
     } finally {
       setIsUploadingLogo(false);
+      e.target.value = "";
     }
   };
 
@@ -135,6 +147,7 @@ export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
       return null;
     } finally {
       setIsUploadingBanner(false);
+      e.target.value = "";
     }
   };
 
@@ -149,29 +162,28 @@ export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
   const handleProjectImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const localPreviewUrl = URL.createObjectURL(file);
-    setNewProject(prev => {
-      const updatedGallery =
-        prev.gallery && prev.gallery.length > 0
-          ? [localPreviewUrl, ...prev.gallery.slice(1)]
-          : [localPreviewUrl];
-      return { ...prev, image: localPreviewUrl, gallery: updatedGallery };
-    });
     setIsUploadingProjectImage(true);
     try {
       const res = await uploadPortfolioImage(file);
       setNewProject(prev => {
+        const previousCover = prev.image;
+        const currentGallery = prev.gallery || [];
         const updatedGallery =
-          prev.gallery && prev.gallery.length > 0
-            ? prev.gallery.map(url => (url === localPreviewUrl ? res.url : url))
+          currentGallery.length > 0
+            ? currentGallery.map(url => (url === previousCover ? res.url : url))
             : [res.url];
-        return { ...prev, image: res.url, gallery: updatedGallery };
+        return {
+          ...prev,
+          image: res.url,
+          gallery: updatedGallery.includes(res.url) ? updatedGallery : [res.url, ...updatedGallery],
+        };
       });
       notify("Project cover image uploaded successfully");
     } catch {
-      notify("Failed to upload project image");
+      notify("Failed to upload project cover image");
     } finally {
       setIsUploadingProjectImage(false);
+      e.target.value = "";
     }
   };
 
@@ -179,38 +191,28 @@ export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
     const files = e.target.files;
     if (!files || files.length === 0) return;
     const fileArray = Array.from(files);
-    const localPreviews = fileArray.map(file => URL.createObjectURL(file));
-    setNewProject(prev => ({
-      ...prev,
-      gallery: [...(prev.gallery || (prev.image ? [prev.image] : [])), ...localPreviews],
-    }));
     setIsUploadingGalleryImages(true);
     try {
-      const uploadPromises = fileArray.map(file => uploadPortfolioImage(file));
-      const results = await Promise.all(uploadPromises);
-      const newUrls = results.map(r => r.url);
-      setNewProject(prev => {
-        const currentGallery = prev.gallery || [];
-        // Replace temporary preview URLs with uploaded CDN URLs
-        let urlIndex = 0;
-        const finalGallery = currentGallery.map(url => {
-          if (localPreviews.includes(url)) {
-            const mappedUrl = newUrls[urlIndex] || url;
-            urlIndex++;
-            return mappedUrl;
-          }
-          return url;
+      const uploadResults = await uploadMultipleMediaFiles(fileArray);
+      const newUrls = uploadResults.map(r => r.url);
+
+      if (newUrls.length > 0) {
+        setNewProject(prev => {
+          const currentGallery = prev.gallery || [];
+          const existingSet = new Set(currentGallery);
+          const toAdd = newUrls.filter(u => !existingSet.has(u));
+          return {
+            ...prev,
+            gallery: [...currentGallery, ...toAdd],
+          };
         });
-        return {
-          ...prev,
-          gallery: finalGallery,
-        };
-      });
-      notify(`Uploaded ${results.length} gallery ${results.length === 1 ? "image" : "images"}`);
+        notify(`Uploaded ${newUrls.length} ${newUrls.length === 1 ? "image" : "images"}`);
+      }
     } catch {
       notify("Failed to upload gallery images");
     } finally {
       setIsUploadingGalleryImages(false);
+      e.target.value = "";
     }
   };
 

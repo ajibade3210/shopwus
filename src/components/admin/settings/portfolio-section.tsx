@@ -414,9 +414,18 @@ export function PortfolioSection({
                 </button>
                 <button
                   type="submit"
-                  className="dark-button flex-1 py-2.5 text-xs font-medium justify-center"
+                  disabled={isUploadingProjectImage || isUploadingGalleryImages}
+                  className="dark-button flex-1 py-2.5 text-xs font-medium justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Plus size={14} /> Add Project
+                  {isUploadingProjectImage || isUploadingGalleryImages ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" /> Uploading Image...
+                    </>
+                  ) : (
+                    <>
+                      <Plus size={14} /> Add Project
+                    </>
+                  )}
                 </button>
               </div>
             </form>

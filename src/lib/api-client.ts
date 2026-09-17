@@ -181,6 +181,12 @@ async function request<T>(endpoint: string, options: RequestOptions = {}): Promi
 
           // Refresh failed — clear cookies & tokens server-side by calling logout, then redirect
           const sessionErr = new ApiError("Session expired. Please sign in again.", 401);
+          const logoutController =
+            typeof AbortController !== "undefined" ? new AbortController() : null;
+          const logoutTimer = logoutController
+            ? setTimeout(() => logoutController.abort(), 1500)
+            : null;
+
           await fetch(`${API_BASE_URL}/auth/logout`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -188,7 +194,13 @@ async function request<T>(endpoint: string, options: RequestOptions = {}): Promi
               refreshToken: storedRefreshToken || undefined,
             }),
             credentials: "include",
-          }).catch(() => {});
+            keepalive: true,
+            signal: logoutController?.signal,
+          })
+            .catch(() => {})
+            .finally(() => {
+              if (logoutTimer) clearTimeout(logoutTimer);
+            });
           onRefreshFailed(sessionErr);
           isRefreshing = false;
           handleSessionExpired();

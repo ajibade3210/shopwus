@@ -25,7 +25,7 @@ export function LogoutConfirmModal({ isOpen, onClose }: LogoutConfirmModalProps)
     try {
       await clearSession();
     } finally {
-      window.location.href = "/login";
+      window.location.replace("/login");
     }
   };
 

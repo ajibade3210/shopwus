@@ -336,6 +336,17 @@ export function useSettingsForm({ notify }: UseSettingsFormOptions) {
         }))
         .filter(s => s.name.length > 0);
 
+      if (
+        portfolio.isUploadingLogo ||
+        portfolio.isUploadingBanner ||
+        portfolio.isUploadingProjectImage ||
+        portfolio.isUploadingGalleryImages
+      ) {
+        notify("Please wait for all media files to finish uploading before saving.");
+        setSaving(false);
+        return false;
+      }
+
       const cleanedPortfolio: PortfolioProject[] = (
         options?.overridePortfolio ??
         portfolio.portfolio ??

@@ -43,6 +43,13 @@ AFTER EVERY CODE CHANGE, WITHOUT EXCEPTION, YOU MUST:
 - **DOMAIN-SEGMENTED TYPES (`src/types/`):** All domain entities, DTOs, request payloads, and shared models MUST be defined in their designated domain file under `src/types/` (e.g. `customer.ts`, `invoice.ts`, `lead.ts`, `analytics.ts`, `broadcast.ts`, `profile.ts`, `auth.ts`, `common.ts`, `landing.ts`) and exported via `src/types/index.ts`. Never dump arbitrary types into monolithic files or declare shared domain interfaces inline in UI components.
 - **ZERO `any` POLICY (Strict TypeScript):** `any` is strictly prohibited anywhere in the codebase. Always use explicit types from `@/types` or local component prop interfaces. For unknown payloads, use `unknown` with explicit narrowing. All function signatures, props, callbacks, and state must have complete, explicit types.
 - **SERVICE/REPOSITORY ABSTRACTION:** Architect all state and data flows behind an abstraction layer under `src/services/api/` (e.g. `invoice.service.ts`, `leads.service.ts`, `customer.service.ts`) so mock data can be swapped for real API calls later with zero UI refactoring.
+- **MEDIA UPLOADS & CLOUDFLARE R2 PERSISTENCE (STRICT FILE ONLY, NO LOCAL BLOBS):**
+  All media uploads (business logos, storefront banners, portfolio covers, gallery images, custom/auto-generated email headers) MUST be uploaded directly to Cloudflare R2 via `/media/upload` or `/media/upload-multi`.
+  - **Strict `File` Signatures**: Media service upload methods (`uploadMediaFile`, `uploadMultipleMediaFiles`, `uploadBusinessLogo`, `uploadPortfolioImage`) must strictly accept browser `File` objects only. Never accept `Blob`, `string`, or backward-compatibility fallback shims in media service signatures.
+  - **Zero Local `blob:` URLs in State or Payloads**: NEVER assign local `blob:` URLs (e.g. `URL.createObjectURL(file)`) to state that gets submitted to the API or stored in the database.
+  - **Upload Before Persisting**: Upload files to Cloudflare R2 immediately upon file selection or before saving. Component state and API payloads must strictly hold the permanent Cloudflare R2 CDN URL.
+  - **Upload State Guarding**: Disable submit buttons and display visual loading spinners while media uploads are in flight to prevent saving incomplete or unuploaded media.
+
 - **RESPONSIVE DESIGN:** Design layouts to be responsive across Mobile (320px+), Tablet (768px+), and Desktop (1024px+) breakpoints using Tailwind utilities (`sm:`, `md:`, `lg:`).
 - **KEEP DESIGNS SIMPLE:** Avoid over-engineering or adding unrequested features.
 - **NO ASSUMPTIONS:** Never assume or hallucinate requirements; ask clarifying questions when something isn't clear.

@@ -34,8 +34,8 @@ export function EditHeaderModal({
   const [includeInEmail, setIncludeInEmail] = useState(initialIncludeInEmail);
 
   // Custom banner state
-  const [customBannerFile, setCustomBannerFile] = useState<File | null>(null);
-  const [customBannerPreview, setCustomBannerPreview] = useState<string>("");
+  const [customBannerUrl, setCustomBannerUrl] = useState<string>(_currentHeaderUrl || "");
+  const [isUploadingBanner, setIsUploadingBanner] = useState(false);
 
   // Submission state
   const [isSaving, setIsSaving] = useState(false);
@@ -48,7 +48,8 @@ export function EditHeaderModal({
     if (businessName) setHeaderTitle(businessName);
     if (tagline) setHeaderCaption(tagline);
     if (logoUrl) setCustomLogoUrl(logoUrl);
-  }, [businessName, tagline, logoUrl]);
+    if (_currentHeaderUrl) setCustomBannerUrl(_currentHeaderUrl);
+  }, [businessName, tagline, logoUrl, _currentHeaderUrl]);
 
   // Render high-DPI canvas matching typography standards
   useEffect(() => {
@@ -167,14 +168,24 @@ export function EditHeaderModal({
       onToast("Failed to upload logo image");
     } finally {
       setIsUploadingLogo(false);
+      e.target.value = "";
     }
   };
 
-  const handleCustomBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCustomBannerFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setCustomBannerFile(file);
-    setCustomBannerPreview(URL.createObjectURL(file));
+    setIsUploadingBanner(true);
+    try {
+      const res = await uploadMediaFile(file);
+      setCustomBannerUrl(res.url);
+      onToast("Banner uploaded successfully");
+    } catch {
+      onToast("Failed to upload banner");
+    } finally {
+      setIsUploadingBanner(false);
+      e.target.value = "";
+    }
   };
 
   const handleSave = async () => {
@@ -191,26 +202,22 @@ export function EditHeaderModal({
 
         if (!blob) throw new Error("Failed to generate image buffer");
 
-        // Upload generated blob
-        const res = await uploadMediaFile(blob);
+        // Upload generated file directly to Cloudflare R2
+        const generatedFile = new File([blob], "email-header.png", { type: "image/png" });
+        const res = await uploadMediaFile(generatedFile);
         await onSaveHeader(res.url, "AUTO", includeInInvoice, includeInEmail);
         onToast("Auto-generated email header saved successfully");
         onClose();
       } else {
         // Custom banner upload
-        if (!customBannerFile && !_currentHeaderUrl) {
+        const targetUrl = customBannerUrl || _currentHeaderUrl;
+        if (!targetUrl) {
           onToast("Please select a banner image file to upload");
           setIsSaving(false);
           return;
         }
 
-        let uploadedUrl = _currentHeaderUrl || "";
-        if (customBannerFile) {
-          const res = await uploadMediaFile(customBannerFile);
-          uploadedUrl = res.url;
-        }
-
-        await onSaveHeader(uploadedUrl, "CUSTOM", includeInInvoice, includeInEmail);
+        await onSaveHeader(targetUrl, "CUSTOM", includeInInvoice, includeInEmail);
         onToast("Custom email header saved successfully");
         onClose();
       }
@@ -367,9 +374,9 @@ export function EditHeaderModal({
                   Custom Banner Graphic
                 </label>
                 <div className="relative w-full aspect-[10/3] rounded-2xl border-2 border-dashed border-[#d1d5db] bg-[#fafaf9] hover:bg-[#f3f4f6] transition-colors flex flex-col items-center justify-center p-4 text-center group cursor-pointer overflow-hidden">
-                  {customBannerPreview || _currentHeaderUrl ? (
+                  {customBannerUrl ? (
                     <img
-                      src={customBannerPreview || _currentHeaderUrl}
+                      src={customBannerUrl}
                       alt="Custom Banner Preview"
                       className="w-full h-full object-contain"
                     />
@@ -388,11 +395,17 @@ export function EditHeaderModal({
                       </div>
                     </div>
                   )}
+                  {isUploadingBanner && (
+                    <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex items-center justify-center">
+                      <Loader2 size={24} className="animate-spin text-[#0058be]" />
+                    </div>
+                  )}
                   <input
                     type="file"
                     accept="image/png,image/jpeg,image/webp"
                     className="absolute inset-0 opacity-0 cursor-pointer"
                     onChange={handleCustomBannerFileChange}
+                    disabled={isUploadingBanner}
                   />
                 </div>
               </div>
@@ -430,7 +443,7 @@ export function EditHeaderModal({
           <button
             type="button"
             onClick={onClose}
-            disabled={isSaving}
+            disabled={isSaving || isUploadingLogo || isUploadingBanner}
             className="px-4 py-2 rounded-xl text-xs font-semibold text-[#4b5563] hover:bg-[#e5e7eb] transition-colors cursor-pointer disabled:opacity-50"
           >
             Cancel
@@ -438,7 +451,7 @@ export function EditHeaderModal({
           <button
             type="button"
             onClick={handleSave}
-            disabled={isSaving}
+            disabled={isSaving || isUploadingLogo || isUploadingBanner}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#191c1d] hover:bg-black text-white text-xs font-semibold shadow-xs transition-all cursor-pointer disabled:opacity-50"
           >
             {isSaving ? (
