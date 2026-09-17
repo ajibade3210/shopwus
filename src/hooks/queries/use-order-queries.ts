@@ -18,10 +18,11 @@ import type {
   UpdateOrderStatusInput,
 } from "@/types";
 
-export function useOrdersQuery(params?: GetOrdersParams) {
+export function useOrdersQuery(params?: GetOrdersParams, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: queryKeys.orders.list(params),
     queryFn: () => getOrders(params),
+    enabled: options?.enabled,
   });
 }
 

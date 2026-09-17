@@ -213,6 +213,38 @@ export interface OrderDetailsDrawerProps {
 }
 
 export type OrderTab = "all" | "unfulfilled" | "completed" | "abandoned";
+export type OrderView = "table" | "board";
+
+export interface BoardCardProps {
+  order: Order;
+  effectiveStatus: FulfillmentStatus;
+  onSelect: (id: string) => void;
+  onMoveTo: (orderId: string, status: FulfillmentStatus) => Promise<void> | void;
+  onDragStart: (e: React.DragEvent, orderId: string) => void;
+}
+
+export interface BoardColumnDef {
+  key: string;
+  title: string;
+  headerBg: string;
+  statuses: FulfillmentStatus[];
+  dropTargetStatus: FulfillmentStatus;
+}
+
+export type ColumnDateFilter = "ALL" | "TODAY" | "7_DAYS" | "30_DAYS";
+
+export interface ColumnFilterState {
+  dateRange: ColumnDateFilter;
+  orderStatus: OrderStatus | "ALL";
+  paymentStatus: PaymentStatus | "ALL";
+}
+
+export interface OrdersBoardProps {
+  orders: Order[];
+  isLoading: boolean;
+  onSelectOrder: (id: string) => void;
+  onMoveTo: (orderId: string, status: FulfillmentStatus) => Promise<void> | void;
+}
 
 export interface OrdersTableProps {
   orders: Array<Order | CheckoutSession>;

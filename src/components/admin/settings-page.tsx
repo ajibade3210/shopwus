@@ -26,8 +26,6 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
     setSlug,
     website,
     setWebsite,
-    email,
-    setEmail,
     currency,
     setCurrency,
     about,
@@ -170,8 +168,6 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
           slugStatus={slugStatus}
           website={website}
           setWebsite={setWebsite}
-          email={email}
-          setEmail={setEmail}
           currency={currency}
           setCurrency={setCurrency}
           businessType={businessType}

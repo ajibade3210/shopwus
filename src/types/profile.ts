@@ -152,7 +152,7 @@ export interface IdentitySectionProps {
   slugStatus: "checking" | "available" | "taken" | "idle";
   website: string;
   setWebsite: (v: string) => void;
-  email: string;
+  email?: string;
   setEmail?: (v: string) => void;
   currency: CurrencyCode;
   setCurrency: (v: CurrencyCode) => void;
