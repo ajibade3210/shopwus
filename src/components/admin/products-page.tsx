@@ -47,7 +47,7 @@ export function ProductsPage() {
     <button
       type="button"
       onClick={handleOpenCreate}
-      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-[#111827] hover:bg-black text-white px-4 py-2 sm:py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
+      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-primary hover:bg-primary-hover text-white px-4 py-2 sm:py-2.5 rounded-md text-xs font-semibold shadow-xs hover:shadow-sm transition-all cursor-pointer disabled:opacity-50"
     >
       <Plus size={14} />
       <span>Add Product</span>
@@ -59,7 +59,7 @@ export function ProductsPage() {
       <PageTitle title="Products & Inventory" action={action} />
 
       {/* Top Metric Strip */}
-      <div className="metrics">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-7">
         <Metric label="Total Products" value={String(summary?.total || 0)} />
         <Metric label="Active in Store" value={String(summary?.active || 0)} />
         <Metric label="Low Stock Alerts" value={String(summary?.lowStock || 0)} />
@@ -67,13 +67,10 @@ export function ProductsPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white border border-[#e5e7eb] rounded-2xl p-3 sm:p-4 shadow-2xs space-y-3">
+      <div className="bg-card border border-border-hairline rounded-xl p-3 sm:p-4 shadow-card space-y-3">
         <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <div className="relative flex-1">
-            <Search
-              size={14}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9ca3af]"
-            />
+            <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-outline" />
             <input
               type="text"
               placeholder="Search products by title, SKU..."
@@ -82,7 +79,7 @@ export function ProductsPage() {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl transition-all"
+              className="w-full pl-9 pr-4 py-2 text-xs bg-surface-low border border-border-hairline rounded-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"
             />
           </div>
 
@@ -93,7 +90,7 @@ export function ProductsPage() {
                 setCategoryFilter(e.target.value);
                 setPage(1);
               }}
-              className="px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl font-medium text-[#191c1d]"
+              className="px-3 py-2 text-xs bg-surface-low border border-border-hairline rounded-md font-medium text-on-surface focus:outline-none focus:border-primary transition-colors cursor-pointer"
             >
               <option value="">All Categories</option>
               {categories.map(c => (
@@ -109,7 +106,7 @@ export function ProductsPage() {
                 setStatusFilter(e.target.value ? (e.target.value as ProductStatus) : "");
                 setPage(1);
               }}
-              className="px-3 py-2 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-medium text-[#191c1d]"
+              className="px-3 py-2 text-xs bg-surface-low border border-border-hairline rounded-md font-medium text-on-surface focus:outline-none focus:border-primary transition-colors cursor-pointer"
             >
               <option value="">All Statuses</option>
               <option value="ACTIVE">Active</option>
@@ -128,7 +125,7 @@ export function ProductsPage() {
 
         {/* Pagination */}
         {meta && meta.totalPages > 1 && (
-          <div className="flex items-center justify-between pt-3 border-t border-[#f0f0f0] text-xs text-[#6b7280]">
+          <div className="flex items-center justify-between pt-3 border-t border-border-hairline text-xs text-on-surface-variant">
             <div>
               Showing Page <b>{meta.page}</b> of <b>{meta.totalPages}</b> ({meta.total} products)
             </div>
@@ -137,7 +134,7 @@ export function ProductsPage() {
                 type="button"
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="p-1.5 rounded-lg border border-[#e5e7eb] hover:bg-gray-50 disabled:opacity-40"
+                className="p-1.5 rounded-md border border-border-hairline hover:bg-surface-low text-on-surface disabled:opacity-40 cursor-pointer transition-colors"
               >
                 <ChevronLeft size={14} />
               </button>
@@ -145,7 +142,7 @@ export function ProductsPage() {
                 type="button"
                 disabled={page >= meta.totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="p-1.5 rounded-lg border border-[#e5e7eb] hover:bg-gray-50 disabled:opacity-40"
+                className="p-1.5 rounded-md border border-border-hairline hover:bg-surface-low text-on-surface disabled:opacity-40 cursor-pointer transition-colors"
               >
                 <ChevronRight size={14} />
               </button>

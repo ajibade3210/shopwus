@@ -30,9 +30,9 @@ export function AnimatedWorkflowConnector({ className = "" }: AnimatedWorkflowCo
       >
         <defs>
           <linearGradient id="circuitPulseGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#855e2e" stopOpacity="0.1" />
-            <stop offset="50%" stopColor="#855e2e" stopOpacity="1" />
-            <stop offset="100%" stopColor="#d6caa7" stopOpacity="0.95" />
+            <stop offset="0%" stopColor="#13678A" stopOpacity="0.1" />
+            <stop offset="50%" stopColor="#13678A" stopOpacity="1" />
+            <stop offset="100%" stopColor="#45B69C" stopOpacity="0.95" />
           </linearGradient>
           <filter id="circuitGlow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="2.5" result="blur" />
@@ -43,7 +43,7 @@ export function AnimatedWorkflowConnector({ className = "" }: AnimatedWorkflowCo
         {/* Base Dotted Circuit Path */}
         <path
           d="M 168 8 L 168 32 A 16 16 0 0 0 184 48 L 524 48 A 16 16 0 0 0 540 32 L 540 8 L 540 32 A 16 16 0 0 0 556 48 L 896 48 A 16 16 0 0 0 912 32 L 912 8"
-          stroke="#dcd6cb"
+          stroke="#d7dade"
           strokeWidth="2"
           strokeDasharray="4 6"
           strokeLinecap="round"
@@ -61,20 +61,20 @@ export function AnimatedWorkflowConnector({ className = "" }: AnimatedWorkflowCo
 
         {/* Connection Node 1 (Left / Create) */}
         <g className="node-group node-1">
-          <circle cx="168" cy="8" r="6" fill="#ffffff" stroke="#855e2e" strokeWidth="2.5" />
-          <circle cx="168" cy="8" r="2.5" fill="#855e2e" className="node-center-dot dot-1" />
+          <circle cx="168" cy="8" r="6" fill="#ffffff" stroke="#13678A" strokeWidth="2.5" />
+          <circle cx="168" cy="8" r="2.5" fill="#13678A" className="node-center-dot dot-1" />
         </g>
 
         {/* Connection Node 2 (Center / Curate) */}
         <g className="node-group node-2">
-          <circle cx="540" cy="8" r="6" fill="#ffffff" stroke="#855e2e" strokeWidth="2.5" />
-          <circle cx="540" cy="8" r="2.5" fill="#855e2e" className="node-center-dot dot-2" />
+          <circle cx="540" cy="8" r="6" fill="#ffffff" stroke="#13678A" strokeWidth="2.5" />
+          <circle cx="540" cy="8" r="2.5" fill="#13678A" className="node-center-dot dot-2" />
         </g>
 
         {/* Connection Node 3 (Right / Convert) */}
         <g className="node-group node-3">
-          <circle cx="912" cy="8" r="6" fill="#ffffff" stroke="#855e2e" strokeWidth="2.5" />
-          <circle cx="912" cy="8" r="2.5" fill="#855e2e" className="node-center-dot dot-3" />
+          <circle cx="912" cy="8" r="6" fill="#ffffff" stroke="#13678A" strokeWidth="2.5" />
+          <circle cx="912" cy="8" r="2.5" fill="#13678A" className="node-center-dot dot-3" />
         </g>
       </svg>
     </div>
@@ -95,20 +95,20 @@ function MobileVerticalConnector({ stepNumber }: MobileVerticalConnectorProps) {
       >
         <path
           d="M 12 0 L 12 56"
-          stroke="#ded5c6"
+          stroke="#d7dade"
           strokeWidth="2"
           strokeDasharray="4 5"
           strokeLinecap="round"
         />
         <path
           d="M 12 0 L 12 56"
-          stroke="#855e2e"
+          stroke="#13678A"
           strokeWidth="2.5"
           strokeLinecap="round"
           className={`mobile-pulse-beam mobile-beam-${stepNumber}`}
         />
-        <circle cx="12" cy="4" r="4.5" fill="#ffffff" stroke="#855e2e" strokeWidth="2" />
-        <circle cx="12" cy="52" r="4.5" fill="#ffffff" stroke="#855e2e" strokeWidth="2" />
+        <circle cx="12" cy="4" r="4.5" fill="#ffffff" stroke="#13678A" strokeWidth="2" />
+        <circle cx="12" cy="52" r="4.5" fill="#ffffff" stroke="#13678A" strokeWidth="2" />
       </svg>
     </div>
   );
@@ -127,18 +127,18 @@ function CreatePreviewCard() {
           <span className="w-2 h-2 rounded-full bg-[#81c784]" />
         </div>
         <div className="card-domain-pill">
-          <Globe size={11} className="text-[#855e2e]" />
+          <Globe size={11} className="text-primary" />
           <span>elanevents.com/studio</span>
         </div>
-        <div className="flex items-center gap-1 text-[10px] text-[#2e7d32] font-semibold">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#2e7d32]" />
+        <div className="flex items-center gap-1 text-[10px] text-tertiary font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-tertiary" />
           <span>Live</span>
         </div>
       </div>
 
       <div className="card-body-content">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl overflow-hidden bg-[#191c1d] flex items-center justify-center shadow-xs shrink-0">
+          <div className="w-10 h-10 rounded-xl overflow-hidden bg-secondary flex items-center justify-center shadow-xs shrink-0">
             <img
               src="https://cdn.accessa.ng/test/accessa/louis-dike-ayskyj/images/c95e52aa48bf676ed0d53f36bb957b81.png"
               alt="Store logo"
@@ -147,29 +147,29 @@ function CreatePreviewCard() {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h4 className="text-sm font-semibold text-[#191c1d]">Élan Stores</h4>
-              <Shield size={12} className="text-[#855e2e]" />
+              <h4 className="text-sm font-semibold text-on-surface">Élan Stores</h4>
+              <Shield size={12} className="text-primary" />
             </div>
-            <p className="text-[11px] text-[#5c5f60]">Events & Decor Vendor</p>
+            <p className="text-[11px] text-on-surface-variant">Events & Decor Vendor</p>
           </div>
         </div>
 
         <div className="card-banner-mini mt-3">
           <div className="flex items-center justify-between text-[11px]">
-            <span className="font-serif italic text-[#191c1d]">Bespoke Experiences</span>
-            <span className="text-[10px] font-mono text-[#855e2e] bg-[#f4ece1] px-2 py-0.5 rounded">
+            <span className="font-medium text-on-surface">Bespoke Experiences</span>
+            <span className="text-[10px] font-mono text-primary bg-primary-container px-2 py-0.5 rounded">
               Lagos · London
             </span>
           </div>
-          <p className="text-[10px] text-[#747878] mt-1 line-clamp-1">
+          <p className="text-[10px] text-on-surface-variant mt-1 line-clamp-1">
             Editorial weddings & private celebrations worldwide.
           </p>
         </div>
 
-        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#eae3d7] text-[11px]">
-          <span className="text-[#5c5f60]">Studio Theme</span>
-          <span className="font-medium text-[#191c1d] flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-[#191c1d]" />
+        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-border-hairline text-[11px]">
+          <span className="text-on-surface-variant">Studio Theme</span>
+          <span className="font-medium text-on-surface flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-secondary" />
             Noir & Champagne
           </span>
         </div>
@@ -185,11 +185,11 @@ function CuratePreviewCard() {
   return (
     <div className="workflow-preview-card curate-card">
       <div className="card-browser-bar">
-        <div className="flex items-center gap-1 text-[11px] font-semibold text-[#191c1d]">
-          <Layers size={13} className="text-[#855e2e]" />
+        <div className="flex items-center gap-1 text-[11px] font-semibold text-on-surface">
+          <Layers size={13} className="text-primary" />
           <span>Unified Channels</span>
         </div>
-        <div className="flex items-center gap-1 text-[10px] text-[#855e2e] bg-[#f4ece1] px-2 py-0.5 rounded-full font-medium">
+        <div className="flex items-center gap-1 text-[10px] text-primary bg-primary-container px-2 py-0.5 rounded-full font-medium">
           <Share2 size={10} />
           <span>10 Platforms</span>
         </div>
@@ -198,7 +198,7 @@ function CuratePreviewCard() {
       <div className="card-body-content">
         {/* Media Thumbnail Mini-Grid */}
         <div className="grid grid-cols-3 gap-1.5 mb-2.5">
-          <div className="aspect-[4/3] rounded-lg bg-[#e8dfd3] relative overflow-hidden flex items-end p-1">
+          <div className="aspect-[4/3] rounded-lg bg-surface-container-high relative overflow-hidden flex items-end p-1">
             <img
               src="https://images.unsplash.com/photo-1519741497674-611481863552?w=160&auto=format&fit=crop&q=80"
               alt="Gala"
@@ -208,7 +208,7 @@ function CuratePreviewCard() {
               Gala
             </span>
           </div>
-          <div className="aspect-[4/3] rounded-lg bg-[#e8dfd3] relative overflow-hidden flex items-end p-1">
+          <div className="aspect-[4/3] rounded-lg bg-surface-container-high relative overflow-hidden flex items-end p-1">
             <img
               src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=160&auto=format&fit=crop&q=80"
               alt="Wedding"
@@ -218,7 +218,7 @@ function CuratePreviewCard() {
               Wedding
             </span>
           </div>
-          <div className="aspect-[4/3] rounded-lg bg-[#e8dfd3] relative overflow-hidden flex items-end p-1">
+          <div className="aspect-[4/3] rounded-lg bg-surface-container-high relative overflow-hidden flex items-end p-1">
             <img
               src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=160&auto=format&fit=crop&q=80"
               alt="Dining"
@@ -232,8 +232,8 @@ function CuratePreviewCard() {
 
         {/* Sync Status Pill Row */}
         <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-[11px] bg-[#f8f6f2] p-1.5 rounded-md border border-[#eae3d7]">
-            <span className="font-medium text-[#191c1d] flex items-center gap-1.5">
+          <div className="flex items-center justify-between text-[11px] bg-surface-container-low p-1.5 rounded-md border border-border-hairline">
+            <span className="font-medium text-on-surface flex items-center gap-1.5">
               <svg
                 className="w-3 h-3 text-[#e1306c]"
                 viewBox="0 0 24 24"
@@ -249,15 +249,15 @@ function CuratePreviewCard() {
               </svg>
               @elanevents.live
             </span>
-            <span className="text-[9px] text-[#2e7d32] font-semibold flex items-center gap-0.5">
+            <span className="text-[9px] text-tertiary font-semibold flex items-center gap-0.5">
               <CheckCircle2 size={10} /> Auto-Sync
             </span>
           </div>
-          <div className="flex items-center justify-between text-[11px] bg-[#f8f6f2] p-1.5 rounded-md border border-[#eae3d7]">
-            <span className="font-medium text-[#191c1d] flex items-center gap-1.5">
-              <Sparkles size={12} className="text-[#855e2e]" />3 Curated Packages
+          <div className="flex items-center justify-between text-[11px] bg-surface-container-low p-1.5 rounded-md border border-border-hairline">
+            <span className="font-medium text-on-surface flex items-center gap-1.5">
+              <Sparkles size={12} className="text-primary" />3 Curated Packages
             </span>
-            <span className="text-[9px] text-[#747878] font-mono">Live</span>
+            <span className="text-[9px] text-on-surface-variant font-mono">Live</span>
           </div>
         </div>
       </div>
@@ -272,11 +272,11 @@ function ConvertPreviewCard() {
   return (
     <div className="workflow-preview-card convert-card">
       <div className="card-browser-bar">
-        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#191c1d]">
-          <TrendingUp size={13} className="text-[#2e7d32]" />
+        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-on-surface">
+          <TrendingUp size={13} className="text-tertiary" />
           <span>VIP Inquiry Pipeline</span>
         </div>
-        <div className="flex items-center gap-1 text-[10px] text-[#2e7d32] bg-[#e8f5e9] px-2 py-0.5 rounded-full font-bold">
+        <div className="flex items-center gap-1 text-[10px] text-on-tertiary-container bg-tertiary-container px-2 py-0.5 rounded-full font-bold">
           <span>High Intent</span>
         </div>
       </div>
@@ -284,36 +284,36 @@ function ConvertPreviewCard() {
       <div className="card-body-content">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#f4ece1] border border-[#e5d8c5] text-[#855e2e] flex items-center justify-center font-bold text-xs">
+            <div className="w-8 h-8 rounded-full bg-primary-container border border-primary/20 text-primary flex items-center justify-center font-bold text-xs">
               VS
             </div>
             <div>
-              <h5 className="text-xs font-semibold text-[#191c1d]">Lady Victoria S.</h5>
-              <p className="text-[10px] text-[#747878]">Lake Como 3-Day Gala</p>
+              <h5 className="text-xs font-semibold text-on-surface">Lady Victoria S.</h5>
+              <p className="text-[10px] text-on-surface-variant">Lake Como 3-Day Gala</p>
             </div>
           </div>
           <div className="text-right">
-            <span className="text-xs font-bold font-mono text-[#191c1d] block">₦65,000</span>
-            <span className="text-[9px] text-[#855e2e] font-semibold">Tier 1 Bespoke</span>
+            <span className="text-xs font-bold font-mono text-on-surface block">₦65,000</span>
+            <span className="text-[9px] text-primary font-semibold">Tier 1 Bespoke</span>
           </div>
         </div>
 
-        <div className="mt-3 bg-[#f8f6f2] p-2 rounded-lg border border-[#eae3d7]">
-          <div className="flex items-center justify-between text-[10px] text-[#5c5f60] mb-1">
+        <div className="mt-3 bg-surface-container-low p-2 rounded-lg border border-border-hairline">
+          <div className="flex items-center justify-between text-[10px] text-on-surface-variant mb-1">
             <span className="flex items-center gap-1">
-              <FileCheck size={11} className="text-[#2e7d32]" /> Order Made
+              <FileCheck size={11} className="text-tertiary" /> Order Made
             </span>
-            <span className="font-semibold text-[#2e7d32]">Paid & Delivered</span>
+            <span className="font-semibold text-tertiary">Paid & Delivered</span>
           </div>
-          <div className="w-full bg-[#ded5c6] h-1.5 rounded-full overflow-hidden">
-            <div className="bg-[#2e7d32] h-full w-full rounded-full" />
+          <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+            <div className="bg-tertiary h-full w-full rounded-full" />
           </div>
         </div>
 
-        <div className="mt-2.5 pt-2 border-t border-[#eae3d7] flex items-center justify-between text-[11px]">
-          <span className="text-[#5c5f60]">Deposit Retained</span>
-          <span className="font-bold text-[#191c1d] flex items-center gap-1">
-            <CheckCircle2 size={12} className="text-[#2e7d32]" />
+        <div className="mt-2.5 pt-2 border-t border-border-hairline flex items-center justify-between text-[11px]">
+          <span className="text-on-surface-variant">Deposit Retained</span>
+          <span className="font-bold text-on-surface flex items-center gap-1">
+            <CheckCircle2 size={12} className="text-tertiary" />
             ₦32,500 Paid
           </span>
         </div>
@@ -356,7 +356,7 @@ export function WorkflowSection() {
     <section className="workflow" id="workflow">
       <div className="section-intro">
         <h2 id="workflow-title">
-          Everything in its <em>right place.</em>
+          Everything in its <span className="text-primary font-bold">right place.</span>
         </h2>
       </div>
 

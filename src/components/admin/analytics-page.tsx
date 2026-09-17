@@ -33,7 +33,7 @@ export function AnalyticsPage({ onToast }: AnalyticsPageProps) {
   if (!data) {
     return (
       <section className="content max-w-6xl mx-auto py-16 flex justify-center items-center">
-        <div className="text-xs text-[#8c827a] font-medium animate-pulse">
+        <div className="text-xs text-text-muted font-medium animate-pulse">
           Loading studio telemetry &amp; financial records...
         </div>
       </section>
@@ -55,13 +55,13 @@ export function AnalyticsPage({ onToast }: AnalyticsPageProps) {
               priority
             />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#191c1d] tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-sans font-bold text-on-surface tracking-[-0.015em]">
             Welcome to {displayStudioName}
           </h1>
         </div>
 
         {/* Timeframe Filter Switch */}
-        <div className="inline-flex items-center p-1 rounded-xl bg-[#f0ebe3] border border-[#e2dad0]">
+        <div className="inline-flex items-center p-1 rounded-xl bg-surface-container-low border border-border-hairline">
           {(
             [
               ["daily", "Daily"],
@@ -73,10 +73,10 @@ export function AnalyticsPage({ onToast }: AnalyticsPageProps) {
               key={key}
               type="button"
               onClick={() => setTimeframe(key)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer font-sans ${
                 timeframe === key
-                  ? "bg-white text-[#191c1d] shadow-2xs"
-                  : "text-[#747878] hover:text-[#191c1d]"
+                  ? "bg-card text-on-surface shadow-2xs font-semibold"
+                  : "text-text-muted hover:text-on-surface font-medium"
               }`}
             >
               {label}

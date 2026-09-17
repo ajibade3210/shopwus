@@ -78,11 +78,11 @@ export function ProfileIdentityCard({
     : "AB";
 
   return (
-    <div className="bg-white border border-[#eae3d7] rounded-3xl p-4 sm:p-6 lg:p-8 shadow-sm space-y-6">
+    <div className="bg-card border border-border-hairline rounded-xl p-4 sm:p-6 lg:p-8 shadow-card space-y-6">
       <div className="flex items-center justify-between gap-3 sm:gap-4">
         {/* Avatar and Leadership Title */}
         <div className="flex items-center gap-2.5 sm:gap-3.5 lg:gap-4 min-w-0">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl bg-[#191c1d] text-white flex items-center justify-center font-serif text-base sm:text-lg lg:text-xl italic font-bold shadow-xs shrink-0 overflow-hidden border border-[#eae3d7]">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl bg-primary text-white flex items-center justify-center font-sans text-base sm:text-lg lg:text-xl font-bold shadow-xs shrink-0 overflow-hidden border border-border-hairline">
             {isImageUrl && !imageFailed ? (
               <img
                 src={avatar}
@@ -95,10 +95,10 @@ export function ProfileIdentityCard({
             )}
           </div>
           <div className="min-w-0">
-            <b className="text-[13px] sm:text-sm lg:text-base text-[#191c1d] font-bold block leading-snug whitespace-nowrap">
+            <b className="text-[13px] sm:text-sm lg:text-base text-on-surface font-bold block leading-snug whitespace-nowrap">
               {name || "Studio Director"}
             </b>
-            <span className="text-[11px] sm:text-xs text-[#5c5f60] mt-0.5 block leading-tight whitespace-nowrap">
+            <span className="text-[11px] sm:text-xs text-on-surface-variant mt-0.5 block leading-tight whitespace-nowrap">
               {studioName}
             </span>
           </div>
@@ -108,7 +108,7 @@ export function ProfileIdentityCard({
           <button
             type="button"
             onClick={handleStartEdit}
-            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-white hover:bg-[#fafaf9] text-[#1f2937] border border-[#d1d5db] hover:border-[#9ca3af] px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs shrink-0"
+            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-card hover:bg-surface-low text-on-surface border border-border-hairline hover:border-outline px-3 py-1.5 sm:px-4 sm:py-2 rounded-md text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs shrink-0"
           >
             <Pencil size={13} />
             <span>Edit profile</span>
@@ -121,112 +121,112 @@ export function ProfileIdentityCard({
         <div className="space-y-5 pt-1 animate-in fade-in duration-200">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-2">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-2">
                 Full name
               </label>
-              <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-4 py-3 text-xs transition-all">
+              <div className="signup-field flex items-center bg-surface-low border border-border-hairline rounded-md px-4 py-3 text-xs transition-all focus-within:border-primary">
                 <input
                   value={editName}
                   onChange={event => setEditName(event.target.value)}
                   placeholder="Elena Vance"
-                  className="w-full text-xs text-[#191c1d] placeholder:text-[#9ea1a2] bg-transparent outline-none border-none focus:outline-none focus:ring-0"
+                  className="w-full text-xs text-on-surface placeholder:text-outline bg-transparent outline-none border-none focus:outline-none focus:ring-0"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-2">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-2">
                 Email Address
               </label>
-              <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-4 py-3 text-xs transition-all opacity-80 cursor-not-allowed">
+              <div className="signup-field flex items-center bg-surface-low border border-border-hairline rounded-md px-4 py-3 text-xs transition-all opacity-80 cursor-not-allowed">
                 <input
                   disabled
                   value={email}
                   placeholder="elena@atelierforma.design"
-                  className="w-full text-xs text-[#191c1d] placeholder:text-[#9ea1a2] bg-transparent outline-none border-none focus:outline-none focus:ring-0 cursor-not-allowed"
+                  className="w-full text-xs text-on-surface placeholder:text-outline bg-transparent outline-none border-none focus:outline-none focus:ring-0 cursor-not-allowed"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-2">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-2">
                 Phone Number
               </label>
-              <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-4 py-3 text-xs transition-all">
+              <div className="signup-field flex items-center bg-surface-low border border-border-hairline rounded-md px-4 py-3 text-xs transition-all focus-within:border-primary">
                 <input
                   value={editPhone}
                   onChange={event => setEditPhone(event.target.value)}
                   placeholder="+234 800 ELAN VIP"
-                  className="w-full text-xs text-[#191c1d] placeholder:text-[#9ea1a2] bg-transparent outline-none border-none focus:outline-none focus:ring-0"
+                  className="w-full text-xs text-on-surface placeholder:text-outline bg-transparent outline-none border-none focus:outline-none focus:ring-0"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-2">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-2">
                 Studio Name
               </label>
-              <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-4 py-3 text-xs transition-all">
+              <div className="signup-field flex items-center bg-surface-low border border-border-hairline rounded-md px-4 py-3 text-xs transition-all focus-within:border-primary">
                 <input
                   value={editStudioName}
                   onChange={event => setEditStudioName(event.target.value)}
                   placeholder="Atelier Forma Couture"
-                  className="w-full text-xs text-[#191c1d] placeholder:text-[#9ea1a2] bg-transparent outline-none border-none focus:outline-none focus:ring-0"
+                  className="w-full text-xs text-on-surface placeholder:text-outline bg-transparent outline-none border-none focus:outline-none focus:ring-0"
                 />
               </div>
             </div>
           </div>
 
           {/* Bank details accordion / expandable sub-group */}
-          <div className="pt-2 border-t border-[#f0e8dc] space-y-4">
+          <div className="pt-2 border-t border-border-hairline space-y-4">
             <div>
-              <h4 className="text-xs font-bold text-[#191c1d] uppercase tracking-wider">
+              <h4 className="text-xs font-bold text-on-surface uppercase tracking-wider">
                 Payout & Remittance Bank Details
               </h4>
-              <p className="text-xs text-[#6b7280] mt-0.5">
+              <p className="text-xs text-on-surface-variant mt-0.5">
                 Bank account for automated settlements and disbursements.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
                   Bank Name
                 </label>
-                <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-3.5 py-2.5 text-xs transition-all">
+                <div className="signup-field flex items-center bg-surface-low border border-border-hairline rounded-md px-3.5 py-2.5 text-xs transition-all focus-within:border-primary">
                   <input
                     value={editBankName}
                     onChange={event => setEditBankName(event.target.value)}
                     placeholder="e.g. Providus Bank"
-                    className="w-full text-xs text-[#191c1d] placeholder:text-[#9ea1a2] bg-transparent outline-none border-none focus:outline-none focus:ring-0"
+                    className="w-full text-xs text-on-surface placeholder:text-outline bg-transparent outline-none border-none focus:outline-none focus:ring-0"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
                   Account Name
                 </label>
-                <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-3.5 py-2.5 text-xs transition-all">
+                <div className="signup-field flex items-center bg-surface-low border border-border-hairline rounded-md px-3.5 py-2.5 text-xs transition-all focus-within:border-primary">
                   <input
                     value={editAccountName}
                     onChange={event => setEditAccountName(event.target.value)}
                     placeholder="e.g. Atelier Forma Ent"
-                    className="w-full text-xs text-[#191c1d] placeholder:text-[#9ea1a2] bg-transparent outline-none border-none focus:outline-none focus:ring-0"
+                    className="w-full text-xs text-on-surface placeholder:text-outline bg-transparent outline-none border-none focus:outline-none focus:ring-0"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
                   Account Number
                 </label>
-                <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-3.5 py-2.5 text-xs transition-all">
+                <div className="signup-field flex items-center bg-surface-low border border-border-hairline rounded-md px-3.5 py-2.5 text-xs transition-all focus-within:border-primary">
                   <input
                     value={editAccountNumber}
                     onChange={event => setEditAccountNumber(event.target.value)}
                     placeholder="e.g. 0039281745"
-                    className="w-full text-xs text-[#191c1d] font-mono placeholder:text-[#9ea1a2] bg-transparent outline-none border-none focus:outline-none focus:ring-0"
+                    className="w-full text-xs text-on-surface font-mono placeholder:text-outline bg-transparent outline-none border-none focus:outline-none focus:ring-0"
                   />
                 </div>
               </div>
@@ -234,10 +234,10 @@ export function ProfileIdentityCard({
           </div>
 
           {/* Localized Action Buttons */}
-          <div className="flex items-center gap-3 pt-2 border-t border-[#f0e8dc]">
+          <div className="flex items-center gap-3 pt-2 border-t border-border-hairline">
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-2 bg-[#111827] hover:bg-black text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-md text-xs font-semibold shadow-xs hover:shadow-sm transition-all cursor-pointer disabled:opacity-50"
               disabled={saving}
               onClick={handleSave}
             >
@@ -245,7 +245,7 @@ export function ProfileIdentityCard({
             </button>
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-[#fafaf9] text-[#1f2937] border border-[#d1d5db] hover:border-[#9ca3af] px-4 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs"
+              className="inline-flex items-center justify-center gap-1.5 bg-card hover:bg-surface-low text-on-surface border border-border-hairline hover:border-outline px-4 py-2.5 rounded-md text-xs font-semibold shadow-2xs hover:shadow-xs transition-all cursor-pointer"
               onClick={() => setIsEditing(false)}
             >
               <span>Cancel</span>
@@ -255,49 +255,49 @@ export function ProfileIdentityCard({
       ) : (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-1">
-            <div className="p-4 bg-[#faf8f5] border border-[#eee7dc] rounded-2xl">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8c827a] block">
+            <div className="p-4 bg-surface-low border border-border-hairline rounded-xl">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-outline block">
                 Full name
               </span>
-              <strong className="text-xs font-bold text-[#191c1d] block mt-1">
+              <strong className="text-xs font-bold text-on-surface block mt-1">
                 {name || "Elena Vance"}
               </strong>
             </div>
 
-            <div className="p-4 bg-[#faf8f5] border border-[#eee7dc] rounded-2xl">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8c827a] block">
+            <div className="p-4 bg-surface-low border border-border-hairline rounded-xl">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-outline block">
                 Email address
               </span>
-              <strong className="text-xs font-bold text-[#191c1d] block mt-1 truncate">
+              <strong className="text-xs font-bold text-on-surface block mt-1 truncate">
                 {email || "elena@atelierforma.design"}
               </strong>
             </div>
 
-            <div className="p-4 bg-[#faf8f5] border border-[#eee7dc] rounded-2xl">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8c827a] block">
+            <div className="p-4 bg-surface-low border border-border-hairline rounded-xl">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-outline block">
                 Phone number
               </span>
-              <strong className="text-xs font-bold text-[#191c1d] block mt-1">
+              <strong className="text-xs font-bold text-on-surface block mt-1">
                 {phone || "+234 800 ELAN VIP"}
               </strong>
             </div>
           </div>
 
-          <div className="p-4 bg-[#faf8f5] border border-[#eee7dc] rounded-2xl space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#855e2e] block">
+          <div className="p-4 bg-surface-low border border-border-hairline rounded-xl space-y-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
               Remittance Banking Details
             </span>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#191c1d]">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-on-surface">
               <div>
-                <span className="text-[10px] text-[#8c827a] block">Bank Name</span>
+                <span className="text-[10px] text-outline block">Bank Name</span>
                 <span className="font-semibold block mt-0.5">{bankName || "---"}</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#8c827a] block">Account Name</span>
+                <span className="text-[10px] text-outline block">Account Name</span>
                 <span className="font-semibold block mt-0.5">{accountName || "---"}</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#8c827a] block">Account Number</span>
+                <span className="text-[10px] text-outline block">Account Number</span>
                 <span className="font-mono font-semibold block mt-0.5">
                   {accountNumber || "---"}
                 </span>

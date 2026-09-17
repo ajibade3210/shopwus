@@ -176,6 +176,8 @@ export interface StudioProductsSectionProps {
 export interface CartDrawerProps {
   slug: string;
   studioName?: string;
+  buttonColor?: string;
+  radiusClass?: string;
 }
 
 export interface CartFloatingButtonProps {
@@ -188,6 +190,8 @@ export interface CheckoutModalProps {
   onClose: () => void;
   slug: string;
   studioName?: string;
+  buttonColor?: string;
+  radiusClass?: string;
   onOrderComplete?: (order: import("./order").Order) => void;
 }
 

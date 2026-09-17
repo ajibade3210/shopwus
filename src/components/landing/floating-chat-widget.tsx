@@ -41,14 +41,14 @@ export function FloatingChatWidget() {
       {!isOpen && (
         <div className="flex items-center gap-2.5">
           {showBadge && (
-            <div className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 bg-white border border-[#ded7cb] rounded-full shadow-md text-xs text-[#191c1d] font-medium">
-              <span onClick={() => setIsOpen(true)} className="cursor-pointer hover:text-[#855e2e]">
+            <div className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 bg-card border border-border-hairline rounded-full shadow-md text-xs text-on-surface font-medium">
+              <span onClick={() => setIsOpen(true)} className="cursor-pointer hover:text-primary">
                 Let&apos;s Chat
               </span>
               <button
                 type="button"
                 onClick={() => setShowBadge(false)}
-                className="text-[#9ea1a2] hover:text-[#191c1d] p-0.5"
+                className="text-text-muted hover:text-on-surface p-0.5"
                 aria-label="Dismiss chat prompt"
               >
                 <X size={12} />
@@ -60,7 +60,7 @@ export function FloatingChatWidget() {
             type="button"
             onClick={() => setIsOpen(true)}
             aria-label="Open chat"
-            className="w-12 h-12 rounded-full bg-[#191c1d] hover:bg-black text-white flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="w-12 h-12 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer"
           >
             <MessageSquare size={18} />
           </button>
@@ -69,10 +69,10 @@ export function FloatingChatWidget() {
 
       {/* Clean & Simple Popup Card */}
       {isOpen && (
-        <div className="w-[320px] sm:w-[360px] bg-white rounded-2xl border border-[#eee7dc] shadow-2xl p-5 flex flex-col space-y-4 animate-in fade-in zoom-in-95 duration-150">
+        <div className="w-[320px] sm:w-[360px] bg-card rounded-2xl border border-border-hairline shadow-2xl p-5 flex flex-col space-y-4 animate-in fade-in zoom-in-95 duration-150">
           {/* Header */}
-          <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe3]">
-            <strong className="text-sm font-bold text-[#191c1d]">
+          <div className="flex items-center justify-between pb-3 border-b border-border-hairline">
+            <strong className="text-sm font-bold text-on-surface">
               {view === "request" ? "Request a Feature" : "How can we help?"}
             </strong>
             <button
@@ -83,7 +83,7 @@ export function FloatingChatWidget() {
                 setIsSubmitted(false);
               }}
               aria-label="Close"
-              className="text-[#9ea1a2] hover:text-[#191c1d] p-1 cursor-pointer"
+              className="text-text-muted hover:text-on-surface p-1 cursor-pointer"
             >
               <X size={16} />
             </button>
@@ -105,9 +105,9 @@ export function FloatingChatWidget() {
               <button
                 type="button"
                 onClick={() => setView("request")}
-                className="w-full flex items-center gap-3 p-3 rounded-xl border border-[#ded7cb] hover:bg-[#faf8f5] text-[#191c1d] text-xs font-semibold transition-colors text-left cursor-pointer"
+                className="w-full flex items-center gap-3 p-3 rounded-xl border border-border-hairline hover:bg-surface-container-low text-on-surface text-xs font-semibold transition-colors text-left cursor-pointer"
               >
-                <Send size={15} className="text-[#855e2e]" />
+                <Send size={15} className="text-primary" />
                 <span>Suggest a Feature / Feedback</span>
               </button>
             </div>
@@ -118,16 +118,18 @@ export function FloatingChatWidget() {
             <div>
               {isSubmitted ? (
                 <div className="text-center py-4 space-y-2">
-                  <CheckCircle2 size={24} className="text-[#059669] mx-auto" />
-                  <p className="text-xs font-semibold text-[#191c1d]">Thanks for your feedback!</p>
-                  <p className="text-[11px] text-[#5c5f60]">Our team reviews every submission.</p>
+                  <CheckCircle2 size={24} className="text-tertiary mx-auto" />
+                  <p className="text-xs font-semibold text-on-surface">Thanks for your feedback!</p>
+                  <p className="text-[11px] text-on-surface-variant">
+                    Our team reviews every submission.
+                  </p>
                   <button
                     type="button"
                     onClick={() => {
                       setIsSubmitted(false);
                       setView("menu");
                     }}
-                    className="text-xs text-[#855e2e] underline font-medium pt-2"
+                    className="text-xs text-primary underline font-medium pt-2"
                   >
                     Back to options
                   </button>
@@ -140,7 +142,7 @@ export function FloatingChatWidget() {
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                     placeholder="Describe your idea or feature request..."
-                    className="w-full text-xs p-3 rounded-xl border border-[#ded7cb] outline-none resize-none"
+                    className="w-full text-xs p-3 rounded-xl border border-border-hairline focus:border-primary outline-none resize-none bg-surface"
                   />
 
                   <input
@@ -149,21 +151,21 @@ export function FloatingChatWidget() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Your email address"
-                    className="w-full text-xs px-3 py-2 rounded-xl border border-[#ded7cb] outline-none"
+                    className="w-full text-xs px-3 py-2 rounded-xl border border-border-hairline focus:border-primary outline-none bg-surface"
                   />
 
                   <div className="flex items-center justify-between pt-1">
                     <button
                       type="button"
                       onClick={() => setView("menu")}
-                      className="text-xs text-[#5c5f60] hover:text-[#191c1d]"
+                      className="text-xs text-text-muted hover:text-on-surface"
                     >
                       Back
                     </button>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="px-4 py-2 rounded-xl bg-[#191c1d] hover:bg-black text-white text-xs font-semibold cursor-pointer disabled:opacity-50"
+                      className="px-4 py-2 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold cursor-pointer disabled:opacity-50"
                     >
                       {isSubmitting ? <Loader2 size={13} className="animate-spin" /> : "Send"}
                     </button>

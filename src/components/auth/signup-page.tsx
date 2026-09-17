@@ -109,26 +109,26 @@ export function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#191c1d] flex flex-col lg:flex-row font-sans selection:bg-[#191c1d] selection:text-white">
+    <div className="min-h-screen bg-surface text-on-surface flex flex-col lg:flex-row font-sans selection:bg-primary selection:text-white">
       {/* Left Panel: Signup Flow */}
       <div className="w-full lg:w-[58%] min-h-screen flex flex-col justify-between p-6 sm:p-10 lg:p-14">
         {/* Top Header */}
         <div className="flex items-center justify-between">
           <BrandLogo size="md" href="/" />
 
-          <div className="flex items-center gap-5 text-xs text-[#5c5f60]">
+          <div className="flex items-center gap-5 text-xs text-text-muted">
             <a
               href="mailto:support@shopwus.com"
-              className="text-[#2563eb] hover:underline font-medium flex items-center gap-1"
+              className="text-primary hover:underline font-medium flex items-center gap-1"
             >
               <HelpCircle size={14} />
               <span>Need help?</span>
             </a>
-            <div className="h-3.5 w-px bg-[#e5e7eb] hidden sm:block" />
-            <div className="hidden sm:flex items-center gap-1.5 text-[#191c1d] font-medium cursor-pointer">
-              <Globe size={14} className="text-[#64748b]" />
+            <div className="h-3.5 w-px bg-border-hairline hidden sm:block" />
+            <div className="hidden sm:flex items-center gap-1.5 text-on-surface font-medium cursor-pointer">
+              <Globe size={14} className="text-text-muted" />
               <span>English</span>
-              <ChevronDown size={13} className="text-[#94a3b8]" />
+              <ChevronDown size={13} className="text-outline" />
             </div>
           </div>
         </div>
@@ -138,16 +138,16 @@ export function SignupPage() {
           {/* Header */}
           <div className="flex items-start justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#191c1d] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">
                 Get Started
               </h1>
-              <p className="text-xs sm:text-sm text-[#64748b] mt-1">
+              <p className="text-xs sm:text-sm text-text-muted mt-1">
                 {selectedPlan
                   ? `Start your ${selectedPlan === "trial" ? "14-day free trial" : `${selectedPlan} (${selectedCycle || "monthly"})`} to continue.`
                   : "Create your free Shopwus account with Google."}
               </p>
             </div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#94a3b8] shrink-0 mt-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted shrink-0 mt-1">
               STEP 1 / 3
             </span>
           </div>
@@ -156,26 +156,26 @@ export function SignupPage() {
           <div className="space-y-4 mb-6">
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-semibold text-[#191c1d]">
+                <label className="block text-xs font-semibold text-on-surface">
                   Claim your public URL{" "}
-                  <span className="text-[#94a3b8] font-normal">(optional)</span>
+                  <span className="text-text-muted font-normal">(optional)</span>
                 </label>
                 {slug && (
-                  <span className="text-[10px] text-[#8e9192]">
+                  <span className="text-[10px] text-text-muted">
                     {isCheckingSlug ? (
                       "Checking…"
                     ) : slugAvailable ? (
-                      <span className="text-[#10b981] flex items-center gap-1 font-medium">
+                      <span className="text-tertiary flex items-center gap-1 font-medium">
                         <Check size={10} /> Available
                       </span>
                     ) : (
-                      <span className="text-[#ef4444] font-medium">Unavailable</span>
+                      <span className="text-error font-medium">Unavailable</span>
                     )}
                   </span>
                 )}
               </div>
-              <div className="signup-field flex items-center bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-3.5 py-2.5 text-xs transition-all">
-                <span className="text-[#94a3b8] select-none shrink-0 text-xs mr-1 font-medium">
+              <div className="signup-field flex items-center bg-surface-container-lowest border border-border-hairline rounded-xl px-3.5 py-2.5 text-xs transition-all focus-within:border-primary">
+                <span className="text-text-muted select-none shrink-0 text-xs mr-1 font-medium">
                   shopwus.com/
                 </span>
                 <input
@@ -183,29 +183,30 @@ export function SignupPage() {
                   value={slug}
                   onChange={e => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
                   placeholder="your-brand"
-                  className="w-full text-xs text-[#191c1d] placeholder:text-[#94a3b8] outline-none"
+                  className="w-full text-xs text-on-surface placeholder:text-text-placeholder outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">
-                Business / Brand Name <span className="text-[#94a3b8] font-normal">(optional)</span>
+              <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                Business / Brand Name{" "}
+                <span className="text-text-muted font-normal">(optional)</span>
               </label>
-              <div className="signup-field flex items-center bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-3.5 py-2.5 text-xs transition-all">
+              <div className="signup-field flex items-center bg-surface-container-lowest border border-border-hairline rounded-xl px-3.5 py-2.5 text-xs transition-all focus-within:border-primary">
                 <input
                   type="text"
                   value={studioName}
                   onChange={e => setStudioName(e.target.value)}
                   placeholder="e.g. Élan Store"
-                  className="w-full text-xs text-[#191c1d] placeholder:text-[#94a3b8] outline-none"
+                  className="w-full text-xs text-on-surface placeholder:text-text-placeholder outline-none"
                 />
               </div>
             </div>
 
             {/* Business Type Selector */}
             <div>
-              <label className="block text-xs font-semibold text-[#191c1d] mb-2">
+              <label className="block text-xs font-semibold text-on-surface mb-2">
                 Business Type
               </label>
               <div className="grid grid-cols-4 gap-2" role="radiogroup" aria-label="Business Type">
@@ -223,8 +224,8 @@ export function SignupPage() {
                       onClick={() => setBusinessType(item.key as typeof businessType)}
                       className={`py-2.5 px-2 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-[#191c1d] text-white border-[#191c1d] shadow-2xs"
-                          : "bg-white text-[#374151] border-[#e2e8f0] hover:bg-[#f8fafc]"
+                          ? "bg-primary text-white border-primary shadow-2xs"
+                          : "bg-surface-container-lowest text-on-surface-variant border-border-hairline hover:bg-surface-container-low"
                       }`}
                     >
                       {item.label}
@@ -241,7 +242,7 @@ export function SignupPage() {
               type="button"
               disabled={isSubmitting || !agreedToTerms || !googleLoaded}
               onClick={handleGoogleSignup}
-              className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl bg-[#191c1d] hover:bg-black text-white text-xs font-semibold shadow-xs transition-all cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+              className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold shadow-xs transition-all cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
             >
               {isSubmitting ? (
                 <>
@@ -259,25 +260,23 @@ export function SignupPage() {
             </button>
 
             {/* Auth error */}
-            {authError && (
-              <p className="text-[11px] text-[#ef4444] text-center pt-1">{authError}</p>
-            )}
+            {authError && <p className="text-[11px] text-error text-center pt-1">{authError}</p>}
 
             {/* Terms Agreement Checkbox */}
-            <label className="flex items-center gap-2 text-xs text-[#64748b] cursor-pointer select-none pt-1">
+            <label className="flex items-center gap-2 text-xs text-text-muted cursor-pointer select-none pt-1">
               <input
                 type="checkbox"
                 checked={agreedToTerms}
                 onChange={e => setAgreedToTerms(e.target.checked)}
-                className="w-4 h-4 rounded border-[#cbd5e1] text-[#2563eb] focus:ring-0 cursor-pointer shrink-0"
+                className="w-4 h-4 rounded border-border-subtle text-primary focus:ring-0 cursor-pointer shrink-0"
               />
               <span>
                 I agree to the{" "}
-                <Link href="/terms" className="text-[#2563eb] underline hover:text-[#1d4ed8]">
+                <Link href="/terms" className="text-primary underline hover:opacity-80">
                   Terms & Conditions
                 </Link>{" "}
                 and have read the{" "}
-                <Link href="/privacy" className="text-[#2563eb] underline hover:text-[#1d4ed8]">
+                <Link href="/privacy" className="text-primary underline hover:opacity-80">
                   Privacy Policy
                 </Link>
                 .
@@ -286,29 +285,32 @@ export function SignupPage() {
           </div>
 
           {/* Bottom Link */}
-          <div className="pt-6 mt-6 border-t border-[#f1f5f9] flex items-center justify-between text-xs text-[#64748b]">
+          <div className="pt-6 mt-6 border-t border-border-hairline flex items-center justify-between text-xs text-text-muted">
             <span>Already have an account?</span>
-            <Link href="/login" className="text-[#2563eb] font-semibold hover:underline">
+            <Link href="/login" className="text-primary font-semibold hover:underline">
               Sign in to Dashboard
             </Link>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="text-center lg:text-left text-[11px] text-[#94a3b8]">
+        <div className="text-center lg:text-left text-[11px] text-text-muted">
           © {new Date().getFullYear()} Shopwus. All rights reserved.
         </div>
       </div>
 
       {/* Right Panel: Testimonials Showcase */}
-      <div className="w-full lg:w-[42%] bg-[#f3f4f6] border-l border-[#e5e7eb] p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
-        <div className="max-w-md mx-auto space-y-8">
+      <div className="w-full lg:w-[42%] bg-gradient-to-br from-[#012030] via-[#083045] to-[#012030] text-white p-8 sm:p-12 lg:p-14 flex flex-col justify-center relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-md mx-auto space-y-8 relative z-10">
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#191c1d] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Ready to join Shopwus?
             </h2>
-            <p className="text-xs sm:text-sm text-[#64748b] leading-relaxed">
-              Over 2000+ online vendors, merchants, event planners, and creative businesses use
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Over 2000+ online businesses, merchants, event planners, and creative studios use
               Shopwus to turn visitors into paying clients.
             </p>
           </div>
@@ -316,26 +318,26 @@ export function SignupPage() {
           {/* Testimonial Cards */}
           <div className="space-y-4">
             {/* Card 1 */}
-            <div className="bg-white rounded-2xl p-5 border border-[#e2e8f0] shadow-xs space-y-3">
+            <div className="bg-card text-on-surface rounded-2xl p-5 border border-white/10 shadow-card space-y-3">
               <div className="flex items-center justify-between">
-                <strong className="text-xs font-bold uppercase tracking-wider text-[#191c1d]">
+                <strong className="text-xs font-bold uppercase tracking-wider text-on-surface">
                   Élan Stores
                 </strong>
-                <span className="text-[10px] bg-[#ecfdf5] text-[#059669] px-2 py-0.5 rounded-full font-medium">
-                  Verified shop
+                <span className="text-[10px] bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full font-medium">
+                  Verified business
                 </span>
               </div>
-              <p className="text-xs text-[#475569] leading-relaxed">
-                &ldquo;Through Shopwus&apos;s bespoke 3D cards and invoicing, our team has seamless
-                customer tracking, instant deposits, and complete financial clarity.&rdquo;
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                &ldquo;Through Shopwus&apos;s bespoke storefronts and invoicing, our team has
+                seamless customer tracking, instant deposits, and complete financial clarity.&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-1">
-                <div className="w-8 h-8 rounded-full bg-[#191c1d] text-white flex items-center justify-center text-xs font-bold">
+                <div className="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center text-xs font-bold font-sans">
                   EV
                 </div>
                 <div>
-                  <strong className="text-xs font-bold text-[#191c1d] block">Elena Vance</strong>
-                  <span className="text-[11px] text-[#64748b] block">
+                  <strong className="text-xs font-bold text-on-surface block">Elena Vance</strong>
+                  <span className="text-[11px] text-text-muted block">
                     Creative Director · Vance Retail
                   </span>
                 </div>
@@ -343,26 +345,26 @@ export function SignupPage() {
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-2xl p-5 border border-[#e2e8f0] shadow-xs space-y-3">
+            <div className="bg-card text-on-surface rounded-2xl p-5 border border-white/10 shadow-card space-y-3">
               <div className="flex items-center justify-between">
-                <strong className="text-xs font-bold uppercase tracking-wider text-[#191c1d]">
+                <strong className="text-xs font-bold uppercase tracking-wider text-on-surface">
                   Maison Production
                 </strong>
-                <span className="text-[10px] bg-[#f0fdf4] text-[#16a34a] px-2 py-0.5 rounded-full font-medium">
+                <span className="text-[10px] bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full font-medium">
                   Flagship Brand
                 </span>
               </div>
-              <p className="text-xs text-[#475569] leading-relaxed">
+              <p className="text-xs text-on-surface-variant leading-relaxed">
                 &ldquo;A reliable platform built for modern commerce that connects our inquiries,
                 multi-currency invoicing, and real-time business valuation.&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-1">
-                <div className="w-8 h-8 rounded-full bg-[#3b82f6] text-white flex items-center justify-center text-xs font-bold">
+                <div className="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center text-xs font-bold font-sans">
                   LH
                 </div>
                 <div>
-                  <strong className="text-xs font-bold text-[#191c1d] block">Laurent Hayoz</strong>
-                  <span className="text-[11px] text-[#64748b] block">
+                  <strong className="text-xs font-bold text-on-surface block">Laurent Hayoz</strong>
+                  <span className="text-[11px] text-text-muted block">
                     Head of Digital & Experiential
                   </span>
                 </div>

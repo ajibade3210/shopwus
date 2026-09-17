@@ -237,16 +237,16 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#e5e7eb] flex flex-col max-h-[92vh] overflow-hidden">
+      <div className="relative w-full max-w-2xl bg-card rounded-2xl shadow-popover border border-border-hairline flex flex-col max-h-[92vh] overflow-hidden text-on-surface">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#eee] bg-[#fafaf9]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border-hairline bg-surface-container-low">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#191c1d] text-white flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center shadow-xs">
               <ShoppingBag size={16} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#191c1d]">Create In-House Order</h2>
-              <p className="text-xs text-[#6b7280]">
+              <h2 className="text-base font-bold text-on-surface">Create In-House Order</h2>
+              <p className="text-xs text-muted">
                 Record walk-in, POS, social, or custom customer sales
               </p>
             </div>
@@ -254,7 +254,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-[#6b7280] hover:text-[#191c1d] rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 text-muted hover:text-on-surface rounded-lg hover:bg-surface-container transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -263,15 +263,15 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
         {/* Scrollable Form Body */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
           {errorMsg && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2 text-xs text-red-700">
-              <AlertCircle size={16} className="shrink-0 mt-0.5" />
+            <div className="p-3 bg-error-container border border-error/20 rounded-xl flex items-start gap-2 text-xs text-on-error-container">
+              <AlertCircle size={16} className="shrink-0 mt-0.5 text-error" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           {/* Section 1: Customer Information */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#9ca3af] flex items-center gap-1.5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted flex items-center gap-1.5">
               <User size={13} />
               Customer Information
             </h3>
@@ -279,7 +279,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
               <div>
                 <label
                   htmlFor={customerNameId}
-                  className="block text-xs font-medium text-[#374151] mb-1"
+                  className="block text-xs font-medium text-on-surface-variant mb-1"
                 >
                   Full Name *
                 </label>
@@ -290,14 +290,14 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                   placeholder="e.g. Chinedu Eze"
                   value={customerName}
                   onChange={e => setCustomerName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                  className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface placeholder:text-muted focus:border-primary focus:outline-none transition-all"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor={customerEmailId}
-                  className="block text-xs font-medium text-[#374151] mb-1"
+                  className="block text-xs font-medium text-on-surface-variant mb-1"
                 >
                   Email Address *
                 </label>
@@ -308,14 +308,14 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                   placeholder="e.g. customer@example.com"
                   value={customerEmail}
                   onChange={e => setCustomerEmail(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                  className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface placeholder:text-muted focus:border-primary focus:outline-none transition-all"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor={customerPhoneId}
-                  className="block text-xs font-medium text-[#374151] mb-1"
+                  className="block text-xs font-medium text-on-surface-variant mb-1"
                 >
                   Phone Number *
                 </label>
@@ -326,7 +326,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                   placeholder="e.g. 08012345678"
                   value={customerPhone}
                   onChange={e => setCustomerPhone(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                  className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface placeholder:text-muted focus:border-primary focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -334,13 +334,13 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
           {/* Section 2: Items in Order */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#9ca3af] flex items-center gap-1.5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted flex items-center gap-1.5">
               <Package size={13} />
               Order Items
             </h3>
 
             {/* Product Selector */}
-            <div className="flex flex-col sm:flex-row gap-2 bg-[#fafaf9] p-3 rounded-xl border border-[#e5e7eb]">
+            <div className="flex flex-col sm:flex-row gap-2 bg-surface-container-low p-3 rounded-xl border border-border-hairline">
               <div className="flex-1">
                 <label htmlFor={productSelectId} className="sr-only">
                   Select Product
@@ -352,7 +352,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                     setSelectedProductId(e.target.value);
                     setSelectedVariantId("");
                   }}
-                  className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl"
+                  className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface focus:border-primary focus:outline-none"
                   disabled={isLoadingProducts}
                 >
                   <option value="">-- Choose Product from Catalog --</option>
@@ -370,7 +370,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                   <select
                     value={selectedVariantId}
                     onChange={e => setSelectedVariantId(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl"
+                    className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface focus:border-primary focus:outline-none"
                   >
                     <option value="">-- Select Variant --</option>
                     {availableVariants.map(v => (
@@ -387,7 +387,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                 type="button"
                 disabled={!selectedProductId}
                 onClick={handleAddProduct}
-                className="px-4 py-2 bg-[#191c1d] text-white text-xs font-medium rounded-xl hover:bg-black transition-colors disabled:opacity-40 flex items-center justify-center gap-1.5 shrink-0"
+                className="px-4 py-2 bg-primary text-white text-xs font-medium rounded-xl hover:bg-primary-hover transition-colors disabled:opacity-40 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-xs"
               >
                 <Plus size={14} />
                 Add Item
@@ -396,19 +396,19 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
             {/* Added Items List */}
             {items.length > 0 ? (
-              <div className="border border-[#e5e7eb] rounded-xl overflow-hidden divide-y divide-[#eee]">
+              <div className="border border-border-hairline rounded-xl overflow-hidden divide-y divide-border-hairline bg-surface-container-lowest">
                 {items.map((item, idx) => (
                   <div
                     key={`${item.productId}-${item.variantId || "default"}`}
                     className="p-3 flex items-center justify-between gap-3 text-xs"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-[#191c1d] truncate">{item.productName}</p>
+                      <p className="font-semibold text-on-surface truncate">{item.productName}</p>
                       {item.variantTitle && (
-                        <p className="text-[11px] text-[#6b7280]">Variant: {item.variantTitle}</p>
+                        <p className="text-[11px] text-muted">Variant: {item.variantTitle}</p>
                       )}
                       {item.maxStock !== undefined && (
-                        <p className="text-[10px] text-amber-700">
+                        <p className="text-[10px] text-tertiary">
                           Stock: {item.maxStock} available
                         </p>
                       )}
@@ -417,13 +417,13 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                     {/* Price & Quantity Controls */}
                     <div className="flex items-center gap-3 shrink-0">
                       <div className="flex items-center gap-1">
-                        <span className="text-[#6b7280] text-[11px]">₦</span>
+                        <span className="text-muted text-[11px]">₦</span>
                         <input
                           type="number"
                           min="0"
                           value={item.unitPrice}
                           onChange={e => handleUpdateUnitPrice(idx, Number(e.target.value))}
-                          className="w-20 px-2 py-1 text-xs border border-[#e5e7eb] rounded-lg text-right"
+                          className="w-20 px-2 py-1 text-xs bg-surface-container-lowest border border-border-hairline rounded-lg text-right text-on-surface font-mono focus:border-primary focus:outline-none"
                           title="Unit Price"
                         />
                       </div>
@@ -432,28 +432,30 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                         <button
                           type="button"
                           onClick={() => handleUpdateQuantity(idx, item.quantity - 1)}
-                          className="w-6 h-6 flex items-center justify-center border border-[#e5e7eb] rounded-lg hover:bg-gray-100 text-xs font-bold"
+                          className="w-6 h-6 flex items-center justify-center border border-border-hairline rounded-lg hover:bg-surface-container-low text-xs font-bold text-on-surface cursor-pointer"
                         >
                           -
                         </button>
-                        <span className="w-6 text-center font-medium">{item.quantity}</span>
+                        <span className="w-6 text-center font-medium font-mono text-on-surface">
+                          {item.quantity}
+                        </span>
                         <button
                           type="button"
                           onClick={() => handleUpdateQuantity(idx, item.quantity + 1)}
-                          className="w-6 h-6 flex items-center justify-center border border-[#e5e7eb] rounded-lg hover:bg-gray-100 text-xs font-bold"
+                          className="w-6 h-6 flex items-center justify-center border border-border-hairline rounded-lg hover:bg-surface-container-low text-xs font-bold text-on-surface cursor-pointer"
                         >
                           +
                         </button>
                       </div>
 
-                      <div className="w-20 text-right font-bold text-[#191c1d]">
+                      <div className="w-20 text-right font-bold font-mono text-on-surface">
                         {formatCurrency(item.unitPrice * item.quantity)}
                       </div>
 
                       <button
                         type="button"
                         onClick={() => handleRemoveItem(idx)}
-                        className="text-red-500 hover:text-red-700 p-1"
+                        className="text-error hover:text-error/80 p-1 cursor-pointer transition-colors"
                       >
                         <Trash2 size={14} />
                       </button>
@@ -462,7 +464,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                 ))}
               </div>
             ) : (
-              <div className="py-6 border-2 border-dashed border-[#e5e7eb] rounded-xl text-center text-xs text-[#9ca3af]">
+              <div className="py-6 border-2 border-dashed border-border-hairline rounded-xl text-center text-xs text-muted">
                 No items added yet. Choose a product above to add.
               </div>
             )}
@@ -470,7 +472,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
           {/* Section 3: Fulfillment Mode */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#9ca3af] flex items-center gap-1.5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted flex items-center gap-1.5">
               <Truck size={13} />
               Fulfillment Mode
             </h3>
@@ -479,22 +481,22 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
               <button
                 type="button"
                 onClick={() => setFulfillmentMode("DIRECT_SALE")}
-                className={`p-3 rounded-xl border text-left transition-all ${
+                className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                   fulfillmentMode === "DIRECT_SALE"
-                    ? "border-[#191c1d] bg-gray-50 ring-1 ring-[#191c1d]"
-                    : "border-[#e5e7eb] hover:bg-gray-50/50"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary"
+                    : "border-border-hairline hover:bg-surface-container-low"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <CheckCircle2
                     size={14}
                     className={
-                      fulfillmentMode === "DIRECT_SALE" ? "text-[#191c1d]" : "text-transparent"
+                      fulfillmentMode === "DIRECT_SALE" ? "text-primary" : "text-transparent"
                     }
                   />
-                  <span className="text-xs font-bold text-[#191c1d]">In-Store Sale</span>
+                  <span className="text-xs font-bold text-on-surface">In-Store Sale</span>
                 </div>
-                <p className="text-[11px] text-[#6b7280] mt-1">
+                <p className="text-[11px] text-muted mt-1">
                   Immediate handover. Marked as fulfilled & delivered.
                 </p>
               </button>
@@ -502,22 +504,22 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
               <button
                 type="button"
                 onClick={() => setFulfillmentMode("STORE_PICKUP")}
-                className={`p-3 rounded-xl border text-left transition-all ${
+                className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                   fulfillmentMode === "STORE_PICKUP"
-                    ? "border-[#191c1d] bg-gray-50 ring-1 ring-[#191c1d]"
-                    : "border-[#e5e7eb] hover:bg-gray-50/50"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary"
+                    : "border-border-hairline hover:bg-surface-container-low"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <Building2
                     size={14}
                     className={
-                      fulfillmentMode === "STORE_PICKUP" ? "text-[#191c1d]" : "text-transparent"
+                      fulfillmentMode === "STORE_PICKUP" ? "text-primary" : "text-transparent"
                     }
                   />
-                  <span className="text-xs font-bold text-[#191c1d]">Store Pickup</span>
+                  <span className="text-xs font-bold text-on-surface">Store Pickup</span>
                 </div>
-                <p className="text-[11px] text-[#6b7280] mt-1">
+                <p className="text-[11px] text-muted mt-1">
                   Customer will collect from store. Marked ready for pickup.
                 </p>
               </button>
@@ -525,22 +527,22 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
               <button
                 type="button"
                 onClick={() => setFulfillmentMode("SHIP_TO_CUSTOMER")}
-                className={`p-3 rounded-xl border text-left transition-all ${
+                className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                   fulfillmentMode === "SHIP_TO_CUSTOMER"
-                    ? "border-[#191c1d] bg-gray-50 ring-1 ring-[#191c1d]"
-                    : "border-[#e5e7eb] hover:bg-gray-50/50"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary"
+                    : "border-border-hairline hover:bg-surface-container-low"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <Truck
                     size={14}
                     className={
-                      fulfillmentMode === "SHIP_TO_CUSTOMER" ? "text-[#191c1d]" : "text-transparent"
+                      fulfillmentMode === "SHIP_TO_CUSTOMER" ? "text-primary" : "text-transparent"
                     }
                   />
-                  <span className="text-xs font-bold text-[#191c1d]">Ship to Customer</span>
+                  <span className="text-xs font-bold text-on-surface">Ship to Customer</span>
                 </div>
-                <p className="text-[11px] text-[#6b7280] mt-1">
+                <p className="text-[11px] text-muted mt-1">
                   Delivery required. Can dispatch with Terminal Africa courier.
                 </p>
               </button>
@@ -548,12 +550,12 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
             {/* Destination Address Inputs if Ship To Customer */}
             {fulfillmentMode === "SHIP_TO_CUSTOMER" && (
-              <div className="p-4 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl space-y-3">
+              <div className="p-4 bg-surface-container-low border border-border-hairline rounded-xl space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label
                       htmlFor={stateSelectId}
-                      className="block text-xs font-medium text-[#374151] mb-1"
+                      className="block text-xs font-medium text-on-surface-variant mb-1"
                     >
                       Destination State *
                     </label>
@@ -567,7 +569,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                           city: NIGERIAN_CITIES_BY_STATE[e.target.value]?.[0] || "",
                         }))
                       }
-                      className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl"
+                      className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface focus:border-primary focus:outline-none"
                     >
                       {NIGERIAN_STATES.map(s => (
                         <option key={s} value={s}>
@@ -580,7 +582,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                   <div>
                     <label
                       htmlFor={citySelectId}
-                      className="block text-xs font-medium text-[#374151] mb-1"
+                      className="block text-xs font-medium text-on-surface-variant mb-1"
                     >
                       City / Area *
                     </label>
@@ -589,7 +591,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                         id={citySelectId}
                         value={address.city}
                         onChange={e => setAddress(prev => ({ ...prev, city: e.target.value }))}
-                        className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl"
+                        className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface focus:border-primary focus:outline-none"
                       >
                         <option value="">-- Choose City --</option>
                         {citiesForState.map(c => (
@@ -605,7 +607,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                         placeholder="City"
                         value={address.city}
                         onChange={e => setAddress(prev => ({ ...prev, city: e.target.value }))}
-                        className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl"
+                        className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface placeholder:text-muted focus:border-primary focus:outline-none"
                       />
                     )}
                   </div>
@@ -614,7 +616,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                 <div>
                   <label
                     htmlFor={addressLine1Id}
-                    className="block text-xs font-medium text-[#374151] mb-1"
+                    className="block text-xs font-medium text-on-surface-variant mb-1"
                   >
                     Street Address *
                   </label>
@@ -624,14 +626,14 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                     placeholder="House number, Street, Landmark"
                     value={address.addressLine1}
                     onChange={e => setAddress(prev => ({ ...prev, addressLine1: e.target.value }))}
-                    className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl"
+                    className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface placeholder:text-muted focus:border-primary focus:outline-none"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor={deliveryFeeId}
-                    className="block text-xs font-medium text-[#374151] mb-1"
+                    className="block text-xs font-medium text-on-surface-variant mb-1"
                   >
                     Shipping Fee (₦)
                   </label>
@@ -642,7 +644,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                     placeholder="0"
                     value={deliveryFee}
                     onChange={e => setDeliveryFee(Math.max(0, Number(e.target.value)))}
-                    className="w-full sm:w-48 px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl"
+                    className="w-full sm:w-48 px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface font-mono placeholder:text-muted focus:border-primary focus:outline-none"
                   />
                 </div>
               </div>
@@ -651,23 +653,23 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
           {/* Section 4: Payment & Accounting */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#9ca3af]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted">
               Payment & Accounting
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <span className="block text-xs font-medium text-[#374151] mb-1">
+                <span className="block text-xs font-medium text-on-surface-variant mb-1">
                   Payment Status
                 </span>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setPaymentStatus("PAID")}
-                    className={`flex-1 py-2 text-xs font-semibold rounded-xl border transition-all ${
+                    className={`flex-1 py-2 text-xs font-semibold rounded-xl border transition-all cursor-pointer ${
                       paymentStatus === "PAID"
-                        ? "bg-[#191c1d] text-white border-[#191c1d]"
-                        : "bg-white text-[#6b7280] border-[#e5e7eb]"
+                        ? "bg-primary text-white border-primary shadow-2xs"
+                        : "bg-surface-container-lowest text-muted border-border-hairline hover:bg-surface-container-low"
                     }`}
                   >
                     Paid Now
@@ -675,10 +677,10 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                   <button
                     type="button"
                     onClick={() => setPaymentStatus("UNPAID")}
-                    className={`flex-1 py-2 text-xs font-semibold rounded-xl border transition-all ${
+                    className={`flex-1 py-2 text-xs font-semibold rounded-xl border transition-all cursor-pointer ${
                       paymentStatus === "UNPAID"
-                        ? "bg-[#191c1d] text-white border-[#191c1d]"
-                        : "bg-white text-[#6b7280] border-[#e5e7eb]"
+                        ? "bg-primary text-white border-primary shadow-2xs"
+                        : "bg-surface-container-lowest text-muted border-border-hairline hover:bg-surface-container-low"
                     }`}
                   >
                     Pay Later / Unpaid
@@ -690,7 +692,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                 <div>
                   <label
                     htmlFor={paymentMethodId}
-                    className="block text-xs font-medium text-[#374151] mb-1"
+                    className="block text-xs font-medium text-on-surface-variant mb-1"
                   >
                     Payment Method
                   </label>
@@ -702,7 +704,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                         e.target.value as "CASH" | "POS" | "BANK_TRANSFER" | "ONLINE" | "OTHER"
                       )
                     }
-                    className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl"
+                    className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface focus:border-primary focus:outline-none"
                   >
                     <option value="CASH">Cash</option>
                     <option value="POS">POS Terminal</option>
@@ -717,7 +719,10 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
           {/* Section 5: Order Notes */}
           <div>
-            <label htmlFor={notesId} className="block text-xs font-medium text-[#374151] mb-1">
+            <label
+              htmlFor={notesId}
+              className="block text-xs font-medium text-on-surface-variant mb-1"
+            >
               Internal Notes (Optional)
             </label>
             <textarea
@@ -726,35 +731,39 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
               placeholder="e.g. Paid cash at counter; customer picked up in person"
               value={notes}
               onChange={e => setNotes(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl"
+              className="w-full px-3 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface placeholder:text-muted focus:border-primary focus:outline-none"
             />
           </div>
 
           {/* Section 6: Financial Breakdown Banner */}
-          <div className="p-4 bg-gray-50 rounded-xl border border-[#e5e7eb] space-y-1.5 text-xs">
-            <div className="flex justify-between text-[#6b7280]">
+          <div className="p-4 bg-surface-container-low rounded-xl border border-border-hairline space-y-1.5 text-xs font-sans">
+            <div className="flex justify-between text-muted">
               <span>Items Subtotal:</span>
-              <span>{formatCurrency(subtotal)}</span>
+              <span className="font-mono font-bold text-on-surface">
+                {formatCurrency(subtotal)}
+              </span>
             </div>
             {fulfillmentMode === "SHIP_TO_CUSTOMER" && (
-              <div className="flex justify-between text-[#6b7280]">
+              <div className="flex justify-between text-muted">
                 <span>Shipping Fee:</span>
-                <span>{formatCurrency(effectiveDeliveryFee)}</span>
+                <span className="font-mono font-bold text-on-surface">
+                  {formatCurrency(effectiveDeliveryFee)}
+                </span>
               </div>
             )}
-            <div className="flex justify-between font-bold text-[#191c1d] pt-2 border-t border-[#e5e7eb] text-sm">
+            <div className="flex justify-between font-bold text-on-surface pt-2 border-t border-border-hairline text-sm">
               <span>Total Amount:</span>
-              <span>{formatCurrency(grandTotal)}</span>
+              <span className="font-mono text-primary font-bold">{formatCurrency(grandTotal)}</span>
             </div>
           </div>
         </form>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#eee] bg-[#fafaf9] flex items-center justify-between">
+        <div className="px-6 py-4 border-t border-border-hairline bg-surface-container-low flex items-center justify-between">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-medium text-[#6b7280] hover:text-[#191c1d] transition-colors"
+            className="px-4 py-2 text-xs font-medium text-muted hover:text-on-surface transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -763,7 +772,7 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
             type="button"
             onClick={handleSubmit}
             disabled={createMutation.isPending || items.length === 0}
-            className="px-5 py-2.5 bg-[#191c1d] hover:bg-black text-white text-xs font-semibold rounded-xl transition-all shadow-xs disabled:opacity-50 flex items-center gap-2"
+            className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-xl transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
           >
             {createMutation.isPending ? (
               <>

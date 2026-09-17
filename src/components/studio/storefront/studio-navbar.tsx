@@ -42,20 +42,20 @@ export function StudioNavbar({
         <div
           className={`border-b px-4 py-2 text-xs flex items-center justify-between transition-colors ${
             isDarkPage
-              ? "bg-[#0c1222] border-white/10 text-white/70"
-              : "bg-[#edeeef] border-[#e1e3e4] text-[#6b7280]"
+              ? "bg-black/40 border-white/10 text-white/70"
+              : "bg-surface-low border-border-hairline text-text-muted"
           }`}
         >
           <div className="flex items-center gap-2 max-w-5xl mx-auto w-full">
             <span
               style={{ color: primaryColor }}
               className={`inline-flex items-center gap-1 font-medium ${
-                isDarkPage ? "text-white" : "text-[#191c1d]"
+                isDarkPage ? "text-white" : "text-on-surface"
               }`}
             >
               Studio Admin Preview
             </span>
-            <span className={isDarkPage ? "text-white/30" : "text-[#c4c7c7]"}>·</span>
+            <span className={isDarkPage ? "text-white/30" : "text-border-subtle"}>·</span>
             <span className="font-mono">shopwus.com/{profile.slug || slug}</span>
             <div className="ml-auto flex items-center gap-3">
               <button
@@ -71,7 +71,7 @@ export function StudioNavbar({
                 className={`font-medium transition-colors hidden sm:inline ${
                   isDarkPage
                     ? "text-white/70 hover:text-white"
-                    : "text-[#6b7280] hover:text-[#191c1d]"
+                    : "text-text-muted hover:text-on-surface"
                 }`}
               >
                 Return to Studio Settings →
@@ -87,14 +87,14 @@ export function StudioNavbar({
           backgroundColor: isScrolled
             ? isDarkPage
               ? "rgba(10, 15, 29, 0.92)"
-              : "rgba(250, 248, 245, 0.92)"
+              : "rgba(255, 255, 255, 0.92)"
             : "transparent",
         }}
         className={`sticky top-0 z-40 transition-all duration-300 ${
           isScrolled
             ? isDarkPage
-              ? "backdrop-blur-md shadow-lg border-b border-white/10"
-              : "backdrop-blur-md shadow-xs border-b border-[#e8dfd3]"
+              ? "backdrop-blur-md shadow-card border-b border-white/10"
+              : "backdrop-blur-md shadow-card border-b border-border-hairline"
             : "border-b border-transparent"
         }`}
       >
@@ -106,7 +106,7 @@ export function StudioNavbar({
                 color: primaryColor,
                 borderColor: primaryColor,
               }}
-              className="w-10 h-10 rounded-full border flex items-center justify-center font-serif text-lg font-normal transition-transform group-hover:scale-105 shadow-2xs overflow-hidden shrink-0"
+              className="w-10 h-10 rounded-full border flex items-center justify-center font-sans text-lg font-bold transition-transform group-hover:scale-105 shadow-card overflow-hidden shrink-0"
             >
               {profile.logoUrl ? (
                 <img
@@ -120,7 +120,7 @@ export function StudioNavbar({
             </div>
             <span
               style={{ color: textColor }}
-              className="font-serif text-xl font-medium tracking-tight group-hover:opacity-80 transition-opacity"
+              className="font-sans text-xl font-bold tracking-tight group-hover:opacity-80 transition-opacity"
             >
               {profile.businessName}
             </span>
@@ -129,7 +129,7 @@ export function StudioNavbar({
           {/* Desktop Navigation */}
           <nav
             className={`hidden md:flex items-center gap-8 text-sm font-medium ${
-              isDarkPage ? "text-white/80" : "text-[#68625c]"
+              isDarkPage ? "text-white/80" : "text-on-surface-variant"
             }`}
           >
             {hasSocials && (
@@ -137,9 +137,9 @@ export function StudioNavbar({
                 href="#social"
                 style={{
                   color:
-                    activeSection === "social" ? primaryColor : isDarkPage ? "#F8FAFC" : undefined,
+                    activeSection === "social" ? primaryColor : isDarkPage ? "white" : undefined,
                 }}
-                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}`}
+                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-on-surface"}`}
               >
                 Socials
               </a>
@@ -149,13 +149,9 @@ export function StudioNavbar({
                 href="#portfolio"
                 style={{
                   color:
-                    activeSection === "portfolio"
-                      ? primaryColor
-                      : isDarkPage
-                        ? "#F8FAFC"
-                        : undefined,
+                    activeSection === "portfolio" ? primaryColor : isDarkPage ? "white" : undefined,
                 }}
-                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}`}
+                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-on-surface"}`}
               >
                 {
                   BUSINESS_TYPE_PORTFOLIO_SECTION_TITLE[
@@ -168,9 +164,9 @@ export function StudioNavbar({
               href="#products"
               style={{
                 color:
-                  activeSection === "products" ? primaryColor : isDarkPage ? "#F8FAFC" : undefined,
+                  activeSection === "products" ? primaryColor : isDarkPage ? "white" : undefined,
               }}
-              className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}`}
+              className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-on-surface"}`}
             >
               Shop
             </a>
@@ -179,13 +175,9 @@ export function StudioNavbar({
                 href="#services"
                 style={{
                   color:
-                    activeSection === "services"
-                      ? primaryColor
-                      : isDarkPage
-                        ? "#F8FAFC"
-                        : undefined,
+                    activeSection === "services" ? primaryColor : isDarkPage ? "white" : undefined,
                 }}
-                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}`}
+                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-on-surface"}`}
               >
                 {
                   BUSINESS_TYPE_SERVICES_SECTION_TITLE[
@@ -199,9 +191,9 @@ export function StudioNavbar({
                 href="#reviews"
                 style={{
                   color:
-                    activeSection === "reviews" ? primaryColor : isDarkPage ? "#F8FAFC" : undefined,
+                    activeSection === "reviews" ? primaryColor : isDarkPage ? "white" : undefined,
                 }}
-                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}`}
+                className={`transition-colors ${isDarkPage ? "hover:text-white" : "hover:text-on-surface"}`}
               >
                 Reviews
               </a>
@@ -214,7 +206,7 @@ export function StudioNavbar({
               type="button"
               onClick={() => setQuoteModalOpen(true)}
               style={{ backgroundColor: buttonColor }}
-              className={`text-white text-xs font-medium px-5 py-2.5 shadow-2xs hover:shadow-xs transition-all cursor-pointer hidden sm:block ${radiusClass}`}
+              className={`text-white text-xs font-medium px-5 py-2.5 shadow-xs hover:shadow-card hover:opacity-95 transition-all cursor-pointer hidden sm:block ${radiusClass}`}
             >
               {BUSINESS_TYPE_CTA_MAP[profile.businessType ?? DEFAULT_BUSINESS_TYPE]}
             </button>
@@ -226,7 +218,7 @@ export function StudioNavbar({
               className={`p-2 cursor-pointer md:hidden ${
                 isDarkPage
                   ? "text-white/80 hover:text-white"
-                  : "text-[#78716c] hover:text-[#1c1917]"
+                  : "text-text-muted hover:text-on-surface"
               }`}
               aria-label="Toggle menu"
             >
@@ -238,20 +230,20 @@ export function StudioNavbar({
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
           <div
-            className={`md:hidden border-b px-6 py-5 space-y-4 animate-fadeIn ${
+            className={`md:hidden border-b px-6 py-5 space-y-4 animate-in fade-in duration-150 ${
               isDarkPage
-                ? "bg-[#0A0F1D] border-white/10 text-white"
-                : "bg-[#faf8f5] border-[#e8dfd3]"
+                ? "bg-card border-white/10 text-white"
+                : "bg-card border-border-hairline text-on-surface shadow-popover"
             }`}
           >
             <nav
-              className={`flex flex-col gap-3.5 text-sm font-medium ${isDarkPage ? "text-white/80" : "text-[#68625c]"}`}
+              className={`flex flex-col gap-3.5 text-sm font-medium ${isDarkPage ? "text-white/80" : "text-on-surface-variant"}`}
             >
               {hasSocials && (
                 <a
                   href="#social"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}
+                  className={isDarkPage ? "hover:text-white" : "hover:text-on-surface"}
                 >
                   Social Networks
                 </a>
@@ -260,7 +252,7 @@ export function StudioNavbar({
                 <a
                   href="#portfolio"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}
+                  className={isDarkPage ? "hover:text-white" : "hover:text-on-surface"}
                 >
                   {
                     BUSINESS_TYPE_PORTFOLIO_SECTION_TITLE[
@@ -272,7 +264,7 @@ export function StudioNavbar({
               <a
                 href="#products"
                 onClick={() => setMobileMenuOpen(false)}
-                className={isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}
+                className={isDarkPage ? "hover:text-white" : "hover:text-on-surface"}
               >
                 Shop
               </a>
@@ -280,7 +272,7 @@ export function StudioNavbar({
                 <a
                   href="#services"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}
+                  className={isDarkPage ? "hover:text-white" : "hover:text-on-surface"}
                 >
                   {
                     BUSINESS_TYPE_SERVICES_SECTION_TITLE[
@@ -293,7 +285,7 @@ export function StudioNavbar({
                 <a
                   href="#reviews"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={isDarkPage ? "hover:text-white" : "hover:text-[#1c1917]"}
+                  className={isDarkPage ? "hover:text-white" : "hover:text-on-surface"}
                 >
                   Reviews
                 </a>
@@ -306,7 +298,7 @@ export function StudioNavbar({
                 setQuoteModalOpen(true);
               }}
               style={{ backgroundColor: buttonColor }}
-              className={`w-full text-white text-xs font-medium py-3 shadow-2xs ${radiusClass}`}
+              className={`w-full text-white text-xs font-medium py-3 shadow-xs hover:opacity-95 ${radiusClass}`}
             >
               {BUSINESS_TYPE_CTA_MAP[profile.businessType ?? DEFAULT_BUSINESS_TYPE]}
             </button>

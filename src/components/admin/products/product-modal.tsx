@@ -316,14 +316,14 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl border border-[#eee7dc] overflow-hidden my-8 font-sans">
+      <div className="relative w-full max-w-3xl bg-card rounded-3xl shadow-popover border border-border-hairline overflow-hidden my-8 font-sans">
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-5 border-b border-[#eee7dc] bg-[#faf8f5]">
+        <div className="flex items-center justify-between p-5 border-b border-border-hairline bg-surface-container-low">
           <div>
-            <h2 className="text-base font-bold text-[#191c1d]">
+            <h2 className="text-base font-bold text-on-surface">
               {isEditing ? "Edit Product" : "Add New Product"}
             </h2>
-            <p className="text-xs text-[#6b7280]">
+            <p className="text-xs text-muted">
               {isEditing
                 ? "Update catalog details, multi-SKU variants, and stock"
                 : "Create a new item in your storefront catalog"}
@@ -332,7 +332,7 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-[#6b7280] hover:text-[#191c1d] rounded-lg hover:bg-[#f3f4f6] transition-colors cursor-pointer"
+            className="p-1.5 text-muted hover:text-on-surface rounded-xl hover:bg-surface-container-high transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -340,7 +340,7 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[78vh] overflow-y-auto">
           {error && (
-            <div className="p-3.5 text-xs text-red-700 bg-red-50 border border-red-200 rounded-xl font-medium flex items-center gap-2">
+            <div className="p-3.5 text-xs text-error bg-error/10 border border-error/20 rounded-xl font-medium flex items-center gap-2">
               <AlertCircle size={15} className="shrink-0" />
               <span>{error}</span>
             </div>
@@ -349,7 +349,7 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
           {/* Basic Details */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">
+              <label className="block text-xs font-semibold text-on-surface mb-1.5">
                 Product Name *
               </label>
               <input
@@ -358,16 +358,16 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
                 placeholder="e.g., The Saffiano Heritage Satchel"
-                className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl transition-all"
+                className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface transition-all focus:border-primary focus:outline-hidden"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">Category</label>
+              <label className="block text-xs font-semibold text-on-surface mb-1.5">Category</label>
               <select
                 value={formData.categoryId}
                 onChange={e => setFormData({ ...formData, categoryId: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl transition-all"
+                className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface transition-all focus:border-primary focus:outline-hidden"
               >
                 <option value="">None / Uncategorized</option>
                 {categories.map(c => (
@@ -379,7 +379,7 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">
+              <label className="block text-xs font-semibold text-on-surface mb-1.5">
                 SKU / Base Code
               </label>
               <input
@@ -387,12 +387,12 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                 value={formData.sku}
                 onChange={e => setFormData({ ...formData, sku: e.target.value })}
                 placeholder="e.g., SAT-HRTG-01"
-                className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-mono transition-all"
+                className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-mono text-on-surface transition-all focus:border-primary focus:outline-hidden"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">
+              <label className="block text-xs font-semibold text-on-surface mb-1.5">
                 Description
               </label>
               <textarea
@@ -400,19 +400,19 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                 value={formData.description}
                 onChange={e => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Describe material composition, sizing, fitting, and care instructions..."
-                className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl transition-all resize-none"
+                className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface transition-all resize-none focus:border-primary focus:outline-hidden"
               />
             </div>
           </div>
 
           {/* Pricing & Base Stock */}
-          <div className="pt-4 border-t border-[#eee7dc]">
-            <h3 className="text-xs font-bold text-[#191c1d] uppercase tracking-wider mb-3">
+          <div className="pt-4 border-t border-border-hairline">
+            <h3 className="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">
               Base Pricing & Inventory
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">
+                <label className="block text-xs font-semibold text-on-surface mb-1.5">
                   {formData.hasVariants ? "Base / Min Price (NGN) *" : "Price (NGN) *"}
                 </label>
                 <input
@@ -422,12 +422,12 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                   value={formData.price}
                   onChange={e => setFormData({ ...formData, price: e.target.value })}
                   placeholder="0.00"
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-sans font-bold tabular-nums transition-all"
+                  className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-sans font-bold tabular-nums text-on-surface transition-all focus:border-primary focus:outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#6b7280] mb-1.5">
+                <label className="block text-xs font-semibold text-muted mb-1.5">
                   Compare-at Price (NGN)
                 </label>
                 <input
@@ -436,12 +436,12 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                   value={formData.compareAtPrice}
                   onChange={e => setFormData({ ...formData, compareAtPrice: e.target.value })}
                   placeholder="Original price"
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-sans tabular-nums transition-all"
+                  className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-sans tabular-nums text-on-surface transition-all focus:border-primary focus:outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#6b7280] mb-1.5">
+                <label className="block text-xs font-semibold text-muted mb-1.5">
                   Cost Price (NGN)
                 </label>
                 <input
@@ -450,7 +450,7 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                   value={formData.costPrice}
                   onChange={e => setFormData({ ...formData, costPrice: e.target.value })}
                   placeholder="Unit cost"
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-sans tabular-nums transition-all"
+                  className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-sans tabular-nums text-on-surface transition-all focus:border-primary focus:outline-hidden"
                 />
               </div>
             </div>
@@ -458,26 +458,26 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
             {!formData.hasVariants && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">
+                  <label className="block text-xs font-semibold text-on-surface mb-1.5">
                     Available Stock Units
                   </label>
                   <input
                     type="number"
                     value={formData.inventoryCount}
                     onChange={e => setFormData({ ...formData, inventoryCount: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-sans font-bold tabular-nums transition-all"
+                    className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-sans font-bold tabular-nums text-on-surface transition-all focus:border-primary focus:outline-hidden"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#191c1d] mb-1.5">
+                  <label className="block text-xs font-semibold text-on-surface mb-1.5">
                     Low Stock Warning At
                   </label>
                   <input
                     type="number"
                     value={formData.lowStockThreshold}
                     onChange={e => setFormData({ ...formData, lowStockThreshold: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-sans tabular-nums transition-all"
+                    className="w-full px-3.5 py-2.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-sans tabular-nums text-on-surface transition-all focus:border-primary focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -485,13 +485,13 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
           </div>
 
           {/* Variants & Multi-SKU Section */}
-          <div className="pt-4 border-t border-[#eee7dc] space-y-4">
-            <div className="flex items-center justify-between p-3.5 bg-[#faf7f2] border border-[#e8dfd2] rounded-2xl">
+          <div className="pt-4 border-t border-border-hairline space-y-4">
+            <div className="flex items-center justify-between p-3.5 bg-surface-container-low border border-border-hairline rounded-2xl">
               <div className="flex items-center gap-2.5">
-                <Layers size={18} className="text-[#9e633d]" />
+                <Layers size={18} className="text-primary" />
                 <div>
-                  <h3 className="text-xs font-bold text-[#191c1d]">Product Options & Variants</h3>
-                  <p className="text-[11px] text-[#9e633d]">
+                  <h3 className="text-xs font-bold text-on-surface">Product Options & Variants</h3>
+                  <p className="text-[11px] text-muted">
                     Enable multiple options (e.g. Size, Color) with discrete stock counts, prices,
                     and SKUs.
                   </p>
@@ -512,7 +512,7 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                   }}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#111827]" />
+                <div className="w-9 h-5 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-border-hairline after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary" />
               </label>
             </div>
 
@@ -548,13 +548,13 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
           />
 
           {/* Shipping & Parcel Weight */}
-          <div className="pt-4 border-t border-[#eee7dc] space-y-3">
-            <div className="flex items-center justify-between p-3.5 bg-[#faf8f5] border border-[#e5e7eb] rounded-2xl">
+          <div className="pt-4 border-t border-border-hairline space-y-3">
+            <div className="flex items-center justify-between p-3.5 bg-surface-container-low border border-border-hairline rounded-2xl">
               <div className="flex items-center gap-2.5">
-                <Truck size={18} className="text-[#6b7280]" />
+                <Truck size={18} className="text-muted" />
                 <div>
-                  <h3 className="text-xs font-bold text-[#191c1d]">Requires Physical Delivery</h3>
-                  <p className="text-[11px] text-[#6b7280]">
+                  <h3 className="text-xs font-bold text-on-surface">Requires Physical Delivery</h3>
+                  <p className="text-[11px] text-muted">
                     Disable for digital downloads, e-books, or in-person appointments.
                   </p>
                 </div>
@@ -566,18 +566,18 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                   onChange={e => setFormData({ ...formData, requiresShipping: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#111827]" />
+                <div className="w-9 h-5 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-border-hairline after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary" />
               </label>
             </div>
 
             {formData.requiresShipping && (
-              <div className="p-3.5 bg-[#faf8f5] border border-[#e5e7eb] rounded-2xl space-y-2.5">
+              <div className="p-3.5 bg-surface-container-low border border-border-hairline rounded-2xl space-y-2.5">
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="block text-xs font-semibold text-[#191c1d]">
+                    <label className="block text-xs font-semibold text-on-surface">
                       Estimated Parcel Weight (kg)
                     </label>
-                    <span className="text-[11px] text-[#6b7280]">Includes packaging box</span>
+                    <span className="text-[11px] text-muted">Includes packaging box</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <input
@@ -588,14 +588,14 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                       placeholder="1.0"
                       value={formData.weightKg}
                       onChange={e => setFormData({ ...formData, weightKg: e.target.value })}
-                      className="w-full sm:w-44 px-3.5 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl font-sans font-bold tabular-nums"
+                      className="w-full sm:w-44 px-3.5 py-2 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-sans font-bold tabular-nums text-on-surface"
                     />
-                    <span className="text-xs font-medium text-[#6b7280]">kg</span>
+                    <span className="text-xs font-medium text-muted">kg</span>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-[11px] text-[#6b7280] mb-1.5 font-medium">Quick presets:</p>
+                  <p className="text-[11px] text-muted mb-1.5 font-medium">Quick presets:</p>
                   <div className="flex flex-wrap gap-1.5">
                     {WEIGHT_PRESETS.map(preset => {
                       const isActive =
@@ -605,10 +605,10 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                           key={preset.val}
                           type="button"
                           onClick={() => setFormData({ ...formData, weightKg: preset.val })}
-                          className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer font-medium ${
+                          className={`px-2.5 py-1 text-[11px] rounded-xl border transition-all cursor-pointer font-medium ${
                             isActive
-                              ? "bg-[#111827] text-white border-[#111827]"
-                              : "bg-white text-[#4b5563] border-[#e5e7eb] hover:border-[#9ca3af] hover:bg-[#fafaf9]"
+                              ? "bg-primary text-white border-primary"
+                              : "bg-surface-container-lowest text-muted border-border-hairline hover:border-outline hover:bg-surface-container"
                           }`}
                         >
                           {preset.label}{" "}
@@ -619,7 +619,7 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                   </div>
                 </div>
 
-                <p className="text-[10px] text-[#9ca3af]">
+                <p className="text-[10px] text-muted">
                   Used by Terminal Africa to calculate accurate real-time courier quotes at
                   storefront checkout.
                 </p>
@@ -628,9 +628,9 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
           </div>
 
           {/* Status & Featured Toggle */}
-          <div className="pt-4 border-t border-[#eee7dc] flex items-center justify-between">
+          <div className="pt-4 border-t border-border-hairline flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <label className="block text-xs font-semibold text-[#191c1d]">Status:</label>
+              <label className="block text-xs font-semibold text-on-surface">Status:</label>
               <select
                 value={formData.status}
                 onChange={e =>
@@ -639,37 +639,37 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
                     status: e.target.value as "ACTIVE" | "DRAFT" | "ARCHIVED",
                   })
                 }
-                className="px-3 py-1.5 text-xs bg-[#faf8f5] border border-[#e5e7eb] rounded-xl font-medium"
+                className="px-3 py-1.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-medium text-on-surface"
               >
                 <option value="ACTIVE">Active (Live in Store)</option>
                 <option value="DRAFT">Draft (Hidden)</option>
               </select>
             </div>
 
-            <label className="flex items-center gap-2 text-xs text-[#191c1d] font-medium cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-on-surface font-medium cursor-pointer">
               <input
                 type="checkbox"
                 checked={formData.isFeatured}
                 onChange={e => setFormData({ ...formData, isFeatured: e.target.checked })}
-                className="rounded text-[#111827]"
+                className="rounded text-primary focus:ring-primary"
               />
               Feature on Homepage
             </label>
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-4 border-t border-[#eee7dc] flex items-center justify-end gap-2.5">
+          <div className="pt-4 border-t border-border-hairline flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-[#fafaf9] text-[#1f2937] border border-[#d1d5db] hover:border-[#9ca3af] px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs"
+              className="inline-flex items-center justify-center gap-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface border border-border-hairline px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center gap-2 bg-[#111827] hover:bg-black text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
             >
               {isSubmitting ? "Saving Product..." : isEditing ? "Save Changes" : "Create Product"}
             </button>

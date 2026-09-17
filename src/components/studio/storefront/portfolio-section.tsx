@@ -81,13 +81,12 @@ export function StudioPortfolioSection({
                   }}
                   style={{
                     backgroundColor: isActive ? primaryColor : undefined,
-                    borderColor: isActive ? primaryColor : "#e5dcd1",
-                    color: isActive ? "#ffffff" : "#57534e",
+                    borderColor: isActive ? primaryColor : undefined,
                   }}
                   className={`text-xs px-4 py-2 rounded-full border transition-all whitespace-nowrap cursor-pointer font-medium ${
                     isActive
-                      ? "shadow-2xs scale-100"
-                      : "bg-[#faf6f0]/70 hover:bg-[#faf6f0] hover:text-[#1c1917]"
+                      ? "shadow-2xs scale-100 text-white"
+                      : "bg-surface-low/70 hover:bg-surface-low text-on-surface-variant hover:text-on-surface border-border-hairline"
                   }`}
                 >
                   {cat}
@@ -111,7 +110,7 @@ export function StudioPortfolioSection({
               type="button"
               aria-label={`View ${proj.title} project and gallery`}
               onClick={() => setSelectedProject(proj)}
-              className="group relative aspect-[4/3] w-full bg-[#faf6f0] border border-[#e8dfd3] rounded-3xl overflow-hidden shadow-2xs hover:shadow-xl transition-all duration-300 cursor-pointer block p-0 text-left"
+              className="group relative aspect-[4/3] w-full bg-card border border-border-hairline rounded-3xl overflow-hidden shadow-card hover:shadow-xl transition-all duration-300 cursor-pointer block p-0 text-left"
             >
               <Image
                 src={proj.image || DEFAULT_PORTFOLIO_IMAGE}
@@ -122,13 +121,13 @@ export function StudioPortfolioSection({
               />
 
               {/* Category Badge */}
-              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-xs text-[#1c1917] text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-xs z-10">
+              <div className="absolute top-4 left-4 bg-card/90 backdrop-blur-xs text-on-surface text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-xs z-10 border border-border-hairline/60">
                 {proj.category}
               </div>
 
               {/* Multi-Photo Count Badge */}
               {photoCount > 1 && (
-                <div className="absolute top-4 right-4 bg-[#1c1917]/80 backdrop-blur-xs text-white text-[10px] font-medium px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 z-10">
+                <div className="absolute top-4 right-4 bg-black/75 backdrop-blur-xs text-white text-[10px] font-medium px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 z-10">
                   <Images size={11} />
                   <span>{photoCount} Images</span>
                 </div>
@@ -161,10 +160,10 @@ export function StudioPortfolioSection({
             type="button"
             onClick={() => setIsExpanded(prev => !prev)}
             style={{
-              borderColor: isExpanded ? "#e5dcd1" : primaryColor,
-              color: isExpanded ? "#57534e" : primaryColor,
+              borderColor: isExpanded ? undefined : primaryColor,
+              color: isExpanded ? undefined : primaryColor,
             }}
-            className="group inline-flex items-center gap-2 px-7 py-3 rounded-full border bg-white hover:bg-[#faf6f0] text-xs font-semibold shadow-2xs hover:shadow-md transition-all cursor-pointer"
+            className="group inline-flex items-center gap-2 px-7 py-3 rounded-full border border-border-hairline bg-card hover:bg-surface-low text-on-surface-variant text-xs font-semibold shadow-card hover:shadow-md transition-all cursor-pointer"
             aria-expanded={isExpanded}
           >
             {isExpanded ? (

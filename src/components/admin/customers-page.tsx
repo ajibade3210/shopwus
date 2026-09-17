@@ -112,7 +112,7 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
           setCustomerToEdit(null);
           setShowAddModal(true);
         }}
-        className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-[#111827] hover:bg-black text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs"
+        className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-primary hover:bg-primary-hover text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-md text-xs font-semibold shadow-xs hover:shadow-sm transition-all cursor-pointer"
       >
         <Plus size={14} />
         <span>Add</span>
@@ -123,7 +123,7 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
         <button
           type="button"
           onClick={() => setShowMoreMenu(prev => !prev)}
-          className="inline-flex items-center justify-center p-2 sm:p-2.5 bg-white hover:bg-[#fafaf9] text-[#1f2937] border border-[#d1d5db] hover:border-[#9ca3af] rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-2xs"
+          className="inline-flex items-center justify-center p-2 sm:p-2.5 bg-card hover:bg-surface-low text-on-surface border border-border-hairline rounded-md text-xs font-semibold shadow-2xs hover:shadow-xs transition-all cursor-pointer"
           title="More actions"
           aria-label="More actions"
         >
@@ -133,16 +133,16 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
         {showMoreMenu && (
           <>
             <div className="fixed inset-0 z-20" onClick={() => setShowMoreMenu(false)} />
-            <div className="absolute right-0 top-full mt-1.5 w-44 bg-white border border-[#ded7cb] rounded-2xl shadow-xl z-30 py-1 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <div className="absolute right-0 top-full mt-1.5 w-44 bg-card border border-border-hairline rounded-xl shadow-popover z-30 py-1 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
               <button
                 type="button"
                 onClick={() => {
                   setShowMoreMenu(false);
                   handleOpenBroadcastModal();
                 }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-semibold text-[#191c1d] hover:bg-[#faf8f5] hover:text-[#855e2e] transition-colors cursor-pointer text-left"
+                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-semibold text-on-surface hover:bg-surface-low hover:text-primary transition-colors cursor-pointer text-left"
               >
-                <MessageSquare size={14} className="text-[#855e2e]" />
+                <MessageSquare size={14} className="text-primary" />
                 <span>Broadcast</span>
               </button>
 
@@ -152,9 +152,9 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
                   setShowMoreMenu(false);
                   setShowImportModal(true);
                 }}
-                className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-[#2a1d15] hover:bg-[#faf7f2] transition-colors text-left font-medium cursor-pointer"
+                className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs text-on-surface hover:bg-surface-low transition-colors text-left font-medium cursor-pointer"
               >
-                <Upload size={14} className="text-[#855e2e]" />
+                <Upload size={14} className="text-primary" />
                 <span>Import</span>
               </button>
 
@@ -165,11 +165,11 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
                   handleExport();
                 }}
                 disabled={isExporting}
-                className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-[#2a1d15] hover:bg-[#faf7f2] transition-colors text-left font-medium cursor-pointer disabled:opacity-50"
+                className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-on-surface hover:bg-surface-low transition-colors text-left font-medium cursor-pointer disabled:opacity-50"
               >
                 <Download
                   size={14}
-                  className={`text-[#855e2e] ${isExporting ? "animate-bounce" : ""}`}
+                  className={`text-primary ${isExporting ? "animate-bounce" : ""}`}
                 />
                 <span>{isExporting ? "Exporting..." : "Export"}</span>
               </button>
@@ -184,7 +184,7 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
     <section className="content">
       <PageTitle title="Customers" action={actions} />
 
-      <div className="metrics">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-7">
         <Metric
           label="Total customers"
           value={String(totalCustomers)}

@@ -46,8 +46,8 @@ export function SiteFooter() {
             <BrandLogo size="md" />
 
             <p className="footer-mission-text">
-              The digital storefront and commerce platform engineered for online vendors, growing
-              merchants, and independent businesses.
+              The operational and financial intelligence engine engineered for online businesses,
+              growing merchants, and independent brands.
             </p>
 
             {/* Companion App Card */}

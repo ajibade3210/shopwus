@@ -13,7 +13,7 @@ export function InvoiceItemsTable({
 }: InvoiceItemsTableProps) {
   return (
     <div className="space-y-3 pt-2">
-      <label className="block text-[11px] font-bold text-[#374151] uppercase tracking-wider">
+      <label className="block text-[11px] font-bold text-muted uppercase tracking-wider">
         Items Details *
       </label>
 
@@ -21,7 +21,7 @@ export function InvoiceItemsTable({
         {items.map(item => (
           <div
             key={item.id}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 bg-[#f9fafb] p-3 rounded-2xl border border-[#f3f4f6]"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 bg-surface-container p-3 rounded-2xl border border-border-hairline"
           >
             {/* Description */}
             <div className="flex-1">
@@ -29,7 +29,7 @@ export function InvoiceItemsTable({
                 value={item.description}
                 onChange={e => onItemChange(item.id, "description", e.target.value)}
                 placeholder="Item description"
-                className="w-full bg-white border border-[#e5e7eb] rounded-xl px-3 py-2 text-xs text-[#111827] focus:outline-none"
+                className="w-full bg-surface-container-lowest border border-border-hairline rounded-xl px-3 py-2 text-xs text-on-surface focus:outline-hidden focus:border-primary"
               />
             </div>
 
@@ -41,7 +41,7 @@ export function InvoiceItemsTable({
                 value={item.quantity}
                 onChange={e => onItemChange(item.id, "quantity", Number(e.target.value) || 1)}
                 placeholder="Qty"
-                className="w-full bg-white border border-[#e5e7eb] rounded-xl px-3 py-2 text-xs text-[#111827] text-center focus:outline-none"
+                className="w-full bg-surface-container-lowest border border-border-hairline rounded-xl px-3 py-2 text-xs text-on-surface text-center focus:outline-hidden focus:border-primary"
               />
             </div>
 
@@ -54,13 +54,13 @@ export function InvoiceItemsTable({
                 value={item.unitPrice}
                 onChange={e => onItemChange(item.id, "unitPrice", Number(e.target.value) || 0)}
                 placeholder="Cost"
-                className="w-full bg-white border border-[#e5e7eb] rounded-xl px-3 py-2 text-xs text-[#111827] text-right focus:outline-none"
+                className="w-full bg-surface-container-lowest border border-border-hairline rounded-xl px-3 py-2 text-xs text-on-surface text-right focus:outline-hidden focus:border-primary"
               />
             </div>
 
             {/* Amount */}
             <div className="w-28 text-right px-2">
-              <span className="text-xs font-mono font-bold text-[#111827]">
+              <span className="text-xs font-mono font-bold text-on-surface">
                 {formatMoney(item.amount, currency)}
               </span>
             </div>
@@ -69,7 +69,7 @@ export function InvoiceItemsTable({
             <button
               type="button"
               onClick={() => onRemoveItem(item.id)}
-              className="p-2 text-[#9ca3af] hover:text-[#ef4444] hover:bg-[#fee2e2] rounded-xl transition-colors cursor-pointer shrink-0"
+              className="p-2 text-muted hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-colors cursor-pointer shrink-0"
               aria-label="Remove item"
             >
               <Trash2 size={14} />
@@ -81,7 +81,7 @@ export function InvoiceItemsTable({
       <button
         type="button"
         onClick={onAddItem}
-        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#111827] hover:text-[#855e2e] transition-colors py-1 cursor-pointer"
+        className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-hover transition-colors py-1 cursor-pointer"
       >
         <Plus size={14} />
         <span>Add Item</span>

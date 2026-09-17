@@ -12,16 +12,16 @@ export function AuthHeader({ rightAction, mode, claimSlug }: AuthHeaderProps) {
       ) : mode === "signup" ? (
         <Link
           href={`/login${claimSlug ? `?claim=${encodeURIComponent(claimSlug)}` : ""}`}
-          className="text-xs text-[#5c5f60] hover:text-[#191c1d] font-medium transition-colors"
+          className="text-xs text-text-muted hover:text-on-surface font-medium transition-colors"
         >
-          Already have an account? <b className="text-[#191c1d] underline">Sign in</b>
+          Already have an account? <b className="text-primary hover:underline">Sign in</b>
         </Link>
       ) : mode === "login" ? (
         <Link
           href={`/signup${claimSlug ? `?claim=${encodeURIComponent(claimSlug)}` : ""}`}
-          className="text-xs text-[#5c5f60] hover:text-[#191c1d] font-medium transition-colors"
+          className="text-xs text-text-muted hover:text-on-surface font-medium transition-colors"
         >
-          Don&apos;t have an account? <b className="text-[#191c1d] underline">Sign up</b>
+          Don&apos;t have an account? <b className="text-primary hover:underline">Sign up</b>
         </Link>
       ) : null}
     </header>

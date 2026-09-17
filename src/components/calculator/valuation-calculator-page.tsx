@@ -29,23 +29,23 @@ export function ValuationCalculatorPage() {
   }, [inputs]);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[#1f1d1a]">
+    <div className="min-h-screen bg-surface text-on-surface">
       {/* Top Header Navigation */}
-      <header className="border-b border-[#eee7dc] bg-[var(--background)]/90 backdrop-blur-md sticky top-0 z-40">
+      <header className="border-b border-border-hairline bg-surface/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <a
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#665e57] hover:text-[#1f1d1a] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-muted hover:text-on-surface transition-colors"
             >
               <ArrowLeft size={14} />
               <span>Back to Home</span>
             </a>
-            <span className="text-[#ded5c8] hidden sm:inline">|</span>
-            <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-[#8c827a]">
+            <span className="text-border-hairline hidden sm:inline">|</span>
+            <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-text-muted">
               <span>Resources</span>
               <span>/</span>
-              <span className="text-[#1f1d1a] font-bold">Valuation Calculator</span>
+              <span className="text-on-surface font-bold">Valuation Calculator</span>
             </div>
           </div>
 
@@ -54,13 +54,13 @@ export function ValuationCalculatorPage() {
           <div className="flex items-center gap-3">
             <a
               href="/login"
-              className="text-xs font-semibold text-[#524a43] hover:text-[#1f1d1a] hidden sm:inline"
+              className="text-xs font-semibold text-text-muted hover:text-on-surface hidden sm:inline"
             >
               Log in
             </a>
             <a
               href="/signup"
-              className="bg-[#111827] hover:bg-black text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
+              className="bg-primary hover:bg-primary-hover text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
             >
               <span>Start Free Trial</span>
               <ArrowRight size={13} />
@@ -72,10 +72,13 @@ export function ValuationCalculatorPage() {
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12 sm:space-y-16">
         <section className="text-center max-w-3xl mx-auto space-y-3">
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#1f1d1a] tracking-tight leading-tight">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary-container text-on-tertiary-container border border-tertiary/20">
+            Valuation Engine
+          </span>
+          <h1 className="text-3xl sm:text-5xl font-bold text-on-surface tracking-tight leading-tight">
             Business Valuation Calculator
           </h1>
-          <p className="text-sm sm:text-base text-[#665e57] leading-relaxed">
+          <p className="text-sm sm:text-base text-on-surface-variant leading-relaxed">
             Estimate the market worth of your company in seconds using industry SDE multiples, net
             profit run-rates, and balance sheet assets.
           </p>

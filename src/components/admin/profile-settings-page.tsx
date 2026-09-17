@@ -135,7 +135,7 @@ export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
     <section className="content profile-content max-w-5xl mx-auto space-y-6 sm:space-y-7 pb-16">
       {/* Page Title */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#191c1d] tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-sans font-bold text-on-surface tracking-tight">
           Admin Overview
         </h1>
       </div>

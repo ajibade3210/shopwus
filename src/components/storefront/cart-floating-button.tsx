@@ -6,7 +6,7 @@ import { formatCurrency } from "@/utils/currency";
 import { useCart } from "./cart-context";
 
 export function CartFloatingButton({
-  buttonColor = "#191c1d",
+  buttonColor = "var(--primary)",
   radiusClass = "rounded-full",
 }: CartFloatingButtonProps) {
   const { cartCount, subtotal, setIsCartOpen } = useCart();
@@ -19,11 +19,11 @@ export function CartFloatingButton({
         type="button"
         onClick={() => setIsCartOpen(true)}
         style={{ backgroundColor: buttonColor }}
-        className={`flex items-center gap-3 px-4 py-3 text-white shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer ${radiusClass}`}
+        className={`flex items-center gap-3 px-4 py-3 text-white shadow-card hover:shadow-popover hover:scale-105 active:scale-95 transition-all cursor-pointer ${radiusClass}`}
       >
         <div className="relative">
           <ShoppingBag size={18} />
-          <span className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center ring-2 ring-white">
+          <span className="absolute -top-2 -right-2 w-4 h-4 bg-error text-white text-[10px] font-bold rounded-full flex items-center justify-center ring-2 ring-white font-sans tabular-nums">
             {cartCount}
           </span>
         </div>

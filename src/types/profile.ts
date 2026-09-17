@@ -464,10 +464,12 @@ export interface StudioFooterProps {
   monogram: string;
 }
 
-export interface ElanEventsPageProps {
+export interface StorefrontPageProps {
   initialProfile?: BusinessProfile;
   slug?: string;
 }
+
+export type ElanEventsPageProps = StorefrontPageProps;
 
 export interface ProfileIdentityCardProps {
   name: string;

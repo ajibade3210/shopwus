@@ -31,7 +31,7 @@ export function LeadTable({
               value={statusFilter}
               onChange={e => onStatusFilterChange?.(e.target.value as LeadFilterStatus)}
               aria-label="Filter inquiries by status"
-              className="h-9 appearance-none pl-3 pr-7 bg-white border border-[#ded7cb] rounded-xl text-[11px] font-medium text-[#191c1d] hover:bg-[#faf8f5] focus:outline-none transition-colors cursor-pointer shadow-2xs"
+              className="h-9 appearance-none pl-3 pr-7 bg-card border border-border-hairline rounded-md text-[11px] font-medium text-on-surface hover:bg-surface-low focus:outline-none focus:border-primary transition-colors cursor-pointer shadow-2xs"
             >
               <option value="all" className="text-[11px]">
                 All
@@ -54,7 +54,7 @@ export function LeadTable({
             </select>
             <ChevronDown
               size={12}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8c827a] pointer-events-none"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none"
             />
           </div>
 
@@ -74,19 +74,19 @@ export function LeadTable({
         <table className="w-full border-collapse sm:min-w-[680px] text-left">
           <thead>
             <tr>
-              <th className="px-3 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="px-3 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-on-surface-variant bg-surface-low border-b border-border-hairline">
                 Name
               </th>
-              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-on-surface-variant bg-surface-low border-b border-border-hairline">
                 Service requested
               </th>
-              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-on-surface-variant bg-surface-low border-b border-border-hairline">
                 Estimated date
               </th>
-              <th className="text-right sm:text-left px-2 sm:px-5 py-3 sm:py-3.5 text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="text-right sm:text-left px-2 sm:px-5 py-3 sm:py-3.5 text-[10px] font-bold tracking-[0.08em] uppercase text-on-surface-variant bg-surface-low border-b border-border-hairline">
                 Status
               </th>
-              <th className="w-5 sm:w-10 px-2 sm:px-5 py-3 sm:py-3.5 bg-[#faf8f5] border-b border-[#eee7dc]" />
+              <th className="w-5 sm:w-10 px-2 sm:px-5 py-3 sm:py-3.5 bg-surface-low border-b border-border-hairline" />
             </tr>
           </thead>
           <tbody className="align-middle">
@@ -94,34 +94,34 @@ export function LeadTable({
               <tr
                 key={lead.id}
                 onClick={() => onSelectLead(lead.id)}
-                className="cursor-pointer hover:bg-[#faf8f5]/60 transition-colors"
+                className="cursor-pointer hover:bg-surface-low/50 transition-colors"
               >
-                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-xs text-on-surface-variant border-b border-border-hairline align-middle">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <b className="text-xs sm:text-sm font-semibold text-[#191c1d] block">
+                    <b className="text-xs sm:text-sm font-semibold text-on-surface block">
                       {lead.name}
                     </b>
                     {lead.isExistingCustomer && (
-                      <span className="px-1.5 py-0.2 rounded-full text-[9px] font-semibold bg-[#e0f2fe] text-[#0369a1] border border-[#bae6fd]">
+                      <span className="px-1.5 py-0.5 rounded-full text-[9px] font-semibold bg-secondary-container text-on-secondary-container border border-secondary/20">
                         Customer
                       </span>
                     )}
                   </div>
                   {/* Mobile service requested subtitle */}
-                  <div className="sm:hidden text-[10px] text-[#855e2e] font-medium mt-0.5 truncate">
+                  <div className="sm:hidden text-[10px] text-primary font-medium mt-0.5 truncate">
                     {lead.service}
                     {lead.services && lead.services.length > 1 && ` (+${lead.services.length - 1})`}
                   </div>
-                  <small className="text-[10px] sm:text-xs text-[#8c827a] truncate block max-w-[150px] sm:max-w-none mt-0.5">
+                  <small className="text-[10px] sm:text-xs text-outline truncate block max-w-[150px] sm:max-w-none mt-0.5">
                     {lead.email}
                   </small>
                 </td>
-                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-on-surface-variant border-b border-border-hairline align-middle">
                   <div className="flex items-center">
-                    <span className="font-semibold text-[#191c1d]">{lead.service}</span>
+                    <span className="font-semibold text-on-surface">{lead.service}</span>
                     {lead.services && lead.services.length > 1 && (
                       <span
-                        className="ml-1.5 px-1.5 py-0.5 rounded text-[10px] bg-[#f4ece1] text-[#855e2e] font-mono font-bold shrink-0"
+                        className="ml-1.5 px-1.5 py-0.5 rounded text-[10px] bg-surface-high text-on-surface-variant font-mono font-bold shrink-0"
                         title={`${lead.services.length} requested services/scopes`}
                       >
                         +{lead.services.length - 1}
@@ -129,22 +129,22 @@ export function LeadTable({
                     )}
                   </div>
                 </td>
-                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                <td className="hidden sm:table-cell px-5 py-3.5 text-xs text-on-surface-variant border-b border-border-hairline align-middle">
                   {formatDate(lead.eventDate)}
                 </td>
-                <td className="text-right sm:text-left whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
+                <td className="text-right sm:text-left whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs text-on-surface-variant border-b border-border-hairline align-middle">
                   {/* Mobile: clean text label */}
                   <span
                     className={`sm:hidden text-[11px] font-semibold capitalize ${
                       lead.status === "new"
-                        ? "text-[#b45309]"
+                        ? "text-amber-700"
                         : lead.status === "contacted"
-                          ? "text-[#855e2e]"
+                          ? "text-primary"
                           : lead.status === "qualified"
-                            ? "text-[#0f766e]"
+                            ? "text-secondary"
                             : lead.status === "converted"
-                              ? "text-[#047857]"
-                              : "text-[#6b7280]"
+                              ? "text-tertiary"
+                              : "text-on-surface-variant"
                     }`}
                   >
                     {formatStatusLabel(lead.status)}
@@ -154,8 +154,8 @@ export function LeadTable({
                     <StatusBadge status={lead.status} />
                   </span>
                 </td>
-                <td className="w-5 sm:w-10 text-right px-2 sm:px-5 py-3 sm:py-3.5 border-b border-[#eee7dc] align-middle">
-                  <ChevronRight size={14} className="text-[#8c827a] ml-auto" />
+                <td className="w-5 sm:w-10 text-right px-2 sm:px-5 py-3 sm:py-3.5 border-b border-border-hairline align-middle">
+                  <ChevronRight size={14} className="text-outline ml-auto" />
                 </td>
               </tr>
             ))}
@@ -171,19 +171,19 @@ export function LeadTable({
       </div>
 
       {/* Pagination Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-[#f0e8dc] bg-[#fdfbf7] text-xs text-[#5c5f60] rounded-b-3xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-border-hairline bg-surface-low text-xs text-on-surface-variant rounded-b-xl">
         <div className="flex items-center gap-2">
           <span>
-            Showing <b className="text-[#191c1d]">{items.length === 0 ? 0 : startIndex + 1}</b>–
-            <b className="text-[#191c1d]">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
-            <b className="text-[#191c1d]">{items.length}</b> records
+            Showing <b className="text-on-surface">{items.length === 0 ? 0 : startIndex + 1}</b>–
+            <b className="text-on-surface">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
+            <b className="text-on-surface">{items.length}</b> records
           </span>
-          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-[#ded7cb] pl-3">
-            <span className="text-[11px] text-[#8c827a]">Per page:</span>
+          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-border-hairline pl-3">
+            <span className="text-[11px] text-outline">Per page:</span>
             <select
               value={pageSize}
               onChange={e => onPageSizeChange(Number(e.target.value))}
-              className="bg-white border border-[#ded7cb] rounded-lg px-2 py-0.5 text-[11px] text-[#191c1d] focus:outline-none"
+              className="bg-card border border-border-hairline rounded-md px-2 py-0.5 text-[11px] text-on-surface focus:outline-none focus:border-primary"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -197,7 +197,7 @@ export function LeadTable({
             type="button"
             disabled={currentPage <= 1}
             onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#ded7cb] bg-white text-xs font-semibold text-[#191c1d] hover:bg-[#faf8f5] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-border-hairline bg-card text-xs font-semibold text-on-surface hover:bg-surface-low disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
           >
             <ChevronLeft size={13} />
             <span>Previous</span>
@@ -209,10 +209,10 @@ export function LeadTable({
                 key={page}
                 type="button"
                 onClick={() => onPageChange(page)}
-                className={`w-7 h-7 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`w-7 h-7 rounded-md text-xs font-semibold transition-all cursor-pointer ${
                   page === currentPage
-                    ? "bg-[#191c1d] text-white shadow-2xs"
-                    : "bg-white border border-[#ded7cb] text-[#5c5f60] hover:bg-[#faf8f5] hover:text-[#191c1d]"
+                    ? "bg-primary text-white shadow-xs"
+                    : "bg-card border border-border-hairline text-on-surface-variant hover:bg-surface-low hover:text-on-surface"
                 }`}
               >
                 {page}
@@ -224,7 +224,7 @@ export function LeadTable({
             type="button"
             disabled={currentPage >= totalPages}
             onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#ded7cb] bg-white text-xs font-semibold text-[#191c1d] hover:bg-[#faf8f5] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-border-hairline bg-card text-xs font-semibold text-on-surface hover:bg-surface-low disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
           >
             <span>Next</span>
             <ChevronRight size={13} />

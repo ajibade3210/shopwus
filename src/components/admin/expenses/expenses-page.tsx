@@ -71,13 +71,13 @@ export function ExpensesPage({ onToast }: ExpensesPageProps) {
   }, [showMoreMenu]);
 
   const actions = (
-    <>
+    <div className="flex items-center gap-2 sm:gap-2.5 font-sans">
       <button
         type="button"
         onClick={handleOpenCreate}
-        className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-[#111827] hover:bg-black text-white px-4 py-2 sm:py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
+        className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-primary hover:bg-primary-hover text-white px-4 py-2 sm:py-2.5 rounded-md text-xs font-semibold shadow-xs transition-colors cursor-pointer disabled:opacity-50"
       >
-        <Plus size={13} />
+        <Plus size={14} />
         <span>Add</span>
       </button>
 
@@ -86,7 +86,7 @@ export function ExpensesPage({ onToast }: ExpensesPageProps) {
         <button
           type="button"
           onClick={() => setShowMoreMenu(prev => !prev)}
-          className="inline-flex items-center justify-center p-2 sm:p-2.5 bg-white hover:bg-[#fafaf9] text-[#1f2937] border border-[#d1d5db] hover:border-[#9ca3af] rounded-xl transition-all cursor-pointer shadow-2xs disabled:opacity-50"
+          className="inline-flex items-center justify-center p-2 sm:p-2.5 bg-card hover:bg-surface-low text-on-surface border border-border-hairline hover:border-border-subtle rounded-md transition-colors cursor-pointer shadow-2xs disabled:opacity-50"
           title="More actions"
           aria-label="More actions"
           aria-expanded={showMoreMenu}
@@ -95,7 +95,7 @@ export function ExpensesPage({ onToast }: ExpensesPageProps) {
         </button>
 
         {showMoreMenu && (
-          <div className="absolute right-0 top-full mt-1.5 w-44 bg-white border border-atelier-subtle rounded-2xl shadow-xl z-30 py-1 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          <div className="absolute right-0 top-full mt-1.5 w-44 bg-card border border-border-hairline rounded-xl shadow-popover z-30 py-1 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             <button
               type="button"
               onClick={() => {
@@ -103,18 +103,18 @@ export function ExpensesPage({ onToast }: ExpensesPageProps) {
                 handleExportCSV();
               }}
               disabled={isExporting}
-              className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-atelier-ink hover:bg-atelier-warm transition-colors text-left font-medium cursor-pointer disabled:opacity-50"
+              className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-on-surface hover:bg-surface-low transition-colors text-left font-medium cursor-pointer disabled:opacity-50"
             >
               <Download
                 size={14}
-                className={`text-atelier-accent ${isExporting ? "animate-bounce" : ""}`}
+                className={`text-primary ${isExporting ? "animate-bounce" : ""}`}
               />
               <span>{isExporting ? "Exporting..." : "Export"}</span>
             </button>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 
   return (

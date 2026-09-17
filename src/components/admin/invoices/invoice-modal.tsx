@@ -109,7 +109,7 @@ export function InvoiceModal({
       onClick={onClose}
     >
       <div
-        className="bg-[#f8f9fa] border border-[#e5e7eb] rounded-3xl max-w-7xl w-full max-h-[94vh] shadow-2xl overflow-hidden flex flex-col my-auto"
+        className="bg-card border border-border-hairline rounded-3xl max-w-7xl w-full max-h-[94vh] shadow-popover overflow-hidden flex flex-col my-auto font-sans"
         onClick={e => e.stopPropagation()}
       >
         <InvoiceModalHeader
