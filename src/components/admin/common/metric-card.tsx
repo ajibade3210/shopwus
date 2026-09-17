@@ -1,4 +1,4 @@
-import type { ExtendedMetricProps } from "@/types";
+import type { ExtendedMetricProps, MetricsGridProps } from "@/types";
 
 export function Metric({
   label,
@@ -89,14 +89,14 @@ export function Metric({
 
   return (
     <div
-      className={`flex flex-col justify-between bg-card border border-border-hairline rounded-xl p-5 sm:p-[20px_22px] shadow-card hover:border-border-subtle hover:shadow-md transition-all ${className}`}
+      className={`flex flex-col justify-between bg-card border border-border-hairline rounded-xl p-3 sm:p-3.5 shadow-card hover:border-border-subtle hover:shadow-md transition-all ${className}`}
     >
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-[11px] font-semibold tracking-wider uppercase text-muted block font-sans">
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-[10px] sm:text-[10.5px] font-semibold tracking-wider uppercase text-muted block font-sans truncate">
           {label}
         </span>
         {icon && (
-          <div className="w-8 h-8 rounded-full bg-surface-low flex items-center justify-center text-muted shrink-0">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-surface-low flex items-center justify-center text-muted shrink-0">
             {icon}
           </div>
         )}
@@ -104,8 +104,8 @@ export function Metric({
 
       {isLoading ? (
         <div className="py-1">
-          <div className="h-7 w-28 bg-surface-high animate-pulse rounded-md my-0.5" />
-          <div className="h-3.5 w-36 bg-surface-high/70 animate-pulse rounded-md mt-2" />
+          <div className="h-6 w-24 bg-surface-high animate-pulse rounded-md my-0.5" />
+          <div className="h-3 w-32 bg-surface-high/70 animate-pulse rounded-md mt-1.5" />
         </div>
       ) : (
         <>
@@ -113,15 +113,15 @@ export function Metric({
             <strong
               className={`font-bold font-sans tabular-nums text-on-surface tracking-tight leading-tight ${
                 isLong
-                  ? "!text-lg sm:!text-xl !leading-snug !font-semibold truncate"
-                  : "text-2xl sm:text-[26px]"
+                  ? "!text-base sm:!text-lg !leading-snug !font-semibold truncate"
+                  : "text-lg sm:text-xl"
               }`}
             >
               {value}
             </strong>
             {trend && (
               <span
-                className={`inline-flex items-center gap-0.5 text-[11px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${
+                className={`inline-flex items-center gap-0.5 text-[10px] sm:text-[10.5px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${
                   trend.isPositive !== false
                     ? "bg-[#ebf8f2] text-[#2d8a74]"
                     : "bg-[#feefef] text-[#d9383a]"
@@ -131,21 +131,24 @@ export function Metric({
               </span>
             )}
           </div>
-          {detail && <small className="text-muted text-xs mt-1.5 block font-sans">{detail}</small>}
+          {detail && (
+            <small className="text-muted text-[10.5px] sm:text-[11px] mt-0.5 block font-sans truncate">
+              {detail}
+            </small>
+          )}
         </>
       )}
     </div>
   );
 }
 
-export function MetricsGrid({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-7 ${className}`}>{children}</div>
-  );
+export function MetricsGrid({ children, cols = 3, className = "" }: MetricsGridProps) {
+  const colClass =
+    cols === 4
+      ? "grid-cols-2 sm:grid-cols-4"
+      : cols === 2
+        ? "grid-cols-1 sm:grid-cols-2"
+        : "grid-cols-1 sm:grid-cols-3";
+
+  return <div className={`grid ${colClass} gap-2.5 sm:gap-3 mb-6 ${className}`}>{children}</div>;
 }

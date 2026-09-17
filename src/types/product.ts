@@ -165,6 +165,20 @@ export interface ProductsTableProps {
   isLoading: boolean;
   onEdit: (product: Product) => void;
   onRefresh?: () => void;
+  searchQuery: string;
+  onSearch: (q: string) => void;
+  categoryFilter: string;
+  onCategoryChange: (cat: string) => void;
+  categories: Category[];
+  statusFilter: ProductStatus | "";
+  onStatusFilterChange: (status: ProductStatus | "") => void;
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+  totalRecords: number;
+  startIndex: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
 }
 
 export interface StudioProductsSectionProps {

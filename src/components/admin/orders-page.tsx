@@ -1,9 +1,10 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOrderSummaryQuery, useOrdersQuery } from "@/hooks/queries";
-import { formatMoney, Metric, PageTitle } from "./admin-layout";
+import { markRegisterViewed } from "@/hooks/use-unseen-badge";
+import { formatMoney, Metric, MetricsGrid, PageTitle } from "./admin-layout";
 import { CreateOrderModal } from "./orders/create-order-modal";
 import { OrderDetailsDrawer } from "./orders/order-details-drawer";
 import { OrdersTable } from "./orders/orders-table";
@@ -16,6 +17,14 @@ export function OrdersPage() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const { data: summary } = useOrderSummaryQuery();
+
+  // Reset the sidebar unseen-orders badge once total is known
+  useEffect(() => {
+    if (summary?.totalOrders != null) {
+      markRegisterViewed("orders_badge", summary.totalOrders);
+    }
+  }, [summary?.totalOrders]);
+
   const {
     data: ordersData,
     isLoading,
@@ -48,12 +57,12 @@ export function OrdersPage() {
       />
 
       {/* Top Metric Strip */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-7">
+      <MetricsGrid cols={4}>
         <Metric label="Total Orders" value={String(summary?.totalOrders || 0)} />
         <Metric label="Unfulfilled Orders" value={String(summary?.unfulfilled || 0)} />
         <Metric label="Total Sales Revenue" value={formatMoney(summary?.totalRevenue || 0)} />
         <Metric label="Abandoned Checkouts" value={String(summary?.abandonedCount || 0)} />
-      </div>
+      </MetricsGrid>
 
       {/* Main Register Box */}
       <div className="bg-card border border-border-hairline rounded-xl p-3 sm:p-4 shadow-card space-y-3">

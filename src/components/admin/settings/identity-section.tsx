@@ -2,7 +2,6 @@ import { ChevronDown, Loader2, Lock, Trash2, Upload } from "lucide-react";
 import type { CurrencyCode, IdentitySectionProps } from "@/types";
 import { isValidUrl, slugify } from "@/utils";
 import { Card } from "./card";
-import { GooglePlacesAutocompleteField } from "./google-places-autocomplete-field";
 
 export function IdentitySection({
   name,
@@ -10,10 +9,6 @@ export function IdentitySection({
   slug,
   setSlug,
   slugStatus,
-  tagline,
-  setTagline,
-  location,
-  setLocation,
   website,
   setWebsite,
   email,
@@ -232,34 +227,7 @@ export function IdentitySection({
             </div>
           </div>
 
-          {/* Row 2: Core Value */}
-          <div className="md:col-span-2 space-y-2">
-            <label className="text-xs font-semibold text-[#374151] tracking-wide block">
-              Core value
-            </label>
-            <input
-              value={tagline}
-              onChange={e => setTagline(e.target.value)}
-              placeholder="e.g. Bespoke luxury wedding design and creative direction"
-              className="w-full rounded-lg border border-[#d1d5db] bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#111827] focus:outline-none shadow-2xs"
-            />
-          </div>
-
-          {/* Row 3: Location & Email */}
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#374151] tracking-wide block">
-              Location
-            </label>
-            <GooglePlacesAutocompleteField
-              value={location}
-              onChange={setLocation}
-              onPlaceSelected={place => {
-                setLocation(place.address || location);
-              }}
-              placeholder="e.g. Victoria Island, Lagos, Nigeria"
-            />
-          </div>
-
+          {/* Row 2: Email & Website */}
           <div className="space-y-2 opacity-60 cursor-not-allowed select-none">
             <div className="flex items-center justify-between">
               <label className="text-xs font-semibold text-[#6b7280] tracking-wide block cursor-not-allowed">
@@ -284,7 +252,7 @@ export function IdentitySection({
             </div>
           </div>
 
-          {/* Row 4: Website & Currency */}
+          {/* Website & Currency */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-semibold text-[#374151] tracking-wide block">

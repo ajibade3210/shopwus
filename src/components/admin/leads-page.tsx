@@ -1,10 +1,11 @@
 "use client";
 
 import { Download } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { APP_CONFIG } from "@/constants";
 import { useCurrentStudio } from "@/hooks/use-current-studio";
 import { useLeads } from "@/hooks/use-leads";
+import { markRegisterViewed } from "@/hooks/use-unseen-badge";
 import { getInvoices } from "@/lib/api";
 import { sendLeadMessage } from "@/services/api";
 import type { Customer, Invoice, Lead, LeadsPageProps } from "@/types";
@@ -42,6 +43,13 @@ export function LeadsPage({ onToast }: LeadsPageProps) {
     handleConvertToCustomer,
     handleUpdateStatus,
   } = useLeads(notify);
+
+  // Reset the sidebar unseen-leads badge once total is known
+  useEffect(() => {
+    if (metrics.total != null) {
+      markRegisterViewed("leads_badge", metrics.total);
+    }
+  }, [metrics.total]);
 
   const [showSendMessageModal, setShowSendMessageModal] = useState(false);
   const [showInvoiceModal, setShowInvoiceModal] = useState(false);

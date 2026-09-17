@@ -103,6 +103,12 @@ export interface ExtendedMetricProps extends MetricProps {
   icon?: ReactNode;
 }
 
+export interface MetricsGridProps {
+  children: ReactNode;
+  cols?: 2 | 3 | 4;
+  className?: string;
+}
+
 export interface PageTitleProps {
   title: string;
   description?: string;
