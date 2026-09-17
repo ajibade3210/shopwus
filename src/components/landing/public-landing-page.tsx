@@ -30,8 +30,16 @@ export function PublicLandingPage() {
         </div>
         <BrandLogo className="public-logo" />
         <div className="nav-ctas">
-          <a href="/signup" className="text-on-surface-variant hover:text-on-surface transition-colors">Sign up</a>
-          <a className="dark-button bg-primary hover:bg-primary-hover border-primary hover:border-primary-hover rounded-md text-white shadow-xs" href="/login">
+          <a
+            href="/signup"
+            className="text-on-surface-variant hover:text-on-surface transition-colors"
+          >
+            Sign up
+          </a>
+          <a
+            className="dark-button bg-primary hover:bg-primary-hover border-primary hover:border-primary-hover rounded-md text-white shadow-xs"
+            href="/login"
+          >
             Enter Studio <ArrowRight size={15} />
           </a>
         </div>
@@ -42,14 +50,19 @@ export function PublicLandingPage() {
           <h1 className="font-sans font-bold text-on-surface tracking-tight">
             An operational & financial
             <br />
-            <span className="text-primary font-bold">intelligence engine for online businesses.</span>
+            <span className="text-primary font-bold">
+              intelligence engine for online businesses.
+            </span>
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed">
-            Unify your storefront, client pipelines, itemized multi-currency invoicing,
-            expense bookkeeping, and live valuation analytics—all in one unified operating system.
+            Unify your storefront, client pipelines, itemized multi-currency invoicing, expense
+            bookkeeping, and live valuation analytics—all in one unified operating system.
           </p>
           <div className="hero-ctas">
-            <a className="dark-button bg-primary hover:bg-primary-hover border-primary hover:border-primary-hover rounded-md text-white shadow-xs" href="/signup">
+            <a
+              className="dark-button bg-primary hover:bg-primary-hover border-primary hover:border-primary-hover rounded-md text-white shadow-xs"
+              href="/signup"
+            >
               Start my free trial now <ArrowRight size={15} />
             </a>
           </div>

@@ -120,7 +120,9 @@ export function FloatingChatWidget() {
                 <div className="text-center py-4 space-y-2">
                   <CheckCircle2 size={24} className="text-tertiary mx-auto" />
                   <p className="text-xs font-semibold text-on-surface">Thanks for your feedback!</p>
-                  <p className="text-[11px] text-on-surface-variant">Our team reviews every submission.</p>
+                  <p className="text-[11px] text-on-surface-variant">
+                    Our team reviews every submission.
+                  </p>
                   <button
                     type="button"
                     onClick={() => {

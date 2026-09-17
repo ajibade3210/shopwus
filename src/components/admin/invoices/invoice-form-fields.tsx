@@ -50,9 +50,7 @@ export function InvoiceFormFields({
           <div className="w-full bg-surface-container border border-border-hairline rounded-xl px-4 py-2.5 text-xs text-on-surface">
             <span className="font-semibold text-on-surface">{customerName}</span>
             {customerEmail && (
-              <span className="text-muted text-[11px] ml-1.5 font-normal">
-                ({customerEmail})
-              </span>
+              <span className="text-muted text-[11px] ml-1.5 font-normal">({customerEmail})</span>
             )}
           </div>
         ) : allCustomers.length > 0 ? (

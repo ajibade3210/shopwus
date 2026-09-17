@@ -127,9 +127,15 @@ export function HeroRotatingCard({
               isAnimating ? "opacity-30 translate-y-1" : "opacity-100 translate-y-0"
             }`}
           >
-            <span className="eyebrow text-primary font-bold uppercase tracking-wider text-[10px]">{currentOrg.eyebrow}</span>
-            <h2 className="text-on-surface group-hover:text-primary transition-colors font-sans font-bold text-xl">{currentOrg.name}</h2>
-            <p className="line-clamp-2 text-on-surface-variant text-xs mt-1">{currentOrg.tagline}</p>
+            <span className="eyebrow text-primary font-bold uppercase tracking-wider text-[10px]">
+              {currentOrg.eyebrow}
+            </span>
+            <h2 className="text-on-surface group-hover:text-primary transition-colors font-sans font-bold text-xl">
+              {currentOrg.name}
+            </h2>
+            <p className="line-clamp-2 text-on-surface-variant text-xs mt-1">
+              {currentOrg.tagline}
+            </p>
           </div>
 
           {/* Card Footer with Custom Domain & CTA */}
@@ -156,7 +162,9 @@ export function HeroRotatingCard({
                 handleSelect(idx);
               }}
               className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentIndex ? "w-5 bg-primary" : "w-1.5 bg-border-hairline hover:bg-outline"
+                idx === currentIndex
+                  ? "w-5 bg-primary"
+                  : "w-1.5 bg-border-hairline hover:bg-outline"
               }`}
               aria-label={`Switch to ${org.name}`}
             />

@@ -67,7 +67,9 @@ export function AnalyticsStatCards({ data }: AnalyticsStatCardsProps) {
           </span>
           <span
             className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold ${
-              data.leads.isPositive ? "bg-tertiary-container text-on-tertiary-container" : "bg-destructive/10 text-destructive"
+              data.leads.isPositive
+                ? "bg-tertiary-container text-on-tertiary-container"
+                : "bg-destructive/10 text-destructive"
             }`}
           >
             {data.leads.isPositive ? <ArrowUpRight size={11} /> : <ArrowDownRight size={11} />}
@@ -87,7 +89,9 @@ export function AnalyticsStatCards({ data }: AnalyticsStatCardsProps) {
           </span>
           <span
             className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold ${
-              data.views.isPositive ? "bg-tertiary-container text-on-tertiary-container" : "bg-destructive/10 text-destructive"
+              data.views.isPositive
+                ? "bg-tertiary-container text-on-tertiary-container"
+                : "bg-destructive/10 text-destructive"
             }`}
           >
             {data.views.isPositive ? <ArrowUpRight size={11} /> : <ArrowDownRight size={11} />}

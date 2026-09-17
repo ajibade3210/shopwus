@@ -98,12 +98,17 @@ export function BlogArticlePage({ post, relatedPosts = [] }: BlogArticlePageProp
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
             {post.takeaways.map((t, idx) => (
-              <div key={idx} className="bg-card border border-border-hairline rounded-xl p-4 space-y-1">
+              <div
+                key={idx}
+                className="bg-card border border-border-hairline rounded-xl p-4 space-y-1"
+              >
                 <h3 className="text-xs font-bold text-on-surface flex items-center gap-1.5">
                   <CheckCircle2 size={13} className="text-tertiary shrink-0" />
                   <span>{t.title}</span>
                 </h3>
-                <p className="text-[11px] text-on-surface-variant leading-relaxed">{t.description}</p>
+                <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                  {t.description}
+                </p>
               </div>
             ))}
           </div>
@@ -113,9 +118,7 @@ export function BlogArticlePage({ post, relatedPosts = [] }: BlogArticlePageProp
         <div className="space-y-8 text-sm sm:text-base text-on-surface leading-relaxed">
           {post.sections.map((sec, sIdx) => (
             <section key={sIdx} className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-on-surface pt-2">
-                {sec.heading}
-              </h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-on-surface pt-2">{sec.heading}</h2>
 
               {sec.body.map((paragraph, pIdx) => (
                 <p key={pIdx} className="leading-relaxed">
@@ -169,9 +172,7 @@ export function BlogArticlePage({ post, relatedPosts = [] }: BlogArticlePageProp
         {/* Related Articles */}
         {relatedPosts.length > 0 && (
           <div className="border-t border-border-hairline pt-10 space-y-4">
-            <h3 className="text-lg font-bold text-on-surface">
-              Related Illustrated Guides
-            </h3>
+            <h3 className="text-lg font-bold text-on-surface">Related Illustrated Guides</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {relatedPosts.map(rel => (
                 <a

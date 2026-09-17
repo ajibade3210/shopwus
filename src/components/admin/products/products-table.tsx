@@ -61,7 +61,10 @@ export function ProductsTable({ products, isLoading, onEdit }: ProductsTableProp
               const isOutOfStock = product.trackInventory && product.inventoryCount <= 0;
 
               return (
-                <tr key={product.id} className="hover:bg-surface-container-low/50 transition-colors group">
+                <tr
+                  key={product.id}
+                  className="hover:bg-surface-container-low/50 transition-colors group"
+                >
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-surface-container-low border border-border-hairline overflow-hidden shrink-0 flex items-center justify-center">

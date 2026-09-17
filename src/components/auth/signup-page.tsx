@@ -190,7 +190,8 @@ export function SignupPage() {
 
             <div>
               <label className="block text-xs font-semibold text-on-surface mb-1.5">
-                Business / Brand Name <span className="text-text-muted font-normal">(optional)</span>
+                Business / Brand Name{" "}
+                <span className="text-text-muted font-normal">(optional)</span>
               </label>
               <div className="signup-field flex items-center bg-surface-container-lowest border border-border-hairline rounded-xl px-3.5 py-2.5 text-xs transition-all focus-within:border-primary">
                 <input
@@ -259,9 +260,7 @@ export function SignupPage() {
             </button>
 
             {/* Auth error */}
-            {authError && (
-              <p className="text-[11px] text-error text-center pt-1">{authError}</p>
-            )}
+            {authError && <p className="text-[11px] text-error text-center pt-1">{authError}</p>}
 
             {/* Terms Agreement Checkbox */}
             <label className="flex items-center gap-2 text-xs text-text-muted cursor-pointer select-none pt-1">
@@ -329,8 +328,8 @@ export function SignupPage() {
                 </span>
               </div>
               <p className="text-xs text-on-surface-variant leading-relaxed">
-                &ldquo;Through Shopwus&apos;s bespoke storefronts and invoicing, our team has seamless
-                customer tracking, instant deposits, and complete financial clarity.&rdquo;
+                &ldquo;Through Shopwus&apos;s bespoke storefronts and invoicing, our team has
+                seamless customer tracking, instant deposits, and complete financial clarity.&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-1">
                 <div className="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center text-xs font-bold font-sans">

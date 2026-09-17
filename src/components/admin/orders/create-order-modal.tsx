@@ -436,7 +436,9 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
                         >
                           -
                         </button>
-                        <span className="w-6 text-center font-medium font-mono text-on-surface">{item.quantity}</span>
+                        <span className="w-6 text-center font-medium font-mono text-on-surface">
+                          {item.quantity}
+                        </span>
                         <button
                           type="button"
                           onClick={() => handleUpdateQuantity(idx, item.quantity + 1)}
@@ -717,7 +719,10 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
 
           {/* Section 5: Order Notes */}
           <div>
-            <label htmlFor={notesId} className="block text-xs font-medium text-on-surface-variant mb-1">
+            <label
+              htmlFor={notesId}
+              className="block text-xs font-medium text-on-surface-variant mb-1"
+            >
               Internal Notes (Optional)
             </label>
             <textarea
@@ -734,12 +739,16 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
           <div className="p-4 bg-surface-container-low rounded-xl border border-border-hairline space-y-1.5 text-xs font-sans">
             <div className="flex justify-between text-muted">
               <span>Items Subtotal:</span>
-              <span className="font-mono font-bold text-on-surface">{formatCurrency(subtotal)}</span>
+              <span className="font-mono font-bold text-on-surface">
+                {formatCurrency(subtotal)}
+              </span>
             </div>
             {fulfillmentMode === "SHIP_TO_CUSTOMER" && (
               <div className="flex justify-between text-muted">
                 <span>Shipping Fee:</span>
-                <span className="font-mono font-bold text-on-surface">{formatCurrency(effectiveDeliveryFee)}</span>
+                <span className="font-mono font-bold text-on-surface">
+                  {formatCurrency(effectiveDeliveryFee)}
+                </span>
               </div>
             )}
             <div className="flex justify-between font-bold text-on-surface pt-2 border-t border-border-hairline text-sm">

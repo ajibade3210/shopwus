@@ -66,7 +66,9 @@ export function ValuationGuideSection() {
                   </h3>
                 </div>
 
-                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">{guide.summary}</p>
+                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                  {guide.summary}
+                </p>
 
                 <div className="border-t border-border-hairline pt-4 space-y-2.5">
                   <span className="text-xs font-bold uppercase tracking-wider text-text-muted block">

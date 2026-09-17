@@ -125,9 +125,7 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
                       <Truck size={16} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-on-surface text-xs">
-                        Courier Pickup Arranged
-                      </h4>
+                      <h4 className="font-bold text-on-surface text-xs">Courier Pickup Arranged</h4>
                       <p className="text-[11px] text-on-tertiary-container">
                         {order.courierName || "Terminal Africa Partner Courier"}
                       </p>
@@ -146,9 +144,7 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
                     </span>
                   </div>
                   <div>
-                    <span className="text-muted block text-[10px]">
-                      Shipment Reference:
-                    </span>
+                    <span className="text-muted block text-[10px]">Shipment Reference:</span>
                     <span className="font-mono text-on-surface truncate block">
                       {order.terminalShipmentId || "N/A"}
                     </span>
@@ -220,7 +216,10 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
                 </div>
                 <div>
                   <span className="text-muted block text-[11px]">Phone:</span>
-                  <a href={`tel:${order.customerPhone}`} className="text-primary hover:underline font-mono">
+                  <a
+                    href={`tel:${order.customerPhone}`}
+                    className="text-primary hover:underline font-mono"
+                  >
                     {order.customerPhone}
                   </a>
                 </div>
@@ -289,9 +288,7 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
                       <div>
                         <div className="font-semibold text-on-surface">{item.productName}</div>
                         {item.variantTitle && (
-                          <div className="text-[10px] text-muted">
-                            Variant: {item.variantTitle}
-                          </div>
+                          <div className="text-[10px] text-muted">Variant: {item.variantTitle}</div>
                         )}
                         <div className="text-[10px] text-muted">
                           <span className="font-sans font-bold tabular-nums text-on-surface">

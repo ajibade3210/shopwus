@@ -160,7 +160,10 @@ export function ValuationHealthModal({ isOpen, onClose, valuation }: ValuationHe
             {valuation.growthLevers?.map((lever, idx) => {
               if (typeof lever === "string") {
                 return (
-                  <p key={`lever-str-${idx}`} className="text-xs text-on-surface-variant leading-relaxed">
+                  <p
+                    key={`lever-str-${idx}`}
+                    className="text-xs text-on-surface-variant leading-relaxed"
+                  >
                     {lever}
                   </p>
                 );

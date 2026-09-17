@@ -76,9 +76,13 @@ export function InvoicePreviewCard({ invoice, totals, cardRef }: InvoicePreviewC
         <p className="text-sm font-semibold text-on-surface">
           {invoice.clientName || "Client Name"}
         </p>
-        {invoice.clientEmail && <p className="text-xs text-on-surface-variant">{invoice.clientEmail}</p>}
+        {invoice.clientEmail && (
+          <p className="text-xs text-on-surface-variant">{invoice.clientEmail}</p>
+        )}
         {invoice.clientAddress && (
-          <p className="text-xs text-on-surface-variant whitespace-pre-line">{invoice.clientAddress}</p>
+          <p className="text-xs text-on-surface-variant whitespace-pre-line">
+            {invoice.clientAddress}
+          </p>
         )}
       </div>
 
@@ -102,7 +106,9 @@ export function InvoicePreviewCard({ invoice, totals, cardRef }: InvoicePreviewC
               <div className="col-span-6 sm:col-span-7 font-medium text-on-surface">
                 {item.description || "Service deliverable"}
               </div>
-              <div className="col-span-2 text-center text-on-surface-variant font-mono">{item.quantity}</div>
+              <div className="col-span-2 text-center text-on-surface-variant font-mono">
+                {item.quantity}
+              </div>
               <div className="col-span-2 text-right text-on-surface-variant font-mono">
                 {formatMoney(Number(item.unitPrice || 0), currency)}
               </div>
@@ -162,7 +168,9 @@ export function InvoicePreviewCard({ invoice, totals, cardRef }: InvoicePreviewC
               <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block">
                 Payment Instructions
               </span>
-              <p className="text-on-surface-variant whitespace-pre-line leading-relaxed">{invoice.notes}</p>
+              <p className="text-on-surface-variant whitespace-pre-line leading-relaxed">
+                {invoice.notes}
+              </p>
             </div>
           )}
 
@@ -171,7 +179,9 @@ export function InvoicePreviewCard({ invoice, totals, cardRef }: InvoicePreviewC
               <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block">
                 Terms & Conditions
               </span>
-              <p className="text-on-surface-variant whitespace-pre-line leading-relaxed">{invoice.terms}</p>
+              <p className="text-on-surface-variant whitespace-pre-line leading-relaxed">
+                {invoice.terms}
+              </p>
             </div>
           )}
         </div>

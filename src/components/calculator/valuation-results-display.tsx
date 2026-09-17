@@ -14,9 +14,7 @@ export function ValuationResultsDisplay({ result }: ValuationResultsDisplayProps
     <div className="bg-card border border-border-hairline rounded-2xl p-6 sm:p-7 shadow-card space-y-5">
       {/* Top Header */}
       <div className="flex items-center justify-between border-b border-border-hairline pb-4">
-        <h2 className="text-lg sm:text-xl font-bold text-on-surface">
-          Valuation Results
-        </h2>
+        <h2 className="text-lg sm:text-xl font-bold text-on-surface">Valuation Results</h2>
 
         <div
           className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-tertiary-container text-on-tertiary-container border border-tertiary/20 cursor-default"

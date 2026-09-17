@@ -107,7 +107,9 @@ export function InvoiceInputForm({
       <div className="bg-card border border-border-hairline rounded-2xl p-5 sm:p-6 space-y-4 shadow-card">
         <div className="border-b border-border-hairline pb-4">
           <h2 className="text-sm font-semibold text-on-surface">Billed To & Terms</h2>
-          <p className="text-xs text-on-surface-variant">Client information and invoice scheduling.</p>
+          <p className="text-xs text-on-surface-variant">
+            Client information and invoice scheduling.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -197,7 +199,9 @@ export function InvoiceInputForm({
         <div className="flex items-center justify-between border-b border-border-hairline pb-4">
           <div>
             <h2 className="text-sm font-semibold text-on-surface">Items & Services</h2>
-            <p className="text-xs text-on-surface-variant">Add line items with quantity and unit rates.</p>
+            <p className="text-xs text-on-surface-variant">
+              Add line items with quantity and unit rates.
+            </p>
           </div>
           <button
             type="button"

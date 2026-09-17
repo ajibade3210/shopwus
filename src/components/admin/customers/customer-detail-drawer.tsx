@@ -34,7 +34,10 @@ export function CustomerDetailDrawer({
   const servicesList = customer.services || [];
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs transition-opacity" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs transition-opacity"
+      onClick={onClose}
+    >
       <aside
         className="fixed inset-y-0 right-0 z-50 w-full max-w-xl bg-card border-l border-border-hairline shadow-2xl flex flex-col font-sans overflow-hidden animate-in slide-in-from-right duration-200"
         onClick={e => e.stopPropagation()}
@@ -218,7 +221,9 @@ export function CustomerDetailDrawer({
                             onConfirmResendInvoice(inv);
                           }}
                           title={
-                            customer.isActive ? "Resend invoice to customer" : "Customer is inactive"
+                            customer.isActive
+                              ? "Resend invoice to customer"
+                              : "Customer is inactive"
                           }
                           className={`p-1.5 rounded-xl border transition-all ${
                             customer.isActive

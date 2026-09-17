@@ -112,7 +112,10 @@ export function ExpenseListTable({
               };
 
               return (
-                <tr key={expense.id} className="hover:bg-surface-container-low/50 transition-colors">
+                <tr
+                  key={expense.id}
+                  className="hover:bg-surface-container-low/50 transition-colors"
+                >
                   <td className="hidden sm:table-cell whitespace-nowrap text-on-surface-variant font-medium px-5 py-3.5 text-xs border-b border-border-hairline align-middle">
                     {formatDate(expense.date)}
                   </td>

@@ -303,7 +303,10 @@ export function CustomerImportModal({
                   </thead>
                   <tbody className="divide-y divide-border-hairline bg-card">
                     {parsedRecords.map((r, i) => (
-                      <tr key={`${r.email}-${i}`} className="hover:bg-surface-container-low/50 transition-colors">
+                      <tr
+                        key={`${r.email}-${i}`}
+                        className="hover:bg-surface-container-low/50 transition-colors"
+                      >
                         <td className="py-2 px-3 font-semibold text-on-surface">{r.name}</td>
                         <td className="py-2 px-3 text-muted">{r.phone || "—"}</td>
                         <td className="py-2 px-3 text-on-surface">{r.email}</td>
