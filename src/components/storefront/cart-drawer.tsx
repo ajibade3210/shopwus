@@ -17,7 +17,7 @@ import { formatCurrency } from "@/utils/currency";
 import { useCart } from "./cart-context";
 import { CheckoutModal } from "./checkout-modal";
 
-export function CartDrawer({ slug, studioName }: CartDrawerProps) {
+export function CartDrawer({ slug, studioName, buttonColor, radiusClass }: CartDrawerProps) {
   const {
     items,
     removeItem,
@@ -71,13 +71,13 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
         />
 
         <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-          <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between border-l border-[#eee7dc] animate-in slide-in-from-right duration-200">
+          <div className="w-screen max-w-md bg-card shadow-popover flex flex-col justify-between border-l border-border-hairline animate-in slide-in-from-right duration-200">
             {/* Header */}
-            <div className="p-5 border-b border-[#eee7dc] flex items-center justify-between bg-[#faf8f5]">
+            <div className="p-5 border-b border-border-hairline flex items-center justify-between bg-surface-low">
               <div className="flex items-center gap-2">
-                <ShoppingBag size={18} className="text-[#1f1d1a]" />
-                <h3 className="text-sm font-bold text-[#1f1d1a]">Your Shopping Bag</h3>
-                <span className="text-[11px] font-sans font-bold tabular-nums bg-white border border-[#e5e7eb] text-[#1f1d1a] px-2 py-0.5 rounded-full">
+                <ShoppingBag size={18} className="text-on-surface" />
+                <h3 className="text-sm font-bold text-on-surface">Your Shopping Bag</h3>
+                <span className="text-[11px] font-sans font-bold tabular-nums bg-surface-lowest border border-border-hairline text-on-surface px-2 py-0.5 rounded-full">
                   {cartCount}
                 </span>
               </div>
@@ -85,7 +85,7 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
               <button
                 type="button"
                 onClick={() => setIsCartOpen(false)}
-                className="p-1.5 text-[#6b7280] hover:text-[#1f1d1a] rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                className="p-1.5 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -93,9 +93,9 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
 
             {/* Stock Warning Notice */}
             {stockIssues.length > 0 && (
-              <div className="p-4 bg-red-50 border-b border-red-200 text-xs text-red-800 space-y-1.5 animate-fade-in">
+              <div className="p-4 bg-error-container border-b border-error/20 text-xs text-on-error-container space-y-1.5 animate-fade-in">
                 <div className="flex items-center gap-2 font-bold">
-                  <AlertCircle size={15} className="text-red-600 shrink-0" />
+                  <AlertCircle size={15} className="text-error shrink-0" />
                   <span>Inventory update before checkout:</span>
                 </div>
                 <ul className="list-disc pl-5 space-y-0.5 text-[11px]">
@@ -114,9 +114,9 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
             {/* Items List */}
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
               {items.length === 0 ? (
-                <div className="text-center py-16 text-[#6b7280]">
-                  <Package size={40} className="mx-auto mb-3 text-[#cbd5e1]" />
-                  <p className="text-sm font-semibold text-[#1f1d1a]">Your bag is empty</p>
+                <div className="text-center py-16 text-text-muted">
+                  <Package size={40} className="mx-auto mb-3 text-border-subtle" />
+                  <p className="text-sm font-semibold text-on-surface">Your bag is empty</p>
                   <p className="text-xs mt-1">Browse our products and add items to your cart.</p>
                 </div>
               ) : (
@@ -126,9 +126,9 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
                   return (
                     <div
                       key={item.id}
-                      className="flex gap-3.5 p-3.5 rounded-2xl border border-[#eee7dc] bg-white shadow-2xs"
+                      className="flex gap-3.5 p-3.5 rounded-2xl border border-border-hairline bg-card shadow-card"
                     >
-                      <div className="w-16 h-16 rounded-xl bg-[#f3f4f6] overflow-hidden border border-[#eee7dc] shrink-0 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-xl bg-surface-low overflow-hidden border border-border-hairline shrink-0 flex items-center justify-center">
                         {item.product.images?.[0] ? (
                           <img
                             src={item.product.images[0]}
@@ -136,18 +136,18 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <Package size={20} className="text-[#9ca3af]" />
+                          <Package size={20} className="text-text-muted" />
                         )}
                       </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start gap-2">
                           <div>
-                            <h4 className="text-xs font-bold text-[#1f1d1a] truncate">
+                            <h4 className="text-xs font-bold text-on-surface truncate">
                               {item.product.name}
                             </h4>
                             {item.variantTitle && (
-                              <p className="text-[11px] font-semibold text-[#9e633d]">
+                              <p className="text-[11px] font-semibold text-primary">
                                 {item.variantTitle}
                               </p>
                             )}
@@ -155,33 +155,33 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
                           <button
                             type="button"
                             onClick={() => removeItem(item.id)}
-                            className="text-[#9ca3af] hover:text-red-600 transition-colors p-1 cursor-pointer"
+                            className="text-text-muted hover:text-error transition-colors p-1 cursor-pointer"
                           >
                             <Trash2 size={13} />
                           </button>
                         </div>
 
-                        <div className="text-xs font-sans font-bold tabular-nums text-[#1f1d1a] mt-1.5">
+                        <div className="text-xs font-sans font-bold tabular-nums text-on-surface mt-1.5">
                           {formatCurrency(itemPrice * item.quantity)}
                         </div>
 
                         {/* Quantity Selector */}
                         <div className="flex items-center gap-2 mt-2">
-                          <div className="flex items-center border border-[#e5e7eb] rounded-lg bg-[#faf8f5]">
+                          <div className="flex items-center border border-border-hairline rounded-lg bg-surface-low">
                             <button
                               type="button"
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="px-2 py-0.5 text-xs text-[#6b7280] hover:text-black hover:bg-gray-200 rounded-l-lg transition-colors cursor-pointer"
+                              className="px-2 py-0.5 text-xs text-text-muted hover:text-on-surface hover:bg-surface-container rounded-l-lg transition-colors cursor-pointer"
                             >
                               <Minus size={11} />
                             </button>
-                            <span className="px-2.5 text-xs font-sans font-bold tabular-nums text-[#1f1d1a]">
+                            <span className="px-2.5 text-xs font-sans font-bold tabular-nums text-on-surface">
                               {item.quantity}
                             </span>
                             <button
                               type="button"
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="px-2 py-0.5 text-xs text-[#6b7280] hover:text-black hover:bg-gray-200 rounded-r-lg transition-colors cursor-pointer"
+                              className="px-2 py-0.5 text-xs text-text-muted hover:text-on-surface hover:bg-surface-container rounded-r-lg transition-colors cursor-pointer"
                             >
                               <Plus size={11} />
                             </button>
@@ -196,14 +196,14 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
 
             {/* Footer Summary & Checkout Button */}
             {items.length > 0 && (
-              <div className="p-5 border-t border-[#eee7dc] bg-[#faf8f5] space-y-3.5">
+              <div className="p-5 border-t border-border-hairline bg-surface-low space-y-3.5">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-[#665e57] font-medium">Subtotal</span>
-                  <span className="font-sans font-bold tabular-nums text-base text-[#1f1d1a]">
+                  <span className="text-text-muted font-medium">Subtotal</span>
+                  <span className="font-sans font-bold tabular-nums text-base text-on-surface">
                     {formatCurrency(subtotal)}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#8c827a]">
+                <p className="text-[11px] text-text-muted">
                   Shipping and taxes calculated during checkout.
                 </p>
 
@@ -211,7 +211,8 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
                   type="button"
                   disabled={isValidating}
                   onClick={handleOpenCheckout}
-                  className="w-full py-3.5 bg-[#111827] hover:bg-black text-white text-xs font-bold rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  style={{ backgroundColor: buttonColor || "var(--primary)" }}
+                  className={`w-full py-3.5 text-white text-xs font-bold shadow-xs hover:shadow-card hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 ${radiusClass || "rounded-2xl"}`}
                 >
                   <span>{isValidating ? "Checking Stock..." : "Proceed to Checkout"}</span>
                   <ArrowRight size={14} />
@@ -228,6 +229,8 @@ export function CartDrawer({ slug, studioName }: CartDrawerProps) {
         onClose={() => setIsCheckoutOpen(false)}
         slug={slug}
         studioName={studioName}
+        buttonColor={buttonColor}
+        radiusClass={radiusClass}
         onOrderComplete={() => {
           clearCart();
           setIsCheckoutOpen(false);

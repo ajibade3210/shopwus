@@ -26,7 +26,7 @@ export function StudioReviewsSection({
             href={googleLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-[#5c544d] hover:text-[#1c1917] bg-white hover:bg-[#faf6f0] px-4 py-2 rounded-full border border-[#d6c7b7] transition-all cursor-pointer shadow-2xs"
+            className="inline-flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface bg-card hover:bg-surface-low px-4 py-2 rounded-full border border-border-hairline transition-all cursor-pointer shadow-2xs"
           >
             <span>View More Reviews</span>
             <ArrowUpRight size={13} />
@@ -45,28 +45,28 @@ export function StudioReviewsSection({
         {reviews.map((rev, idx) => (
           <div
             key={rev.id || idx}
-            className="bg-white border border-[#e8dfd3] rounded-2xl p-5 sm:p-6 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all"
+            className="bg-card border border-border-hairline rounded-2xl p-5 sm:p-6 flex flex-col justify-between shadow-card hover:shadow-md transition-all"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="flex text-[#eab308]">
+                <div className="flex text-amber-500">
                   {[...Array(rev.rating || 5)].map((_, i) => (
                     <Star key={i} size={13} fill="currentColor" />
                   ))}
                 </div>
-                <span className="text-[10px] font-mono text-[#a89e92]">{rev.date}</span>
+                <span className="text-[10px] font-mono text-outline">{rev.date}</span>
               </div>
 
-              <p className="text-xs sm:text-sm text-[#47413b] italic leading-relaxed mb-6 font-serif">
+              <p className="text-xs sm:text-sm text-on-surface-variant italic leading-relaxed mb-6 font-serif">
                 &ldquo;{rev.comment}&rdquo;
               </p>
             </div>
 
             <div className="pt-2 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#f4ece1] text-[#855e2e] font-serif flex items-center justify-center text-xs font-bold shrink-0">
+              <div className="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container font-serif flex items-center justify-center text-xs font-bold shrink-0">
                 {rev.author ? rev.author[0] : "C"}
               </div>
-              <strong className="text-xs text-[#1c1917] block font-medium">{rev.author}</strong>
+              <strong className="text-xs text-on-surface block font-medium">{rev.author}</strong>
             </div>
           </div>
         ))}

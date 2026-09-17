@@ -24,25 +24,25 @@ import {
   submitConsultationInquiry,
   submitReview,
 } from "@/lib/api";
-import type { BusinessProfile, ElanEventsPageProps, PortfolioProject, ServiceItem } from "@/types";
+import type { BusinessProfile, PortfolioProject, ServiceItem, StorefrontPageProps } from "@/types";
 import { getButtonRadiusClass, isDarkColor } from "@/utils/helpers";
-import { ConsultationModal } from "./atelier/consultation-modal";
-import { StudioPortfolioSection } from "./atelier/portfolio-section";
-import { ProjectModal } from "./atelier/project-modal";
-import { ReviewModal } from "./atelier/review-modal";
-import { StudioReviewsSection } from "./atelier/reviews-section";
-import { StudioServicesSection } from "./atelier/services-section";
-import { StudioSocialSection } from "./atelier/social-section";
-import { StationeryCard } from "./atelier/stationery-card";
-import { StudioFooter } from "./atelier/studio-footer";
-import { StudioHighlightsCard } from "./atelier/studio-highlights-card";
-import { StudioNavbar } from "./atelier/studio-navbar";
 import { NotFoundView } from "./not-found-view";
+import { ConsultationModal } from "./storefront/consultation-modal";
+import { StudioPortfolioSection } from "./storefront/portfolio-section";
+import { ProjectModal } from "./storefront/project-modal";
+import { ReviewModal } from "./storefront/review-modal";
+import { StudioReviewsSection } from "./storefront/reviews-section";
+import { StudioServicesSection } from "./storefront/services-section";
+import { StudioSocialSection } from "./storefront/social-section";
+import { StationeryCard } from "./storefront/stationery-card";
+import { StudioFooter } from "./storefront/studio-footer";
+import { StudioHighlightsCard } from "./storefront/studio-highlights-card";
+import { StudioNavbar } from "./storefront/studio-navbar";
 
-export function ElanEventsPage({
+export function StorefrontPage({
   initialProfile,
   slug = APP_CONFIG.defaultSlug,
-}: ElanEventsPageProps) {
+}: StorefrontPageProps) {
   // Live dynamic profile state
   const [profile, setProfile] = useState<BusinessProfile | null>(initialProfile || null);
   const [isNotFound, setIsNotFound] = useState(false);
@@ -322,8 +322,8 @@ export function ElanEventsPage({
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#faf8f5]">
-        <div className="w-8 h-8 rounded-full border-2 border-[#0058be] border-t-transparent animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-surface">
+        <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
       </div>
     );
   }
@@ -340,7 +340,7 @@ export function ElanEventsPage({
   return (
     <CartProvider slug={profile.slug || slug}>
       <div
-        className="min-h-screen font-sans antialiased selection:bg-[#ecdac9] selection:text-[#191c1d] flex flex-col justify-between"
+        className="min-h-screen font-sans antialiased selection:bg-primary/20 selection:text-primary flex flex-col justify-between"
         style={{ backgroundColor: pageBgColor, color: textColor }}
       >
         {/* Floating Studio Navbar */}
@@ -477,7 +477,7 @@ export function ElanEventsPage({
               className={`rounded-3xl p-8 sm:p-14 text-center space-y-6 border transition-colors ${
                 isCardDark
                   ? "border-white/10 shadow-[0_12px_36px_rgba(0,0,0,0.35)]"
-                  : "border-[#ebd8ca] shadow-[0_12px_36px_rgba(40,30,20,0.06)]"
+                  : "border-border-hairline shadow-card"
               }`}
             >
               <div className="max-w-2xl mx-auto space-y-3">
@@ -495,7 +495,7 @@ export function ElanEventsPage({
                 </h2>
                 <p
                   className={`text-xs sm:text-sm leading-relaxed ${
-                    isCardDark ? "text-white/70" : "text-[#78716c]"
+                    isCardDark ? "text-white/70" : "text-outline"
                   }`}
                 >
                   {profile.footerDescription || DEFAULT_FOOTER_DESCRIPTION}
@@ -520,11 +520,10 @@ export function ElanEventsPage({
                     href={whatsAppLink}
                     target="_blank"
                     rel="noreferrer"
-                    style={{ color: "#1c1917" }}
-                    className={`bg-white hover:bg-[#fcfaf7] text-[#1c1917] border border-[#dec9ba] text-sm font-medium px-8 py-3.5 transition-all cursor-pointer flex items-center gap-2 shadow-2xs ${radiusClass}`}
+                    className={`bg-card hover:bg-surface-low text-on-surface border border-border-hairline text-sm font-medium px-8 py-3.5 transition-all cursor-pointer flex items-center gap-2 shadow-2xs ${radiusClass}`}
                   >
-                    <WhatsAppIcon className="w-4 h-4 text-[#25D366] shrink-0" />
-                    <span style={{ color: "#1c1917" }}>WhatsApp Us</span>
+                    <WhatsAppIcon className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>WhatsApp Us</span>
                   </a>
                 )}
               </div>
@@ -578,17 +577,17 @@ export function ElanEventsPage({
 
         {/* Global Toast Notification */}
         {toastMessage && (
-          <div className="fixed bottom-6 right-6 z-50 bg-[#1c1917] text-white text-xs px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 border border-[#38332e] animate-fade-in">
+          <div className="fixed bottom-6 right-6 z-50 bg-surface-lowest text-on-surface text-xs px-5 py-3.5 rounded-2xl shadow-popover flex items-center gap-3 border border-border-hairline animate-fade-in">
             <div
               style={{ backgroundColor: primaryColor }}
               className="w-5 h-5 rounded-full flex items-center justify-center text-white shrink-0"
             >
               <Check size={12} />
             </div>
-            <span>{toastMessage}</span>
+            <span className="font-medium">{toastMessage}</span>
             <button
               onClick={() => setToastMessage(null)}
-              className="text-[#a89e92] hover:text-white ml-2 cursor-pointer"
+              className="text-outline hover:text-on-surface ml-2 cursor-pointer transition-colors"
             >
               <X size={14} />
             </button>
@@ -596,7 +595,12 @@ export function ElanEventsPage({
         )}
 
         {/* E-Commerce Cart Drawer & Floating Bag Trigger */}
-        <CartDrawer slug={profile.slug || slug} studioName={profile.businessName} />
+        <CartDrawer
+          slug={profile.slug || slug}
+          studioName={profile.businessName}
+          buttonColor={buttonColor}
+          radiusClass={radiusClass}
+        />
         <CartFloatingButton buttonColor={buttonColor} radiusClass={radiusClass} />
       </div>
     </CartProvider>

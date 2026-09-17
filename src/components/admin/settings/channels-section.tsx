@@ -1,6 +1,6 @@
 import { RefreshCw, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getSocialChannelStyle } from "@/components/studio/atelier/social-badge";
+import { getSocialChannelStyle } from "@/components/studio/storefront/social-badge";
 import { SOCIAL_PREFIX_MAP } from "@/constants";
 import type { ChannelsSectionProps } from "@/types";
 import { isValidPhone, isValidUrl, sanitizeHandle } from "@/utils";
