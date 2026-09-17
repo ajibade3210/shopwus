@@ -14,6 +14,7 @@ import type {
   ShippingAddress,
 } from "@/types";
 import { formatCurrency } from "@/utils/currency";
+import { isDarkColor } from "@/utils/helpers";
 import { useCart } from "./cart-context";
 import { CheckoutDeliveryForm } from "./checkout-delivery-form";
 import { CheckoutOrderSummary } from "./checkout-order-summary";
@@ -36,6 +37,8 @@ export function CheckoutModal({
   const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
+
+  const isDarkBtn = buttonColor ? isDarkColor(buttonColor) : true;
 
   // Form State
   const [customerName, setCustomerName] = useState("");
@@ -342,8 +345,11 @@ export function CheckoutModal({
                   href={paymentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ backgroundColor: buttonColor || "var(--primary)" }}
-                  className={`w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-white text-xs font-bold shadow-xs hover:shadow-card hover:opacity-95 transition-all ${radiusClass || "rounded-2xl"}`}
+                  style={{
+                    backgroundColor: buttonColor || "var(--primary)",
+                    color: isDarkBtn ? "#ffffff" : "var(--on-surface)",
+                  }}
+                  className={`w-full inline-flex items-center justify-center gap-2 px-5 py-3 ${isDarkBtn ? "!text-white" : "text-on-surface"} text-xs font-bold shadow-xs hover:shadow-card hover:opacity-95 transition-all ${radiusClass || "rounded-2xl"}`}
                 >
                   <CreditCard size={14} /> Pay Now with Paystack
                 </a>
@@ -479,8 +485,11 @@ export function CheckoutModal({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                style={{ backgroundColor: buttonColor || "var(--primary)" }}
-                className={`px-6 py-2.5 text-white text-xs font-bold shadow-xs hover:shadow-card hover:opacity-95 transition-all disabled:opacity-50 flex items-center gap-1.5 cursor-pointer ${radiusClass || "rounded-xl"}`}
+                style={{
+                  backgroundColor: buttonColor || "var(--primary)",
+                  color: isDarkBtn ? "#ffffff" : "var(--on-surface)",
+                }}
+                className={`px-6 py-2.5 ${isDarkBtn ? "!text-white" : "text-on-surface"} text-xs font-bold shadow-xs hover:shadow-card hover:opacity-95 transition-all disabled:opacity-50 flex items-center gap-1.5 cursor-pointer ${radiusClass || "rounded-xl"}`}
               >
                 {isSubmitting ? "Placing Order..." : `Place Order (${formatCurrency(grandTotal)})`}
               </button>

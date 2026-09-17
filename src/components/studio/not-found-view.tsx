@@ -50,10 +50,10 @@ export function NotFoundView({ slug }: NotFoundViewProps) {
           </Link>
           <Link
             href="/login"
-            className="text-xs bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-full font-medium transition-all shadow-xs flex items-center gap-1.5 hover:shadow-card"
+            className="text-xs bg-primary hover:bg-primary-hover !text-white text-on-primary px-4 py-2 rounded-full font-semibold transition-all shadow-xs flex items-center gap-1.5 hover:shadow-card"
           >
             <span>Enter Studio</span>
-            <ArrowRight size={12} />
+            <ArrowRight size={12} className="!text-white text-on-primary" />
           </Link>
         </div>
       </header>
@@ -100,9 +100,9 @@ export function NotFoundView({ slug }: NotFoundViewProps) {
           <div className="flex flex-wrap items-center justify-center gap-3.5">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-medium px-6 py-3 rounded-full transition-all shadow-xs hover:shadow-card cursor-pointer"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover !text-white text-on-primary text-sm font-semibold px-6 py-3 rounded-full transition-all shadow-xs hover:shadow-card cursor-pointer"
             >
-              <Home size={15} />
+              <Home size={15} className="!text-white text-on-primary" />
               <span>Return to Homepage</span>
             </Link>
             <Link

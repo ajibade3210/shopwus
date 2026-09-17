@@ -31,8 +31,10 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-dark: var(--primary-dark);
   --color-primary-container: var(--primary-container);
+  --color-on-primary: var(--on-primary);
   --color-on-primary-container: var(--on-primary-container);
   --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
   --color-tertiary: var(--tertiary);
   --color-tertiary-container: var(--tertiary-container);
   --color-on-tertiary-container: var(--on-tertiary-container);
