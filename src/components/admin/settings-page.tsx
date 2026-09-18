@@ -14,6 +14,7 @@ import { IdentitySection } from "./settings/identity-section";
 import { PortfolioSection } from "./settings/portfolio-section";
 import { ServicesSection } from "./settings/services-section";
 import { SettingsSaveBar } from "./settings/settings-save-bar";
+import { StorefrontPreferencesSection } from "./settings/storefront-preferences-section";
 
 export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
   const { showToast } = useAdminToast();
@@ -123,6 +124,38 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
     handleDragEnd,
     handleSyncReviews,
     handleSave,
+    showStorefrontBanner,
+    setShowStorefrontBanner,
+    storefrontBannerUrl,
+    setStorefrontBannerUrl,
+    storefrontBannerHeader,
+    setStorefrontBannerHeader,
+    storefrontBannerBody,
+    setStorefrontBannerBody,
+    storefrontBannerTextColor,
+    setStorefrontBannerTextColor,
+    storefrontBannerBgColor,
+    setStorefrontBannerBgColor,
+    showStorefrontSales,
+    setShowStorefrontSales,
+    storefrontSalesPosition,
+    setStorefrontSalesPosition,
+    storefrontSalesUrl,
+    setStorefrontSalesUrl,
+    storefrontSalesHeader,
+    setStorefrontSalesHeader,
+    storefrontSalesBody,
+    setStorefrontSalesBody,
+    storefrontSalesBtnText,
+    setStorefrontSalesBtnText,
+    storefrontSalesBtnUrl,
+    setStorefrontSalesBtnUrl,
+    storefrontSalesLinkType,
+    setStorefrontSalesLinkType,
+    isUploadingStorefrontBanner,
+    isUploadingStorefrontSalesImage,
+    handleStorefrontBannerUpload,
+    handleStorefrontSalesImageUpload,
   } = useSettingsForm({ notify });
 
   const bottomBarRef = useRef<HTMLDivElement | null>(null);
@@ -198,6 +231,41 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
           updateChannelHandle={updateChannelHandle}
           toggleChannel={toggleChannel}
           onToast={notify}
+        />
+
+        <StorefrontPreferencesSection
+          showStorefrontBanner={showStorefrontBanner}
+          setShowStorefrontBanner={setShowStorefrontBanner}
+          storefrontBannerUrl={storefrontBannerUrl}
+          setStorefrontBannerUrl={setStorefrontBannerUrl}
+          storefrontBannerHeader={storefrontBannerHeader}
+          setStorefrontBannerHeader={setStorefrontBannerHeader}
+          storefrontBannerBody={storefrontBannerBody}
+          setStorefrontBannerBody={setStorefrontBannerBody}
+          storefrontBannerTextColor={storefrontBannerTextColor}
+          setStorefrontBannerTextColor={setStorefrontBannerTextColor}
+          storefrontBannerBgColor={storefrontBannerBgColor}
+          setStorefrontBannerBgColor={setStorefrontBannerBgColor}
+          showStorefrontSales={showStorefrontSales}
+          setShowStorefrontSales={setShowStorefrontSales}
+          storefrontSalesPosition={storefrontSalesPosition}
+          setStorefrontSalesPosition={setStorefrontSalesPosition}
+          storefrontSalesUrl={storefrontSalesUrl}
+          setStorefrontSalesUrl={setStorefrontSalesUrl}
+          storefrontSalesHeader={storefrontSalesHeader}
+          setStorefrontSalesHeader={setStorefrontSalesHeader}
+          storefrontSalesBody={storefrontSalesBody}
+          setStorefrontSalesBody={setStorefrontSalesBody}
+          storefrontSalesBtnText={storefrontSalesBtnText}
+          setStorefrontSalesBtnText={setStorefrontSalesBtnText}
+          storefrontSalesBtnUrl={storefrontSalesBtnUrl}
+          setStorefrontSalesBtnUrl={setStorefrontSalesBtnUrl}
+          storefrontSalesLinkType={storefrontSalesLinkType}
+          setStorefrontSalesLinkType={setStorefrontSalesLinkType}
+          isUploadingBanner={isUploadingStorefrontBanner}
+          isUploadingSalesImage={isUploadingStorefrontSalesImage}
+          handleStorefrontBannerUpload={handleStorefrontBannerUpload}
+          handleStorefrontSalesImageUpload={handleStorefrontSalesImageUpload}
         />
 
         <ServicesSection

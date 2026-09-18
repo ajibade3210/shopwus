@@ -29,7 +29,7 @@ AFTER EVERY CODE CHANGE, WITHOUT EXCEPTION, YOU MUST:
   - **NEVER** write new global classes or arbitrary selectors in `admin.css` or separate stylesheets.
   - All tables, sidebars, navigation headers, metric grids, modals, and buttons must use Tailwind utilities or standardized UI primitives (`<StatusBadge>`, `<TableCard>`, `<Metric>`, `<PageTitle>`).
   - **NEVER** write non-standard arbitrary media query classes like `[max-width:750px]:*`. Always use official Tailwind breakpoint prefixes: `sm:` (640px), `md:` (768px), `lg:` (1024px), `xl:` (1280px), or `max-lg:` / `max-sm:`.
-- **COMPONENT INTERFACES IN TYPE SECTION:** Check for components with interface declarations and move the interface to the type section (`src/types/{domain}.ts`). No component prop interfaces or hook options should be declared inline in component files.
+- **COMPONENT INTERFACES IN TYPE SECTION:** Check for components with interface or type declarations and move the interface or type to the type section (`src/types/{domain}.ts`). No component prop interfaces or hook options should be declared inline in component files.
 - **STRICT ARCHITECTURAL PLACEMENT:** Moving forward, EVERYTHING in the codebase MUST be defined strictly in its appropriate designated section without exception:
   - Types & Models $\rightarrow$ `src/types/{domain}.ts` (exported via `src/types/index.ts`)
   - Validation Schemas $\rightarrow$ `src/lib/schemas/{domain}.schema.ts`

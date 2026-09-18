@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Layers, Package, Plus, ShoppingBag, X } from "lucide-react";
+import { Check, Layers, Package, Plus, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useStorefrontProductsQuery } from "@/hooks/queries";
 import type { Product, ProductVariant, StudioProductsSectionProps } from "@/types";
@@ -237,7 +237,7 @@ export function StudioProductsSection({
                         ? "Out of stock"
                         : product.hasVariants
                           ? "Select Options"
-                          : "Add to Bag"
+                          : "Add to Cart"
                     }
                   >
                     {isAdded ? (
@@ -415,11 +415,11 @@ export function StudioProductsSection({
                     style={{ backgroundColor: themeColor }}
                     className={`w-full py-3.5 text-white text-xs font-bold shadow-xs hover:shadow-card hover:opacity-95 transition-all flex items-center justify-center gap-2 disabled:opacity-40 cursor-pointer ${buttonRadius}`}
                   >
-                    <ShoppingBag size={15} />
+                    <ShoppingCart size={15} />
                     <span>
                       {activeProduct.hasVariants && !selectedVariant
                         ? "Choose an Option"
-                        : "Add to Bag"}
+                        : "Add to Cart"}
                     </span>
                   </button>
                 </div>

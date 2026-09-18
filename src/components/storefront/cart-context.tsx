@@ -33,7 +33,8 @@ export function CartProvider({ children, slug }: { children: React.ReactNode; sl
     product: Product,
     quantity = 1,
     selectedOptions?: Record<string, string>,
-    selectedVariant?: ProductVariant | null
+    selectedVariant?: ProductVariant | null,
+    openCart: boolean = false
   ) => {
     const variantId = selectedVariant?.id || null;
     const variantTitle = selectedVariant?.title || null;
@@ -63,7 +64,9 @@ export function CartProvider({ children, slug }: { children: React.ReactNode; sl
         },
       ];
     });
-    setIsCartOpen(true);
+    if (openCart) {
+      setIsCartOpen(true);
+    }
   };
 
   const removeItem = (itemId: string) => {

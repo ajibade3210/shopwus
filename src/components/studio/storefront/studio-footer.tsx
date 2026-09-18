@@ -3,6 +3,7 @@
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { StudioFooterProps } from "@/types";
 
 const HOME_ROUTE = "/";
@@ -13,6 +14,11 @@ export function StudioFooter({
   secondaryColor = "var(--surface-container-low)",
   monogram,
 }: StudioFooterProps) {
+  const pathname = usePathname();
+  const isAboutPage = pathname?.endsWith("/about");
+  const studioSlug = profile.slug || "";
+  const aboutBasePath = `/${studioSlug}/about`;
+
   const hasSocials = profile.socialChannels?.some(c => c.connected);
   const hasPortfolio =
     profile.showPortfolio !== false && Boolean(profile.portfolio && profile.portfolio.length > 0);
@@ -65,25 +71,43 @@ export function StudioFooter({
 
           {/* Dynamic Navigation Links based on vendor's active preferences */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-on-surface-variant font-medium">
+            <Link href={`/${studioSlug}`} className="hover:text-primary transition-colors">
+              Store
+            </Link>
+            <Link href={aboutBasePath} className="hover:text-primary transition-colors">
+              About
+            </Link>
             {hasSocials && (
-              <a href="#social" className="hover:text-primary transition-colors">
+              <a
+                href={isAboutPage ? "#social" : `${aboutBasePath}#social`}
+                className="hover:text-primary transition-colors"
+              >
                 Socials
               </a>
             )}
             {hasPortfolio && (
-              <a href="#portfolio" className="hover:text-primary transition-colors">
+              <Link
+                href={isAboutPage ? "#portfolio" : `${aboutBasePath}#portfolio`}
+                className="hover:text-primary transition-colors"
+              >
                 Portfolio
-              </a>
+              </Link>
             )}
             {hasServices && (
-              <a href="#services" className="hover:text-primary transition-colors">
+              <Link
+                href={isAboutPage ? "#services" : `${aboutBasePath}#services`}
+                className="hover:text-primary transition-colors"
+              >
                 Services
-              </a>
+              </Link>
             )}
             {hasReviews && (
-              <a href="#reviews" className="hover:text-primary transition-colors">
+              <Link
+                href={isAboutPage ? "#reviews" : `${aboutBasePath}#reviews`}
+                className="hover:text-primary transition-colors"
+              >
                 Reviews
-              </a>
+              </Link>
             )}
             <a href="/login" className="hover:text-primary transition-colors">
               Studio Login

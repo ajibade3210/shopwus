@@ -127,7 +127,8 @@ export interface CartContextValue {
     product: Product,
     quantity?: number,
     selectedOptions?: Record<string, string>,
-    selectedVariant?: ProductVariant | null
+    selectedVariant?: ProductVariant | null,
+    openCart?: boolean
   ) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;

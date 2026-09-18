@@ -25,6 +25,7 @@ import { useBrandingSettings } from "./settings/use-branding-settings";
 import { useContactSettings } from "./settings/use-contact-settings";
 import { usePortfolioSettings } from "./settings/use-portfolio-settings";
 import { useServicesSettings } from "./settings/use-services-settings";
+import { useStorefrontSettings } from "./settings/use-storefront-settings";
 
 export function useSettingsForm({ notify }: UseSettingsFormOptions) {
   const branding = useBrandingSettings();
@@ -32,6 +33,7 @@ export function useSettingsForm({ notify }: UseSettingsFormOptions) {
   const services = useServicesSettings({ notify, categories: portfolio.categories });
   const appearance = useAppearanceSettings();
   const contact = useContactSettings({ notify });
+  const storefront = useStorefrontSettings({ notify });
   const queryClient = useQueryClient();
 
   const [saving, setSaving] = useState(false);
@@ -177,6 +179,54 @@ export function useSettingsForm({ notify }: UseSettingsFormOptions) {
           if (profile.colors) appearance.setColors(profile.colors);
           if (profile.buttonRadius) {
             appearance.setRadius(normalizeButtonRadius(profile.buttonRadius));
+          }
+
+          if (profile.showStorefrontBanner !== undefined) {
+            storefront.setShowStorefrontBanner(profile.showStorefrontBanner);
+          }
+          if (profile.storefrontBannerUrl) {
+            storefront.setStorefrontBannerUrl(profile.storefrontBannerUrl);
+          }
+          if (profile.storefrontBannerHeader) {
+            storefront.setStorefrontBannerHeader(profile.storefrontBannerHeader);
+          }
+          if (profile.storefrontBannerBody) {
+            storefront.setStorefrontBannerBody(profile.storefrontBannerBody);
+          }
+          if (profile.storefrontBannerTextColor) {
+            storefront.setStorefrontBannerTextColor(profile.storefrontBannerTextColor);
+          }
+          if (profile.storefrontBannerBgColor) {
+            storefront.setStorefrontBannerBgColor(profile.storefrontBannerBgColor);
+          }
+
+          if (profile.showStorefrontSales !== undefined) {
+            storefront.setShowStorefrontSales(profile.showStorefrontSales);
+          }
+          if (profile.storefrontSalesPosition) {
+            storefront.setStorefrontSalesPosition(
+              profile.storefrontSalesPosition as "top" | "bottom"
+            );
+          }
+          if (profile.storefrontSalesUrl) {
+            storefront.setStorefrontSalesUrl(profile.storefrontSalesUrl);
+          }
+          if (profile.storefrontSalesHeader) {
+            storefront.setStorefrontSalesHeader(profile.storefrontSalesHeader);
+          }
+          if (profile.storefrontSalesBody) {
+            storefront.setStorefrontSalesBody(profile.storefrontSalesBody);
+          }
+          if (profile.storefrontSalesBtnText) {
+            storefront.setStorefrontSalesBtnText(profile.storefrontSalesBtnText);
+          }
+          if (profile.storefrontSalesBtnUrl) {
+            storefront.setStorefrontSalesBtnUrl(profile.storefrontSalesBtnUrl);
+          }
+          if (profile.storefrontSalesLinkType) {
+            storefront.setStorefrontSalesLinkType(
+              profile.storefrontSalesLinkType as "product" | "category" | "whatsapp" | "custom"
+            );
           }
         })
         .catch(err => {
@@ -401,6 +451,20 @@ export function useSettingsForm({ notify }: UseSettingsFormOptions) {
         businessType: branding.businessType,
         colors: appearance.colors,
         buttonRadius: appearance.radius,
+        showStorefrontBanner: storefront.showStorefrontBanner,
+        storefrontBannerUrl: storefront.storefrontBannerUrl || null,
+        storefrontBannerHeader: storefront.storefrontBannerHeader || null,
+        storefrontBannerBody: storefront.storefrontBannerBody || null,
+        storefrontBannerTextColor: storefront.storefrontBannerTextColor || null,
+        storefrontBannerBgColor: storefront.storefrontBannerBgColor || null,
+        showStorefrontSales: storefront.showStorefrontSales,
+        storefrontSalesPosition: storefront.storefrontSalesPosition,
+        storefrontSalesUrl: storefront.storefrontSalesUrl || null,
+        storefrontSalesHeader: storefront.storefrontSalesHeader || null,
+        storefrontSalesBody: storefront.storefrontSalesBody || null,
+        storefrontSalesBtnText: storefront.storefrontSalesBtnText || null,
+        storefrontSalesBtnUrl: storefront.storefrontSalesBtnUrl || null,
+        storefrontSalesLinkType: storefront.storefrontSalesLinkType || null,
       });
 
       if (updated) {
@@ -660,6 +724,42 @@ export function useSettingsForm({ notify }: UseSettingsFormOptions) {
     setColors: appearance.setColors,
     radius: appearance.radius,
     setRadius: appearance.setRadius,
+
+    // Storefront Preferences (Banner & Sales Showcase)
+    showStorefrontBanner: storefront.showStorefrontBanner,
+    setShowStorefrontBanner: storefront.setShowStorefrontBanner,
+    storefrontBannerUrl: storefront.storefrontBannerUrl,
+    setStorefrontBannerUrl: storefront.setStorefrontBannerUrl,
+    storefrontBannerHeader: storefront.storefrontBannerHeader,
+    setStorefrontBannerHeader: storefront.setStorefrontBannerHeader,
+    storefrontBannerBody: storefront.storefrontBannerBody,
+    setStorefrontBannerBody: storefront.setStorefrontBannerBody,
+    storefrontBannerTextColor: storefront.storefrontBannerTextColor,
+    setStorefrontBannerTextColor: storefront.setStorefrontBannerTextColor,
+    storefrontBannerBgColor: storefront.storefrontBannerBgColor,
+    setStorefrontBannerBgColor: storefront.setStorefrontBannerBgColor,
+
+    showStorefrontSales: storefront.showStorefrontSales,
+    setShowStorefrontSales: storefront.setShowStorefrontSales,
+    storefrontSalesPosition: storefront.storefrontSalesPosition,
+    setStorefrontSalesPosition: storefront.setStorefrontSalesPosition,
+    storefrontSalesUrl: storefront.storefrontSalesUrl,
+    setStorefrontSalesUrl: storefront.setStorefrontSalesUrl,
+    storefrontSalesHeader: storefront.storefrontSalesHeader,
+    setStorefrontSalesHeader: storefront.setStorefrontSalesHeader,
+    storefrontSalesBody: storefront.storefrontSalesBody,
+    setStorefrontSalesBody: storefront.setStorefrontSalesBody,
+    storefrontSalesBtnText: storefront.storefrontSalesBtnText,
+    setStorefrontSalesBtnText: storefront.setStorefrontSalesBtnText,
+    storefrontSalesBtnUrl: storefront.storefrontSalesBtnUrl,
+    setStorefrontSalesBtnUrl: storefront.setStorefrontSalesBtnUrl,
+    storefrontSalesLinkType: storefront.storefrontSalesLinkType,
+    setStorefrontSalesLinkType: storefront.setStorefrontSalesLinkType,
+
+    isUploadingStorefrontBanner: storefront.isUploadingBanner,
+    isUploadingStorefrontSalesImage: storefront.isUploadingSalesImage,
+    handleStorefrontBannerUpload: storefront.handleStorefrontBannerUpload,
+    handleStorefrontSalesImageUpload: storefront.handleStorefrontSalesImageUpload,
 
     // Actions & State
     saving,

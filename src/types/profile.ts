@@ -141,6 +141,20 @@ export interface BusinessProfile {
   businessType?: BusinessType;
   totalCustomers?: number;
   isVerified?: boolean;
+  showStorefrontBanner?: boolean;
+  storefrontBannerUrl?: string | null;
+  storefrontBannerHeader?: string | null;
+  storefrontBannerBody?: string | null;
+  storefrontBannerTextColor?: string | null;
+  storefrontBannerBgColor?: string | null;
+  showStorefrontSales?: boolean;
+  storefrontSalesPosition?: "top" | "bottom" | string;
+  storefrontSalesUrl?: string | null;
+  storefrontSalesHeader?: string | null;
+  storefrontSalesBody?: string | null;
+  storefrontSalesBtnText?: string | null;
+  storefrontSalesBtnUrl?: string | null;
+  storefrontSalesLinkType?: "product" | "category" | "whatsapp" | "custom" | string | null;
   updatedAt: string;
 }
 
@@ -463,6 +477,7 @@ export interface StudioFooterProps {
 export interface StorefrontPageProps {
   initialProfile?: BusinessProfile;
   slug?: string;
+  hasOuterLayout?: boolean;
 }
 
 export type ElanEventsPageProps = StorefrontPageProps;
