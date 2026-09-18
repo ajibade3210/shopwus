@@ -244,7 +244,7 @@ export function useSettingsForm({ notify }: UseSettingsFormOptions) {
   };
 
   // Save on the fly: add project then immediately persist to API
-  const handleAddProjectAndSave = async (e: React.FormEvent) => {
+  const handleAddProjectAndSave = async (e: React.SubmitEvent) => {
     const newProj = portfolio.handleAddProject(e);
     if (!newProj) return; // validation failed in handleAddProject
     // Pass the new project directly — React state hasn't flushed yet

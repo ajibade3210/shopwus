@@ -216,7 +216,7 @@ export function CheckoutModal({
 
   if (!isOpen) return null;
 
-  const handleSubmitOrder = async (e: React.FormEvent) => {
+  const handleSubmitOrder = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setError(null);
 

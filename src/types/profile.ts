@@ -263,7 +263,7 @@ export interface PortfolioSectionProps {
   handleProjectImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleGalleryImagesUpload?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   removeGalleryImageFromNewProject?: (index: number) => void;
-  handleAddProject: (e: React.FormEvent) => void;
+  handleAddProject: (e: React.SubmitEvent) => void;
   removeProject: (id: string) => void;
   moveProject: (index: number, direction: "up" | "down") => void;
   draggedProjectIndex: number | null;
@@ -404,7 +404,7 @@ export interface ReviewModalProps {
     }>
   >;
   reviewSubmitting: boolean;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (e: React.SubmitEvent) => void;
   primaryColor: string;
   buttonColor: string;
   radiusClass: string;
@@ -442,7 +442,7 @@ export interface ConsultationModalProps {
     }>
   >;
   quoteSubmitting: boolean;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (e: React.SubmitEvent) => void;
   primaryColor: string;
   buttonColor: string;
   radiusClass: string;

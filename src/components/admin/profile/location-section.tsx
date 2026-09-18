@@ -66,7 +66,7 @@ export function LocationSection() {
     [state]
   );
 
-  const handleSaveSettings = async (e?: React.FormEvent) => {
+  const handleSaveSettings = async (e?: React.SyntheticEvent) => {
     if (e) e.preventDefault();
     setErrorMsg(null);
 

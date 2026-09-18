@@ -73,7 +73,7 @@ export function CustomerServiceModal({
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!formData.name) return;
     setIsAdding(true);

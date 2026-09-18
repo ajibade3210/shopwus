@@ -39,7 +39,7 @@ export function FooterAiConcierge() {
   const [customAnswer, setCustomAnswer] = useState<string | null>(null);
   const [isAiThinking, setIsAiThinking] = useState(false);
 
-  const handleAskCustom = (e: React.FormEvent) => {
+  const handleAskCustom = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!customQuestion.trim()) return;
     setIsAiThinking(true);

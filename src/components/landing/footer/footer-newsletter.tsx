@@ -7,7 +7,7 @@ export function FooterNewsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!email) return;
     setSubmitted(true);

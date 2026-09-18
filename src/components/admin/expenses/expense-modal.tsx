@@ -62,7 +62,7 @@ export function ExpenseModal({
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!title.trim()) {
       setError("Please enter a title for the expense.");

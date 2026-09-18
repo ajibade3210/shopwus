@@ -169,8 +169,8 @@ export function CreateOrderModal({ isOpen, onClose, onCreated }: CreateOrderModa
     setItems(prev => prev.filter((_, idx) => idx !== index));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.SyntheticEvent) => {
+    if (e) e.preventDefault();
     setErrorMsg(null);
 
     if (items.length === 0) {

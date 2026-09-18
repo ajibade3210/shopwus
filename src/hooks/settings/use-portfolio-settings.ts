@@ -70,7 +70,7 @@ export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
     notify(`Removed category "${cat}"`);
   };
 
-  const handleAddProject = (e: React.FormEvent): PortfolioProject | null => {
+  const handleAddProject = (e: React.SubmitEvent): PortfolioProject | null => {
     e.preventDefault();
     if (isUploadingProjectImage || isUploadingGalleryImages) {
       notify("Please wait for all images to finish uploading");

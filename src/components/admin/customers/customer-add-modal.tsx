@@ -88,7 +88,7 @@ export function CustomerAddModal({
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setContactError("");
     setAttributeError("");

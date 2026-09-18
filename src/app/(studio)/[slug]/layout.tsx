@@ -65,7 +65,7 @@ function StorefrontLayoutInner({ children, slug }: StorefrontLayoutInnerProps) {
     }
   }, [activeQuoteService, profile?.services, quoteForm.service]);
 
-  const handleQuoteSubmit = async (e: React.FormEvent) => {
+  const handleQuoteSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!profile) return;
     setQuoteSubmitting(true);
@@ -115,7 +115,7 @@ function StorefrontLayoutInner({ children, slug }: StorefrontLayoutInnerProps) {
     }
   };
 
-  const handleReviewSubmit = async (e: React.FormEvent) => {
+  const handleReviewSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!profile) return;
     setReviewSubmitting(true);

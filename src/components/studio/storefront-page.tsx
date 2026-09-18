@@ -233,7 +233,7 @@ export function StorefrontPage({
     showToast("Business profile link copied to clipboard!");
   };
 
-  const handleQuoteSubmit = async (e: React.FormEvent) => {
+  const handleQuoteSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!profile) return;
     setQuoteSubmitting(true);
@@ -288,7 +288,7 @@ export function StorefrontPage({
     }
   };
 
-  const handleReviewSubmit = async (e: React.FormEvent) => {
+  const handleReviewSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!profile) return;
     setReviewSubmitting(true);
