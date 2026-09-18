@@ -151,7 +151,7 @@ export function CategoryDropdown({
                       handleAdd();
                     }
                   }}
-                  className="flex-1 bg-[#f9fafb] border border-[#e5e7eb] rounded-lg px-2.5 py-1 text-xs text-[#191c1d] focus:outline-none focus:bg-white"
+                  className="flex-1 bg-[#f9fafb] border border-[#e5e7eb] rounded-lg px-2.5 py-1 text-xs text-[#191c1d] focus:outline-none"
                 />
                 <button
                   type="button"

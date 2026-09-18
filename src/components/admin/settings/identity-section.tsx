@@ -1,8 +1,7 @@
-import { ChevronDown, Loader2, Lock, Trash2, Upload } from "lucide-react";
+import { ChevronDown, Loader2, Trash2, Upload } from "lucide-react";
 import type { CurrencyCode, IdentitySectionProps } from "@/types";
 import { isValidUrl, slugify } from "@/utils";
 import { Card } from "./card";
-import { GooglePlacesAutocompleteField } from "./google-places-autocomplete-field";
 
 export function IdentitySection({
   name,
@@ -10,14 +9,8 @@ export function IdentitySection({
   slug,
   setSlug,
   slugStatus,
-  tagline,
-  setTagline,
-  location,
-  setLocation,
   website,
   setWebsite,
-  email,
-  setEmail: _setEmail,
   currency = "NGN",
   setCurrency,
   businessType: _businessType,
@@ -232,59 +225,7 @@ export function IdentitySection({
             </div>
           </div>
 
-          {/* Row 2: Core Value */}
-          <div className="md:col-span-2 space-y-2">
-            <label className="text-xs font-semibold text-[#374151] tracking-wide block">
-              Core value
-            </label>
-            <input
-              value={tagline}
-              onChange={e => setTagline(e.target.value)}
-              placeholder="e.g. Bespoke luxury wedding design and creative direction"
-              className="w-full rounded-lg border border-[#d1d5db] bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#111827] focus:outline-none shadow-2xs"
-            />
-          </div>
-
-          {/* Row 3: Location & Email */}
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#374151] tracking-wide block">
-              Location
-            </label>
-            <GooglePlacesAutocompleteField
-              value={location}
-              onChange={setLocation}
-              onPlaceSelected={place => {
-                setLocation(place.address || location);
-              }}
-              placeholder="e.g. Victoria Island, Lagos, Nigeria"
-            />
-          </div>
-
-          <div className="space-y-2 opacity-60 cursor-not-allowed select-none">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-semibold text-[#6b7280] tracking-wide block cursor-not-allowed">
-                Email
-              </label>
-              <span className="inline-flex items-center gap-1 text-[11px] text-[#6b7280] font-medium">
-                <Lock size={11} className="text-[#6b7280]" />
-                <span>Primary account email</span>
-              </span>
-            </div>
-            <div className="relative flex items-center">
-              <input
-                type="email"
-                value={email}
-                disabled
-                readOnly
-                className="w-full rounded-lg border border-[#d1d5db] bg-[#e5e7eb]/75 px-3.5 py-2.5 pr-10 text-xs sm:text-sm !text-[#6b7280] cursor-not-allowed select-none focus:outline-none shadow-none font-normal"
-              />
-              <div className="pointer-events-none absolute right-3 text-[#6b7280]">
-                <Lock size={14} />
-              </div>
-            </div>
-          </div>
-
-          {/* Row 4: Website & Currency */}
+          {/* Row 2: Website & Currency */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-semibold text-[#374151] tracking-wide block">
@@ -303,7 +244,7 @@ export function IdentitySection({
               placeholder="e.g. sitename.com or https://sitename.com"
               className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#111827] focus:outline-none shadow-2xs transition-colors ${
                 website && !isValidUrl(website)
-                  ? "border-amber-400 focus:border-amber-500 bg-amber-50/20"
+                  ? "border-amber-400 bg-amber-50/20"
                   : "border-[#d1d5db]"
               }`}
             />

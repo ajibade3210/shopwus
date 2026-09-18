@@ -1,6 +1,6 @@
 import { RefreshCw, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getSocialChannelStyle } from "@/components/studio/atelier/social-badge";
+import { getSocialChannelStyle } from "@/components/studio/storefront/social-badge";
 import { SOCIAL_PREFIX_MAP } from "@/constants";
 import type { ChannelsSectionProps } from "@/types";
 import { isValidPhone, isValidUrl, sanitizeHandle } from "@/utils";
@@ -130,7 +130,7 @@ export function ChannelsSection({
                   value={googleReviewsLink}
                   onChange={e => setGoogleReviewsLink(e.target.value)}
                   placeholder="https://business.google.com/..."
-                  className="flex-1 h-9 bg-white border border-[#d1d5db] focus:border-[#191c1d] rounded-lg px-3 text-xs text-[#191c1d] focus:outline-none shadow-2xs"
+                  className="flex-1 h-9 bg-white border border-[#d1d5db] rounded-lg px-3 text-xs text-[#191c1d] focus:outline-none shadow-2xs"
                 />
                 <button
                   type="button"
@@ -252,7 +252,7 @@ export function ChannelsSection({
                           boxShadow: "none",
                           background: "transparent",
                         }}
-                        className="social-input-field w-full text-[10px] text-[#191c1d] border-none p-0 outline-none ring-0 shadow-none focus:outline-none focus:ring-0 focus:border-none focus-visible:outline-none focus-visible:ring-0 placeholder:text-[#9ca3af] bg-transparent font-medium min-h-0 h-auto rounded-none leading-none"
+                        className="social-input-field w-full text-[10px] text-[#191c1d] border-none p-0 outline-none focus:outline-none placeholder:text-[#9ca3af] bg-transparent font-medium min-h-0 h-auto rounded-none leading-none"
                       />
                     </div>
                   </div>

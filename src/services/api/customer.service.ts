@@ -4,6 +4,7 @@ import type {
   AddServiceInput,
   Customer,
   CustomerImportResult,
+  CustomersSummary,
   ImportCustomerRecord,
   NewCustomerInput,
   ServiceStatus,
@@ -21,12 +22,6 @@ export async function getCustomers(query?: string, isActive?: boolean): Promise<
   });
   if (Array.isArray(data)) return data;
   return data?.items || data?.customers || data?.data || [];
-}
-
-export interface CustomersSummary {
-  total: number;
-  activeServicesCount: number;
-  totalRevenue: number;
 }
 
 export async function getCustomersSummary(): Promise<CustomersSummary> {

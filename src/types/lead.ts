@@ -47,6 +47,12 @@ export interface PublicInquiryResponse {
   createdAt: string;
 }
 
+export interface LeadsSummary {
+  total: number;
+  newToday: number;
+  conversion: number;
+}
+
 export type LeadFilterStatus = "all" | "active" | "new" | "contacted" | "qualified" | "converted";
 
 export interface LeadTableProps {
@@ -57,6 +63,13 @@ export interface LeadTableProps {
   statusFilter?: LeadFilterStatus;
   onStatusFilterChange?: (status: LeadFilterStatus) => void;
   onSelectLead: (id: string) => void;
+  selectedLeadIds?: string[];
+  onToggleSelect?: (id: string) => void;
+  onSelectAll?: () => void;
+  onClearSelection?: () => void;
+  onDeleteSelected?: () => Promise<unknown>;
+  isDeletingBulk?: boolean;
+  onDeleteLead?: (lead: Lead) => void;
   currentPage: number;
   totalPages: number;
   pageSize: number;
@@ -72,6 +85,8 @@ export interface LeadDetailDrawerProps {
   onOpenMessageModal: (lead: Lead) => void;
   onConvertToCustomer: (leadId: string) => void;
   onIssueInvoice: (lead: Lead) => void;
+  onDeleteLead?: (leadId: string) => Promise<unknown>;
+  isDeleting?: boolean;
 }
 
 export interface LeadMessageModalProps {

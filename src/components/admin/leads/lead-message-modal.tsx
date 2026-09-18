@@ -149,7 +149,7 @@ export function LeadMessageModal({
             onClick={() => onSendWhatsApp(lead, lead.phone || "", messageText)}
             className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
               lead.phone?.trim() && !isSendingEmail
-                ? "bg-[#15803d] hover:bg-[#166534] text-white shadow-xs hover:-translate-y-0.5 cursor-pointer"
+                ? "bg-[#15803d] hover:bg-[#166534] text-white shadow-xs cursor-pointer"
                 : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb] cursor-not-allowed opacity-60"
             }`}
             title={
@@ -168,7 +168,7 @@ export function LeadMessageModal({
             onClick={() => setShowEmailConfirm(true)}
             className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
               lead.email?.trim() && !isSendingEmail && messageText.trim()
-                ? "bg-[#1e40af] hover:bg-[#1e3a8a] text-white shadow-xs hover:-translate-y-0.5 cursor-pointer"
+                ? "bg-[#1e40af] hover:bg-[#1e3a8a] text-white shadow-xs cursor-pointer"
                 : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb] cursor-not-allowed opacity-60"
             }`}
             title={lead.email?.trim() ? "Send via Email and mark as Contacted" : "Email required"}

@@ -1,87 +1,124 @@
 :root {
-  /* VibeCoder Lumina Surfaces */
-  --surface: #f8f9fa;
-  --surface-dim: #d9dadb;
-  --surface-bright: #f8f9fa;
+  /* ==========================================================================
+     Analytics & Enterprise Intelligence UI — Surface Tokens
+     ========================================================================== */
+  --surface: #f7fafe;
+  --surface-dim: #d7dade;
+  --surface-bright: #f7fafe;
   --surface-container-lowest: #ffffff;
-  --surface-container-low: #f3f4f5;
-  --surface-container: #edeeef;
-  --surface-container-high: #e7e8e9;
-  --surface-container-highest: #e1e3e4;
-  --surface-variant: #e1e3e4;
+  --surface-container-low: #f1f4f8;
+  --surface-container: #ebeef2;
+  --surface-container-high: #e5e8ec;
+  --surface-container-highest: #e0e3e7;
+  --surface-variant: #e0e3e7;
 
-  /* VibeCoder Lumina Typography & Text Colors */
-  --on-surface: #191c1d;
-  --on-surface-variant: #444748;
-  --text-main: #1f2937;
-  --text-muted: #6b7280;
-  --inverse-surface: #2e3132;
-  --inverse-on-surface: #f0f1f2;
+  /* ==========================================================================
+     Typography & Contrast (WCAG AA Compliant)
+     ========================================================================== */
+  --on-surface: #181c1f;
+  --on-surface-variant: #40484d;
+  --text-main: #181c1f;
+  --text-muted: #64748b;
+  --text-placeholder: #64748b;
+  --inverse-surface: #2d3134;
+  --inverse-on-surface: #eef1f5;
 
-  /* Primary (Monochromatic) & Secondary (Electric Blue) */
-  --primary: #000000;
+  /* ==========================================================================
+     Brand Interactive (Oceanic Cyan-Slate & Midnight Abyss)
+     ========================================================================== */
+  --primary: #13678a;
+  --primary-hover: #0e526e;
+  --primary-dark: #004e6b;
   --on-primary: #ffffff;
-  --primary-container: #1c1b1b;
-  --on-primary-container: #858383;
-  --inverse-primary: #c8c6c5;
-  --secondary: #0058be;
+  --primary-container: #cae6fc;
+  --on-primary-container: #004e6b;
+  --inverse-primary: #8bcff6;
+
+  --secondary: #012030;
   --on-secondary: #ffffff;
-  --secondary-container: #2170e4;
-  --on-secondary-container: #fefcff;
-  --electric-blue: #3b82f6;
+  --secondary-container: #cae6fc;
+  --on-secondary-container: #4d687a;
+  --electric-blue: #13678a;
 
-  /* Outlines & Borders */
-  --outline: #747878;
-  --outline-variant: #c4c7c7;
-  --border-subtle: #e5e7eb;
-  --code-bg: #f3f4f6;
+  /* ==========================================================================
+     Positive Trajectory / Mint Accents
+     ========================================================================== */
+  --tertiary: #45b69c;
+  --tertiary-dark: #005244;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #ebf8f2;
+  --on-tertiary-container: #2d8a74;
+  --tertiary-fixed: #89f6d9;
+  --tertiary-fixed-dim: #6cd9be;
 
-  /* Error */
-  --error: #ba1a1a;
+  /* ==========================================================================
+     Critical / Downward Indicators (Coral)
+     ========================================================================== */
+  --error: #e76f51;
   --on-error: #ffffff;
-  --error-container: #ffdad6;
-  --on-error-container: #93000a;
+  --error-container: #feefef;
+  --on-error-container: #d9383a;
 
-  /* Fixed Color Accents */
-  --primary-fixed: #e5e2e1;
-  --primary-fixed-dim: #c8c6c5;
-  --on-primary-fixed: #1c1b1b;
-  --on-primary-fixed-variant: #474746;
-  --secondary-fixed: #d8e2ff;
-  --secondary-fixed-dim: #adc6ff;
-  --on-secondary-fixed: #001a42;
-  --on-secondary-fixed-variant: #004395;
+  /* ==========================================================================
+     Borders & Hairlines
+     ========================================================================== */
+  --border-hairline: rgba(203, 213, 225, 0.7);
+  --border-subtle: #e2e8f0;
+  --outline: #70787e;
+  --outline-variant: #bfc7ce;
+  --code-bg: #f1f4f8;
 
-  /* Atelier Luxury Brand Tokens */
-  --atelier-canvas: #faf8f5;
-  --atelier-warm: #faf7f2;
-  --atelier-card: #ffffff;
-  --atelier-line: #eee7dc;
-  --atelier-subtle: #f4eee6;
-  --atelier-ink: #1f1d1a;
-  --atelier-body: #665e57;
-  --atelier-muted: #8c827a;
-  --atelier-accent: #9e633d;
-  --atelier-accent-hover: #c59a78;
+  /* ==========================================================================
+     Fixed Color Accents
+     ========================================================================== */
+  --primary-fixed: #c4e7ff;
+  --primary-fixed-dim: #8bcff6;
+  --on-primary-fixed: #001e2c;
+  --on-primary-fixed-variant: #004c69;
+  --secondary-fixed: #cae6fc;
+  --secondary-fixed-dim: #aecadf;
+  --on-secondary-fixed: #001e2e;
+  --on-secondary-fixed-variant: #2f4a5b;
 
-  /* Backward Compatibility Mappings */
+  /* ==========================================================================
+     Elevation Shadows
+     ========================================================================== */
+  --shadow-card: 0 4px 20px -2px rgba(19, 103, 138, 0.06), 0 2px 6px -1px rgba(1, 32, 48, 0.04);
+  --shadow-hero: 0 12px 28px -6px rgba(1, 32, 48, 0.22);
+  --shadow-popover: 0 16px 36px -4px rgba(1, 32, 48, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+
+  /* ==========================================================================
+     Backward Compatibility Mappings (Prevents regressions in unmigrated code)
+     ========================================================================== */
+  --atelier-canvas: var(--surface);
+  --atelier-warm: var(--surface-container-low);
+  --atelier-card: var(--surface-container-lowest);
+  --atelier-line: var(--border-subtle);
+  --atelier-subtle: var(--border-hairline);
+  --atelier-ink: var(--on-surface);
+  --atelier-body: var(--on-surface-variant);
+  --atelier-muted: var(--text-muted);
+  --atelier-accent: var(--primary);
+  --atelier-accent-hover: var(--primary-hover);
+
   --background: var(--surface);
   --foreground: var(--on-surface);
   --muted: var(--text-muted);
   --line: var(--border-subtle);
   --paper: var(--surface-container-lowest);
-  --ink: var(--primary);
+  --ink: var(--on-surface);
   --soft: var(--surface-container-low);
-  --canvas-subtle: #faf8f5;
-  --border-card-subtle: #ded7cb;
-  --border-card-light: #eee7dc;
-  --action-dark: #111827;
+  --canvas-subtle: var(--surface);
+  --border-card-subtle: var(--border-hairline);
+  --border-card-light: var(--border-subtle);
+  --action-dark: var(--primary-dark);
 
   /* Fonts */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans:
+    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --sans: var(--font-sans);
-  --serif: var(--font-sans);
+  --serif: var(--font-serif, "Playfair Display", Georgia, serif);
 }
 
 /* ==========================================================================

@@ -150,13 +150,9 @@ export interface IdentitySectionProps {
   slug: string;
   setSlug: (v: string) => void;
   slugStatus: "checking" | "available" | "taken" | "idle";
-  tagline: string;
-  setTagline: (v: string) => void;
-  location: string;
-  setLocation: (v: string) => void;
   website: string;
   setWebsite: (v: string) => void;
-  email: string;
+  email?: string;
   setEmail?: (v: string) => void;
   currency: CurrencyCode;
   setCurrency: (v: CurrencyCode) => void;
@@ -464,10 +460,12 @@ export interface StudioFooterProps {
   monogram: string;
 }
 
-export interface ElanEventsPageProps {
+export interface StorefrontPageProps {
   initialProfile?: BusinessProfile;
   slug?: string;
 }
+
+export type ElanEventsPageProps = StorefrontPageProps;
 
 export interface ProfileIdentityCardProps {
   name: string;
@@ -475,16 +473,11 @@ export interface ProfileIdentityCardProps {
   phone: string;
   avatar: string;
   studioName?: string;
-  bankName?: string | null;
-  accountName?: string | null;
-  accountNumber?: string | null;
   onSave: (updates: {
     name: string;
     email: string;
     phone: string;
-    bankName?: string | null;
-    accountName?: string | null;
-    accountNumber?: string | null;
+    studioName?: string;
   }) => Promise<void>;
 }
 
@@ -530,4 +523,17 @@ export interface EditHeaderModalProps {
     includeHeaderInEmail: boolean
   ) => Promise<void>;
   onToast: (msg: string) => void;
+}
+
+export interface UseServicesSettingsOptions {
+  notify: (message: string) => void;
+  categories?: string[];
+}
+
+export interface UseContactSettingsOptions {
+  notify: (message: string) => void;
+}
+
+export interface UsePortfolioSettingsOptions {
+  notify: (message: string) => void;
 }

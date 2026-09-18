@@ -73,6 +73,8 @@ export interface ExpenseModalProps {
   onClose: () => void;
   onToast: (msg: string) => void;
   onExpenseSaved?: (expense: Expense) => void;
+  onDelete?: (id: string, title: string) => Promise<void> | void;
+  isDeleting?: boolean;
 }
 
 export interface ExpenseListTableProps {

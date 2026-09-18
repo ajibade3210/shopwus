@@ -41,6 +41,25 @@ export interface Invoice {
   updatedAt: string;
 }
 
+export interface InvoicesSummary {
+  totalInvoiced: number;
+  paidRevenue: number;
+  outstandingRevenue: number;
+  totalCount: number;
+  paidCount: number;
+  collectionRate: number;
+}
+
+export interface InvoicePdfResponse {
+  status?: string;
+  ready?: boolean;
+  downloadUrl?: string;
+  pdfUrl?: string;
+  filename?: string;
+  invoiceNumber?: string;
+  message?: string;
+}
+
 export interface InvoiceInput {
   id?: string;
   invoiceNumber?: string;
@@ -198,6 +217,8 @@ export interface InvoiceTableProps {
   onSelectInvoice: (invoice: Invoice) => void;
   onMarkPaid: (id: string) => void;
   onMarkUnpaid: (id: string) => void;
+  onDeleteDraft?: (invoice: Invoice) => void;
+  isDeleting?: boolean;
   currentPage: number;
   totalPages: number;
   pageSize: number;

@@ -5,6 +5,7 @@ import { exportLeadsCSV } from "@/services/api/leads.service";
 import type { Lead, LeadFilterStatus } from "@/types";
 import {
   useConvertLeadMutation,
+  useDeleteLeadMutation,
   useLeadsQuery,
   useLeadsSummaryQuery,
   useUpdateLeadStatusMutation,
@@ -22,6 +23,7 @@ export function useLeads(notify?: (message: string) => void) {
   const { data: summary } = useLeadsSummaryQuery();
   const convertMutation = useConvertLeadMutation();
   const updateStatusMutation = useUpdateLeadStatusMutation();
+  const deleteMutation = useDeleteLeadMutation();
 
   const handleSearch = (val: string) => {
     setSearchQuery(val);
@@ -74,6 +76,31 @@ export function useLeads(notify?: (message: string) => void) {
     }
   };
 
+  const handleDeleteLead = async (leadId: string) => {
+    try {
+      await deleteMutation.mutateAsync(leadId);
+      setSelectedLeadId(null);
+      notify?.("Lead inquiry deleted successfully.");
+      return true;
+    } catch {
+      notify?.("Failed to delete lead inquiry.");
+      return false;
+    }
+  };
+
+  const handleBulkDeleteLeads = async (leadIds: string[]) => {
+    if (leadIds.length === 0) return false;
+    try {
+      await Promise.all(leadIds.map(id => deleteMutation.mutateAsync(id)));
+      setSelectedLeadId(null);
+      notify?.(`${leadIds.length} lead${leadIds.length > 1 ? "s" : ""} deleted successfully.`);
+      return true;
+    } catch {
+      notify?.("Failed to delete selected leads.");
+      return false;
+    }
+  };
+
   const selectedLead = items.find(l => l.id === selectedLeadId) || null;
 
   const metrics = useMemo(() => {
@@ -103,6 +130,7 @@ export function useLeads(notify?: (message: string) => void) {
     paginatedItems,
     isExporting,
     isConverting: convertMutation.isPending,
+    isDeleting: deleteMutation.isPending,
     isLoading,
     metrics,
     statusFilter,
@@ -111,5 +139,7 @@ export function useLeads(notify?: (message: string) => void) {
     handleExport,
     handleConvertToCustomer,
     handleUpdateStatus,
+    handleDeleteLead,
+    handleBulkDeleteLeads,
   };
 }

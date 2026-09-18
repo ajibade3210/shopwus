@@ -35,26 +35,25 @@ export function NotFoundView({ slug }: NotFoundViewProps) {
   };
 
   return (
-    <main className="min-h-screen bg-[#faf8f5] text-[#191c1d] flex flex-col justify-between selection:bg-[#d8e2ff] selection:text-[#0058be] font-sans antialiased relative overflow-hidden">
+    <main className="min-h-screen bg-surface text-on-surface flex flex-col justify-between selection:bg-primary-container selection:text-on-primary-container font-sans antialiased relative overflow-hidden">
       {/* Top Header Navigation */}
-      <header className="w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between z-10">
+      <header className="w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between z-10 border-b border-border-hairline">
         <BrandLogo subtitle="Atelier Studio" />
 
         <div className="flex items-center gap-2.5">
           <Link
             href="/"
-            className="text-xs text-[#5c5f60] hover:text-[#191c1d] font-medium transition-colors flex items-center gap-1.5 px-3.5 py-2 rounded-full hover:bg-black/5 text-decoration-none"
+            className="text-xs text-text-muted hover:text-on-surface font-medium transition-colors flex items-center gap-1.5 px-3.5 py-2 rounded-full hover:bg-surface-low"
           >
             <Home size={13} />
             <span>Home</span>
           </Link>
           <Link
             href="/login"
-            style={{ color: "#ffffff" }}
-            className="text-xs bg-[#191c1d] !text-white px-4 py-2 rounded-full font-medium hover:bg-[#2b2e30] transition-all shadow-xs flex items-center gap-1.5 text-decoration-none hover:shadow-sm"
+            className="text-xs bg-primary hover:bg-primary-hover !text-white text-on-primary px-4 py-2 rounded-full font-semibold transition-all shadow-xs flex items-center gap-1.5 hover:shadow-card"
           >
             <span>Enter Studio</span>
-            <ArrowRight size={12} />
+            <ArrowRight size={12} className="!text-white text-on-primary" />
           </Link>
         </div>
       </header>
@@ -64,30 +63,30 @@ export function NotFoundView({ slug }: NotFoundViewProps) {
         {/* Centered Hero Header */}
         <div className="relative text-center max-w-2xl mx-auto mb-10">
           {/* Architectural Watermark 404 */}
-          <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 font-serif text-[140px] sm:text-[190px] md:text-[230px] font-bold text-[#b91c1c]/[0.04] select-none pointer-events-none -z-10 leading-none tracking-tight">
+          <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 font-serif text-[140px] sm:text-[190px] md:text-[230px] font-bold text-primary/[0.04] select-none pointer-events-none -z-10 leading-none tracking-tight">
             404
           </div>
 
           {/* Status Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fef2f2] border border-[#fecaca] text-xs text-[#991b1b] mb-7">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-error-container border border-error/20 text-xs text-on-error-container mb-7">
             <span className="font-semibold tracking-wide">404 · Unregistered Atelier</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif tracking-tight text-[#191c1d] mb-5 leading-[1.18]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif tracking-tight text-on-surface mb-5 leading-[1.18]">
             This studio has not yet <br />
-            <em className="italic font-normal text-[#855e2e]">opened its doors.</em>
+            <em className="italic font-normal text-primary">opened its doors.</em>
           </h1>
 
           {/* Explanatory Message */}
           <p
-            className="text-sm sm:text-base text-[#5c5f60] max-w-2xl mx-auto leading-relaxed block"
+            className="text-sm sm:text-base text-text-muted max-w-2xl mx-auto leading-relaxed block"
             style={{ marginTop: "24px", marginBottom: "36px" }}
           >
             {cleanSlug ? (
               <>
                 The requested URL{" "}
-                <span className="inline-block bg-[#f4ede4] text-[#855e2e] px-2 py-0.5 rounded font-semibold text-xs border border-[#e4dacf]">
+                <span className="inline-block bg-surface-low text-primary px-2.5 py-0.5 rounded font-mono font-semibold text-xs border border-border-hairline">
                   /{cleanSlug}
                 </span>{" "}
                 is currently unregistered or has not yet been published by its creator.
@@ -101,26 +100,25 @@ export function NotFoundView({ slug }: NotFoundViewProps) {
           <div className="flex flex-wrap items-center justify-center gap-3.5">
             <Link
               href="/"
-              style={{ color: "#ffffff" }}
-              className="inline-flex items-center gap-2 bg-[#191c1d] !text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-[#2d3032] transition-all shadow-xs text-decoration-none"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover !text-white text-on-primary text-sm font-semibold px-6 py-3 rounded-full transition-all shadow-xs hover:shadow-card cursor-pointer"
             >
-              <Home size={15} />
+              <Home size={15} className="!text-white text-on-primary" />
               <span>Return to Homepage</span>
             </Link>
             <Link
               href={claimHref}
-              className="inline-flex items-center gap-2 bg-white text-[#191c1d] border border-[#dcd6cb] text-sm font-medium px-5 py-2.5 rounded-full hover:border-[#b8ad9b] hover:bg-[#fcfaf7] transition-all shadow-xs text-decoration-none"
+              className="inline-flex items-center gap-2 bg-surface-lowest text-on-surface border border-border-hairline text-sm font-medium px-6 py-3 rounded-full hover:border-border-subtle hover:bg-surface-low transition-all shadow-xs cursor-pointer"
             >
-              <PlusCircle size={15} className="text-[#855e2e]" />
+              <PlusCircle size={15} className="text-primary" />
               <span>Claim & Create Studio</span>
             </Link>
             <button
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 text-xs text-[#5c5f60] hover:text-[#191c1d] px-3.5 py-2 rounded-full hover:bg-black/5 transition-colors border border-transparent hover:border-[#eae3d7]"
+              className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-on-surface px-4 py-2.5 rounded-full hover:bg-surface-low transition-colors border border-border-hairline cursor-pointer"
             >
               {copiedLink ? (
-                <Check size={13} className="text-[#10b981]" />
+                <Check size={13} className="text-tertiary" />
               ) : (
                 <ExternalLink size={13} />
               )}
@@ -131,23 +129,20 @@ export function NotFoundView({ slug }: NotFoundViewProps) {
       </div>
 
       {/* Bottom Status Bar */}
-      <footer className="w-full max-w-6xl mx-auto px-6 py-6 border-t border-[#eae3d7] flex flex-wrap items-center justify-between gap-4 text-xs text-[#8e9192] z-10">
+      <footer className="w-full max-w-6xl mx-auto px-6 py-6 border-t border-border-hairline flex flex-wrap items-center justify-between gap-4 text-xs text-text-muted z-10">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#10b981]" />
+          <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse" />
           <span>Shopwus Global Registry Active</span>
         </div>
         <div className="flex items-center gap-4 text-xs">
-          <Link href="/" className="hover:text-[#191c1d] transition-colors text-decoration-none">
+          <Link href="/" className="hover:text-on-surface transition-colors">
             Home
           </Link>
-          <span className="text-[#dcd6cb]">·</span>
-          <Link
-            href="/vendor/settings"
-            className="hover:text-[#191c1d] transition-colors text-decoration-none"
-          >
+          <span className="text-border-subtle">·</span>
+          <Link href="/vendor/settings" className="hover:text-on-surface transition-colors">
             Studio Settings
           </Link>
-          <span className="text-[#dcd6cb]">·</span>
+          <span className="text-border-subtle">·</span>
           <span>© 2026 Shopwus</span>
         </div>
       </footer>

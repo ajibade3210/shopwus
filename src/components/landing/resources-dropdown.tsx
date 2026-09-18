@@ -78,14 +78,14 @@ export function ResourcesDropdown() {
           {/* Invisible hit-area bridge to prevent hover dropping */}
           <div className="absolute inset-x-0 -top-3 h-4" />
 
-          <div className="relative rounded-xl bg-white text-[#1f1d1a] border border-[#eee7dc] shadow-xl p-1.5 space-y-0.5">
+          <div className="relative rounded-xl bg-card text-on-surface border border-border-hairline shadow-popover p-1.5 space-y-0.5">
             <a
               href="/invoice-generator"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-between gap-4 px-3 py-2 rounded-lg hover:bg-[#faf7f2] text-xs font-medium text-[#1f1d1a] transition-colors whitespace-nowrap"
+              className="flex items-center justify-between gap-4 px-3 py-2 rounded-lg hover:bg-surface-container-low text-xs font-medium text-on-surface transition-colors whitespace-nowrap"
             >
               <span>Free invoice generator</span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0] whitespace-nowrap shrink-0">
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-tertiary-container text-on-tertiary-container border border-tertiary/20 whitespace-nowrap shrink-0">
                 Free Tool
               </span>
             </a>
@@ -93,10 +93,10 @@ export function ResourcesDropdown() {
             <a
               href="/valuation-calculator"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-between gap-4 px-3 py-2 rounded-lg hover:bg-[#faf7f2] text-xs font-medium text-[#1f1d1a] transition-colors whitespace-nowrap"
+              className="flex items-center justify-between gap-4 px-3 py-2 rounded-lg hover:bg-surface-container-low text-xs font-medium text-on-surface transition-colors whitespace-nowrap"
             >
               <span>Business valuation calculator</span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0] whitespace-nowrap shrink-0">
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-tertiary-container text-on-tertiary-container border border-tertiary/20 whitespace-nowrap shrink-0">
                 Free Tool
               </span>
             </a>
@@ -104,10 +104,10 @@ export function ResourcesDropdown() {
             <a
               href="/blog"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-between gap-4 px-3 py-2 rounded-lg hover:bg-[#faf7f2] text-xs font-medium text-[#1f1d1a] transition-colors whitespace-nowrap"
+              className="flex items-center justify-between gap-4 px-3 py-2 rounded-lg hover:bg-surface-container-low text-xs font-medium text-on-surface transition-colors whitespace-nowrap"
             >
               <span>Blog</span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#f3e8ff] text-[#9333ea] border border-[#e9d5ff] whitespace-nowrap shrink-0">
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-primary-container text-on-primary-container border border-primary/20 whitespace-nowrap shrink-0">
                 Illustrated
               </span>
             </a>

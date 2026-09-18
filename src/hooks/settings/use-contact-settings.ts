@@ -6,11 +6,7 @@ import {
   DEFAULT_FOOTER_EYEBROW,
   DEFAULT_FOOTER_TITLE,
 } from "@/constants";
-import type { SocialChannel } from "@/types";
-
-interface UseContactSettingsOptions {
-  notify: (message: string) => void;
-}
+import type { SocialChannel, UseContactSettingsOptions } from "@/types";
 
 export function useContactSettings({ notify }: UseContactSettingsOptions) {
   // Operating details

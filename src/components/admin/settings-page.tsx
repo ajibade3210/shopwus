@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useSettingsForm } from "@/hooks/use-settings-form";
 import type { EnhancedSettingsPageProps } from "@/types";
@@ -22,14 +24,8 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
     setName,
     slug,
     setSlug,
-    tagline,
-    setTagline,
-    location,
-    setLocation,
     website,
     setWebsite,
-    email,
-    setEmail,
     currency,
     setCurrency,
     about,
@@ -152,11 +148,11 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
   return (
     <div className="w-full space-y-8 sm:space-y-10 pb-6 sm:pb-8 lg:pb-16">
       {/* Top Header Bar */}
-      <div className="pb-5 sm:pb-6 border-b border-[#e5e7eb]">
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#111827] tracking-tight leading-tight">
+      <div className="pb-5 sm:pb-6 border-b border-border-hairline">
+        <h1 className="text-2xl sm:text-3xl font-sans font-bold text-on-surface tracking-tight leading-tight">
           Store Preferences
         </h1>
-        <p className="text-xs sm:text-sm text-[#6b7280] mt-3 sm:mt-2.5 leading-relaxed max-w-2xl">
+        <p className="text-xs sm:text-sm text-on-surface-variant mt-3 sm:mt-2.5 leading-relaxed max-w-2xl">
           Configure your brand identity, storefront slug, services, portfolio, verified social
           badges, and visual aesthetic.
         </p>
@@ -170,14 +166,8 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
           slug={slug}
           setSlug={setSlug}
           slugStatus={slugStatus}
-          tagline={tagline}
-          setTagline={setTagline}
-          location={location}
-          setLocation={setLocation}
           website={website}
           setWebsite={setWebsite}
-          email={email}
-          setEmail={setEmail}
           currency={currency}
           setCurrency={setCurrency}
           businessType={businessType}
@@ -280,6 +270,28 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
           byAppointmentOnly={byAppointmentOnly}
           setByAppointmentOnly={setByAppointmentOnly}
         />
+
+        {/* Fulfillment & Delivery Notice Callout */}
+        <div className="p-4 sm:p-5 bg-surface-low border border-border-hairline rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+          <div className="space-y-1">
+            <h3 className="text-xs font-bold text-on-surface">
+              Looking for Delivery Rates & Pickup Settings?
+            </h3>
+            <p className="text-[11px] text-muted leading-relaxed">
+              Store origin address, courier pickup, and customer fulfillment rules are now managed
+              in Location Settings.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href="/vendor/profile?tab=delivery"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-card hover:bg-surface border border-border-hairline text-on-surface text-xs font-semibold rounded-lg transition-colors shadow-2xs text-decoration-none"
+            >
+              <span>Delivery Settings</span>
+              <ArrowUpRight size={13} className="text-muted" />
+            </Link>
+          </div>
+        </div>
 
         <AppearanceSection
           colors={colors}

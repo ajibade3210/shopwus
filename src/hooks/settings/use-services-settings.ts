@@ -2,12 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MAX_SERVICE_NAME_LENGTH, MAX_SERVICES } from "@/constants";
-import type { ServiceItem } from "@/types";
-
-interface UseServicesSettingsOptions {
-  notify: (message: string) => void;
-  categories?: string[];
-}
+import type { ServiceItem, UseServicesSettingsOptions } from "@/types";
 
 export function useServicesSettings({ notify, categories }: UseServicesSettingsOptions) {
   const [services, setServices] = useState<ServiceItem[]>([]);

@@ -37,6 +37,8 @@ interface AuthResponseDto {
   token?: string;
 }
 
+type MeResponseDto = AuthResponseDto;
+
 export function saveAuthTokens(accessToken?: string, refreshToken?: string): void {
   if (typeof window === "undefined") return;
   if (accessToken) {
@@ -71,13 +73,6 @@ export function clearAuthTokens(): void {
   const isSecure = window.location.protocol === "https:";
   // biome-ignore lint/suspicious/noDocumentCookie: clear client auth cookie
   document.cookie = `${STORAGE_KEYS.accessToken}=; path=/; max-age=0; SameSite=Lax${isSecure ? "; Secure" : ""}`;
-}
-
-interface MeResponseDto {
-  user: UserDto;
-  business?: BusinessDto | null;
-  isStudioOwner?: boolean;
-  permissions?: string[];
 }
 
 export function getCurrentSession(): UserSession | null {

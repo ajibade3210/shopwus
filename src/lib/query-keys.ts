@@ -15,6 +15,43 @@ export const queryKeys = {
     slugCheck: (slug: string) => ["studios", "slug-check", slug.toLowerCase()] as const,
   },
 
+  // Products & Catalog
+  products: {
+    all: ["products"] as const,
+    list: (params?: Record<string, unknown>) => ["products", "list", params ?? {}] as const,
+    detail: (id: string) => ["products", "detail", id] as const,
+    summary: () => ["products", "summary"] as const,
+    categories: () => ["products", "categories"] as const,
+    storefront: (slug: string, params?: Record<string, unknown>) =>
+      ["products", "storefront", slug.toLowerCase(), params ?? {}] as const,
+    storefrontDetail: (slug: string, productSlug: string) =>
+      ["products", "storefront-detail", slug.toLowerCase(), productSlug.toLowerCase()] as const,
+  },
+
+  // Orders
+  orders: {
+    all: ["orders"] as const,
+    list: (params?: Record<string, unknown>) => ["orders", "list", params ?? {}] as const,
+    board: () => ["orders", "board"] as const,
+    detail: (id: string) => ["orders", "detail", id] as const,
+    summary: () => ["orders", "summary"] as const,
+  },
+
+  // Delivery & Logistics
+  delivery: {
+    all: ["delivery"] as const,
+    zones: () => ["delivery", "zones"] as const,
+    settings: () => ["delivery", "settings"] as const,
+    storefront: (slug: string) => ["delivery", "storefront", slug.toLowerCase()] as const,
+  },
+
+  // Billing & Payouts
+  billing: {
+    all: ["billing"] as const,
+    summary: () => ["billing", "summary"] as const,
+    banks: () => ["billing", "banks"] as const,
+  },
+
   // Customers
   customers: {
     all: ["customers"] as const,

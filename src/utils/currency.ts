@@ -41,6 +41,8 @@ export const formatMoney = (
   }).format(n);
 };
 
+export const formatCurrency = formatMoney;
+
 export const formatCompactMoney = (
   n: number,
   currency: CurrencyCode = DEFAULT_CURRENCY

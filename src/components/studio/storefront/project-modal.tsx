@@ -54,13 +54,13 @@ export function ProjectModal({ project, onClose, onInquire, primaryColor }: Proj
   const currentImage = allImages[activeIdx] || project.image || DEFAULT_PORTFOLIO_IMAGE;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#171716]/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-fade-in">
-      <div className="bg-white border border-[#e5dcd1] rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl relative my-auto max-h-[92vh] overflow-y-auto space-y-6">
+    <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-fade-in">
+      <div className="bg-card border border-border-hairline rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-popover relative my-auto max-h-[92vh] overflow-y-auto space-y-6">
         {/* Close button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-6 right-6 text-[#78716c] hover:text-[#1c1917] p-2.5 bg-[#faf6f0] hover:bg-[#ede6dc] rounded-full cursor-pointer z-20 transition-colors shadow-2xs"
+          className="absolute top-6 right-6 text-outline hover:text-on-surface p-2.5 bg-surface-low hover:bg-surface-high rounded-full cursor-pointer z-20 transition-colors shadow-2xs"
           aria-label="Close project lightbox"
         >
           <X size={18} />
@@ -75,32 +75,32 @@ export function ProjectModal({ project, onClose, onInquire, primaryColor }: Proj
             >
               {project.category}
             </span>
-            <span className="text-[#a89e92] text-xs">·</span>
-            <span className="text-[10px] font-mono text-[#8c8278] uppercase tracking-wider">
+            <span className="text-outline-variant text-xs">·</span>
+            <span className="text-[10px] font-mono text-outline uppercase tracking-wider">
               {project.location}
             </span>
             {project.client && (
               <>
-                <span className="text-[#a89e92] text-xs">·</span>
-                <span className="text-[10px] font-medium text-[#78716c]">
+                <span className="text-outline-variant text-xs">·</span>
+                <span className="text-[10px] font-medium text-outline">
                   Client: {project.client}
                 </span>
               </>
             )}
             {project.year && (
               <>
-                <span className="text-[#a89e92] text-xs">·</span>
-                <span className="text-[10px] font-mono text-[#a89e92]">{project.year}</span>
+                <span className="text-outline-variant text-xs">·</span>
+                <span className="text-[10px] font-mono text-outline">{project.year}</span>
               </>
             )}
           </div>
-          <h3 className="font-serif text-2xl sm:text-3xl text-[#1c1917] font-normal leading-tight">
+          <h3 className="font-serif text-2xl sm:text-3xl text-on-surface font-normal leading-tight">
             {project.title}
           </h3>
         </div>
 
         {/* Main Stage Image Viewer */}
-        <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-[#1c1917] group">
+        <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-surface-high group">
           <Image
             src={currentImage}
             alt={`${project.title} - Preview ${activeIdx + 1}`}
@@ -123,7 +123,7 @@ export function ProjectModal({ project, onClose, onInquire, primaryColor }: Proj
               <button
                 type="button"
                 onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 hover:bg-white text-[#1c1917] flex items-center justify-center shadow-lg backdrop-blur-xs cursor-pointer transition-all hover:scale-105"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface-lowest/90 hover:bg-surface-lowest text-on-surface flex items-center justify-center shadow-lg backdrop-blur-xs cursor-pointer transition-all hover:scale-105"
                 aria-label="Previous image"
               >
                 <ArrowLeft size={16} />
@@ -131,7 +131,7 @@ export function ProjectModal({ project, onClose, onInquire, primaryColor }: Proj
               <button
                 type="button"
                 onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 hover:bg-white text-[#1c1917] flex items-center justify-center shadow-lg backdrop-blur-xs cursor-pointer transition-all hover:scale-105"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface-lowest/90 hover:bg-surface-lowest text-on-surface flex items-center justify-center shadow-lg backdrop-blur-xs cursor-pointer transition-all hover:scale-105"
                 aria-label="Next image"
               >
                 <ArrowRight size={16} />
@@ -177,21 +177,21 @@ export function ProjectModal({ project, onClose, onInquire, primaryColor }: Proj
         )}
 
         {/* Stats and Narrative */}
-        <div className="space-y-3 pt-1 border-t border-[#f2ece4]">
+        <div className="space-y-3 pt-1 border-t border-border-hairline">
           {project.stats && (
-            <div className="inline-flex items-center gap-2 bg-[#faf6f0] border border-[#e8dfd3] px-3.5 py-1.5 rounded-full text-xs font-medium text-[#57534e]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0058be]" />
+            <div className="inline-flex items-center gap-2 bg-surface-low border border-border-hairline px-3.5 py-1.5 rounded-full text-xs font-medium text-on-surface-variant">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               <span>{project.stats}</span>
             </div>
           )}
           {project.description && (
-            <p className="text-sm text-[#524b45] leading-relaxed">{project.description}</p>
+            <p className="text-sm text-on-surface-variant leading-relaxed">{project.description}</p>
           )}
         </div>
 
         {/* Footer Action */}
-        <div className="pt-3 border-t border-[#f2ece4] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[#8c8278]">
+        <div className="pt-3 border-t border-border-hairline flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-xs text-outline">
             Commissioning inquiries handled discreetly by Vendor.
           </span>
           <button

@@ -1,15 +1,17 @@
 "use client";
 
 import { Download } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { APP_CONFIG } from "@/constants";
 import { useCurrentStudio } from "@/hooks/use-current-studio";
 import { useLeads } from "@/hooks/use-leads";
+import { markRegisterViewed } from "@/hooks/use-unseen-badge";
 import { getInvoices } from "@/lib/api";
 import { sendLeadMessage } from "@/services/api";
 import type { Customer, Invoice, Lead, LeadsPageProps } from "@/types";
 import { normalizePhoneNumber } from "@/utils";
 import { Metric, PageTitle, useAdminToast } from "./admin-layout";
+import { DeleteConfirmModal } from "./common/delete-confirm-modal";
 import { InvoiceModal } from "./invoices/invoice-modal";
 import { LeadDetailDrawer } from "./leads/lead-detail-drawer";
 import { LeadMessageModal } from "./leads/lead-message-modal";
@@ -41,12 +43,47 @@ export function LeadsPage({ onToast }: LeadsPageProps) {
     handleExport,
     handleConvertToCustomer,
     handleUpdateStatus,
+    handleDeleteLead,
+    handleBulkDeleteLeads,
+    isDeleting,
   } = useLeads(notify);
 
+  // Reset the sidebar unseen-leads badge once total is known
+  useEffect(() => {
+    if (metrics.total != null) {
+      markRegisterViewed("leads_badge", metrics.total);
+    }
+  }, [metrics.total]);
+
+  const [selectedLeadIds, setSelectedLeadIds] = useState<string[]>([]);
+  const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState(false);
+  const [leadToDelete, setLeadToDelete] = useState<Lead | null>(null);
   const [showSendMessageModal, setShowSendMessageModal] = useState(false);
   const [showInvoiceModal, setShowInvoiceModal] = useState(false);
   const [invoiceCustomer, setInvoiceCustomer] = useState<Customer | undefined>(undefined);
   const [invoiceModalInvoice, setInvoiceModalInvoice] = useState<Invoice | undefined>(undefined);
+
+  const handleToggleSelectLead = (id: string) => {
+    setSelectedLeadIds(prev => (prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]));
+  };
+
+  const handleSelectAllLeads = () => {
+    const allOnPage = paginatedItems.map(l => l.id);
+    const allSelected = allOnPage.every(id => selectedLeadIds.includes(id));
+    if (allSelected) {
+      setSelectedLeadIds(prev => prev.filter(id => !allOnPage.includes(id)));
+    } else {
+      setSelectedLeadIds(prev => [...new Set([...prev, ...allOnPage])]);
+    }
+  };
+
+  const handleClearLeadSelection = () => setSelectedLeadIds([]);
+
+  const handleBulkDeleteLeadsConfirmed = async () => {
+    await handleBulkDeleteLeads(selectedLeadIds);
+    setSelectedLeadIds([]);
+    setShowBulkDeleteConfirm(false);
+  };
 
   const handleIssueInvoice = async (lead: Lead) => {
     const allInvoices = await getInvoices();
@@ -115,9 +152,12 @@ export function LeadsPage({ onToast }: LeadsPageProps) {
       type="button"
       onClick={handleExport}
       disabled={isExporting}
-      className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#faf7f2] text-[#191c1d] border border-[#ded5c8] hover:border-[#855e2e] px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-semibold hover:-translate-y-0.5 hover:shadow-xs active:translate-y-0 transition-all duration-200 cursor-pointer disabled:opacity-50"
+      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-card hover:bg-surface-low text-on-surface border border-border-hairline hover:border-outline px-4 py-2 sm:py-2.5 rounded-md text-xs font-semibold shadow-2xs hover:shadow-xs transition-all cursor-pointer disabled:opacity-50"
     >
-      <Download size={13} className={isExporting ? "animate-bounce" : ""} />
+      <Download
+        size={13}
+        className={isExporting ? "animate-bounce text-primary" : "text-primary"}
+      />
       <span>{isExporting ? "Exporting..." : "Export"}</span>
     </button>
   );
@@ -126,7 +166,7 @@ export function LeadsPage({ onToast }: LeadsPageProps) {
     <section className="content">
       <PageTitle title="Leads & Inquiries" action={actions} />
 
-      <div className="metrics">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-7">
         <Metric label="Total leads" value={String(metrics.total)} detail="All time" />
         <Metric label="New today" value={String(metrics.newToday)} detail="Needs attention" />
         <Metric label="Conversion rate" value={`${metrics.conversion}%`} detail="Last 30 days" />
@@ -140,6 +180,13 @@ export function LeadsPage({ onToast }: LeadsPageProps) {
         statusFilter={statusFilter}
         onStatusFilterChange={handleStatusFilterChange}
         onSelectLead={setSelectedLeadId}
+        selectedLeadIds={selectedLeadIds}
+        onToggleSelect={handleToggleSelectLead}
+        onSelectAll={handleSelectAllLeads}
+        onClearSelection={handleClearLeadSelection}
+        onDeleteSelected={async () => setShowBulkDeleteConfirm(true)}
+        isDeletingBulk={isDeleting}
+        onDeleteLead={setLeadToDelete}
         currentPage={currentPage}
         totalPages={totalPages}
         pageSize={pageSize}
@@ -151,10 +198,12 @@ export function LeadsPage({ onToast }: LeadsPageProps) {
       <LeadDetailDrawer
         lead={selectedLead}
         isConverting={isConverting}
+        isDeleting={isDeleting}
         onClose={() => setSelectedLeadId(null)}
         onOpenMessageModal={() => setShowSendMessageModal(true)}
         onConvertToCustomer={handleConvertToCustomer}
         onIssueInvoice={handleIssueInvoice}
+        onDeleteLead={handleDeleteLead}
       />
 
       <LeadMessageModal
@@ -178,6 +227,30 @@ export function LeadsPage({ onToast }: LeadsPageProps) {
           existingInvoice={invoiceModalInvoice}
         />
       )}
+
+      <DeleteConfirmModal
+        isOpen={Boolean(leadToDelete)}
+        title={`Delete lead inquiry from "${leadToDelete?.name}"?`}
+        description="This will permanently remove this lead inquiry. This action cannot be undone."
+        confirmLabel="Delete lead"
+        isDeleting={isDeleting}
+        onConfirm={async () => {
+          if (!leadToDelete) return;
+          await handleDeleteLead(leadToDelete.id);
+          setLeadToDelete(null);
+        }}
+        onClose={() => setLeadToDelete(null)}
+      />
+
+      <DeleteConfirmModal
+        isOpen={showBulkDeleteConfirm}
+        title={`Delete ${selectedLeadIds.length} lead${selectedLeadIds.length > 1 ? "s" : ""}?`}
+        description={`This will permanently remove ${selectedLeadIds.length} lead inquir${selectedLeadIds.length > 1 ? "ies" : "y"}. This action cannot be undone.`}
+        confirmLabel="Delete leads"
+        isDeleting={isDeleting}
+        onConfirm={handleBulkDeleteLeadsConfirmed}
+        onClose={() => setShowBulkDeleteConfirm(false)}
+      />
     </section>
   );
 }

@@ -24,7 +24,7 @@ export function ExpenseListTable({
   onPageSizeChange,
 }: ExpenseListTableProps) {
   return (
-    <div className="table-card">
+    <div className="table-card font-sans">
       {/* Table Head matching Leads and Customers */}
       <div className="table-head justify-end">
         <div className="flex items-center gap-3 ml-auto">
@@ -34,7 +34,7 @@ export function ExpenseListTable({
               value={selectedCategory}
               onChange={e => onCategoryChange(e.target.value as ExpenseCategory | "all")}
               aria-label="Filter expenses by category"
-              className="h-9 appearance-none pl-3 pr-7 bg-white border border-[#ded7cb] rounded-xl text-[11px] font-medium text-[#191c1d] hover:bg-[#faf8f5] focus:outline-none transition-colors cursor-pointer shadow-2xs"
+              className="h-9 appearance-none pl-3 pr-7 bg-card border border-border-hairline rounded-md text-[11px] font-medium text-on-surface hover:bg-surface-low focus:outline-none transition-colors cursor-pointer shadow-2xs font-sans"
             >
               <option value="all" className="text-[11px]">
                 All
@@ -60,7 +60,7 @@ export function ExpenseListTable({
             </select>
             <ChevronDown
               size={12}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8c827a] pointer-events-none"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
             />
           </div>
 
@@ -79,25 +79,25 @@ export function ExpenseListTable({
 
       {/* Table Wrap */}
       <div className="overflow-x-auto flex-1 min-h-0">
-        <table className="w-full border-collapse sm:min-w-[680px] text-left">
+        <table className="w-full border-collapse sm:min-w-[680px] text-left font-sans">
           <thead>
             <tr>
-              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Date
               </th>
-              <th className="px-3 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="px-3 sm:px-5 py-3 sm:py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Expense & Notes
               </th>
-              <th className="hidden md:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden md:table-cell px-5 py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Category
               </th>
-              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="hidden sm:table-cell px-5 py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Payment Method
               </th>
-              <th className="px-2 sm:px-5 py-3 sm:py-3.5 text-left text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="px-2 sm:px-5 py-3 sm:py-3.5 text-left text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Amount
               </th>
-              <th className="text-right px-2 sm:px-5 py-3 sm:py-3.5 text-[10px] font-bold tracking-[0.08em] uppercase text-[#6b7280] bg-[#faf8f5] border-b border-[#eee7dc]">
+              <th className="text-right px-2 sm:px-5 py-3 sm:py-3.5 text-[11px] font-semibold tracking-wider uppercase text-muted bg-surface-container-low border-b border-border-hairline">
                 Actions
               </th>
             </tr>
@@ -106,23 +106,26 @@ export function ExpenseListTable({
             {paginatedItems.map(expense => {
               const categoryConfig = EXPENSE_CATEGORY_CONFIG[expense.category] || {
                 label: expense.category,
-                bg: "#f3f4f6",
-                color: "#4b5563",
-                border: "#e5e7eb",
+                bg: "var(--surface-container-low)",
+                color: "var(--on-surface)",
+                border: "var(--border-hairline)",
               };
 
               return (
-                <tr key={expense.id} className="hover:bg-[#faf8f5]/60 transition-colors">
-                  <td className="hidden sm:table-cell whitespace-nowrap text-[#665e57] font-medium px-5 py-3.5 text-xs border-b border-[#eee7dc] align-middle">
+                <tr
+                  key={expense.id}
+                  className="hover:bg-surface-container-low/50 transition-colors"
+                >
+                  <td className="hidden sm:table-cell whitespace-nowrap text-on-surface-variant font-medium px-5 py-3.5 text-xs border-b border-border-hairline align-middle">
                     {formatDate(expense.date)}
                   </td>
-                  <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-xs text-[#444748] border-b border-[#eee7dc] align-middle">
-                    <b className="text-xs sm:text-sm font-semibold text-[#191c1d] block">
+                  <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-xs text-on-surface-variant border-b border-border-hairline align-middle">
+                    <b className="text-xs sm:text-sm font-semibold text-on-surface block">
                       {expense.title}
                     </b>
                     {/* Mobile date and category subtitle */}
                     <div className="sm:hidden flex items-center gap-1.5 mt-0.5 flex-wrap">
-                      <span className="text-[10px] text-[#8c827a]">{formatDate(expense.date)}</span>
+                      <span className="text-[10px] text-muted">{formatDate(expense.date)}</span>
                       <span
                         className="inline-flex items-center px-1.5 py-0.2 rounded-full text-[9px] font-semibold border"
                         style={{
@@ -135,12 +138,12 @@ export function ExpenseListTable({
                       </span>
                     </div>
                     {expense.notes && (
-                      <small className="truncate max-w-[140px] sm:max-w-md block text-[10px] sm:text-xs text-[#8c827a] mt-0.5">
+                      <small className="truncate max-w-[140px] sm:max-w-md block text-[10px] sm:text-xs text-muted mt-0.5 font-sans">
                         {expense.notes}
                       </small>
                     )}
                   </td>
-                  <td className="hidden md:table-cell px-5 py-3.5 text-xs border-b border-[#eee7dc] align-middle">
+                  <td className="hidden md:table-cell px-5 py-3.5 text-xs border-b border-border-hairline align-middle">
                     <span
                       className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border"
                       style={{
@@ -152,20 +155,20 @@ export function ExpenseListTable({
                       {categoryConfig.label}
                     </span>
                   </td>
-                  <td className="hidden sm:table-cell text-[#665e57] px-5 py-3.5 text-xs border-b border-[#eee7dc] align-middle">
+                  <td className="hidden sm:table-cell text-on-surface-variant px-5 py-3.5 text-xs border-b border-border-hairline align-middle font-sans">
                     {EXPENSE_PAYMENT_METHODS[expense.paymentMethod] || expense.paymentMethod}
                   </td>
-                  <td className="whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs border-b border-[#eee7dc] align-middle text-right sm:text-left">
-                    <span className="font-sans tabular-nums font-bold text-xs sm:text-sm text-[#191c1d]">
+                  <td className="whitespace-nowrap px-2 sm:px-5 py-3 sm:py-3.5 text-xs border-b border-border-hairline align-middle text-right sm:text-left">
+                    <span className="font-sans tabular-nums font-bold text-xs sm:text-sm text-on-surface">
                       -{formatMoney(expense.amount)}
                     </span>
                   </td>
-                  <td className="text-right px-2 sm:px-5 py-3 sm:py-3.5 border-b border-[#eee7dc] align-middle">
+                  <td className="text-right px-2 sm:px-5 py-3 sm:py-3.5 border-b border-border-hairline align-middle">
                     <div className="flex items-center justify-end gap-1">
                       <button
                         type="button"
                         onClick={() => onEdit(expense)}
-                        className="p-1 sm:p-1.5 rounded-lg text-[#665e57] hover:text-[#191c1d] hover:bg-[#faf7f2] transition-colors cursor-pointer"
+                        className="p-1 sm:p-1.5 rounded-md text-muted hover:text-on-surface hover:bg-surface-low transition-colors cursor-pointer"
                         title="Edit expense"
                         aria-label={`Edit ${expense.title}`}
                       >
@@ -174,7 +177,7 @@ export function ExpenseListTable({
                       <button
                         type="button"
                         onClick={() => onDelete(expense.id, expense.title)}
-                        className="p-1 sm:p-1.5 rounded-lg text-[#dc2626] hover:text-[#b91c1c] hover:bg-[#fef2f2] transition-colors cursor-pointer"
+                        className="p-1 sm:p-1.5 rounded-md text-error hover:bg-error-container/40 transition-colors cursor-pointer"
                         title="Delete expense"
                         aria-label={`Delete ${expense.title}`}
                       >
@@ -190,32 +193,32 @@ export function ExpenseListTable({
               <TableEmptyState
                 colSpan={6}
                 title="No expenses found"
-                description="Try adjusting your search query or add a new expense"
+                description="Record business expenses to track cash outflows and evaluate your profit margins."
               />
             )}
           </tbody>
         </table>
       </div>
 
-      {/* Pagination Bar matching Leads & Customers */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-[#f0e8dc] bg-[#fdfbf7] text-xs text-[#5c5f60] rounded-b-3xl">
+      {/* Pagination Bar */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-border-hairline bg-surface text-xs text-muted rounded-b-xl font-sans">
         <div className="flex items-center gap-2">
           <span>
-            Showing <b className="text-[#191c1d]">{items.length === 0 ? 0 : startIndex + 1}</b>–
-            <b className="text-[#191c1d]">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
-            <b className="text-[#191c1d]">{items.length}</b> records
+            Showing <b className="text-on-surface">{items.length === 0 ? 0 : startIndex + 1}</b>–
+            <b className="text-on-surface">{Math.min(startIndex + pageSize, items.length)}</b> of{" "}
+            <b className="text-on-surface">{items.length}</b> records
           </span>
-          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-[#ded7cb] pl-3">
-            <span className="text-[11px] text-[#8c827a]">Per page:</span>
+          <div className="hidden sm:flex items-center gap-1.5 ml-3 border-l border-border-hairline pl-3">
+            <span className="text-[11px] text-muted">Per page:</span>
             <select
               value={pageSize}
               onChange={e => onPageSizeChange(Number(e.target.value))}
-              aria-label="Records per page"
-              className="bg-white border border-[#ded7cb] rounded-lg px-2 py-0.5 text-[11px] text-[#191c1d] focus:outline-none"
+              className="bg-card border border-border-hairline rounded-md px-2 py-0.5 text-[11px] text-on-surface focus:outline-none"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
               <option value={20}>20</option>
+              <option value={50}>50</option>
             </select>
           </div>
         </div>
@@ -223,39 +226,24 @@ export function ExpenseListTable({
         <div className="flex items-center gap-1.5">
           <button
             type="button"
+            onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage <= 1}
-            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#ded7cb] bg-white text-xs font-semibold text-[#191c1d] hover:bg-[#faf8f5] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="p-1.5 rounded-md border border-border-hairline bg-card hover:bg-surface-low disabled:opacity-40 disabled:cursor-not-allowed text-on-surface transition-colors cursor-pointer"
+            aria-label="Previous page"
           >
-            <ChevronLeft size={13} />
-            <span>Previous</span>
+            <ChevronLeft size={14} />
           </button>
-
-          <div className="flex items-center gap-1">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-              <button
-                key={page}
-                type="button"
-                onClick={() => onPageChange(page)}
-                className={`w-7 h-7 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  page === currentPage
-                    ? "bg-[#191c1d] text-white shadow-2xs"
-                    : "bg-white border border-[#ded7cb] text-[#5c5f60] hover:bg-[#faf8f5] hover:text-[#191c1d]"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
-
+          <span className="px-2 text-xs font-semibold text-on-surface font-sans">
+            {currentPage} / {totalPages}
+          </span>
           <button
             type="button"
+            onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage >= totalPages}
-            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#ded7cb] bg-white text-xs font-semibold text-[#191c1d] hover:bg-[#faf8f5] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="p-1.5 rounded-md border border-border-hairline bg-card hover:bg-surface-low disabled:opacity-40 disabled:cursor-not-allowed text-on-surface transition-colors cursor-pointer"
+            aria-label="Next page"
           >
-            <span>Next</span>
-            <ChevronRight size={13} />
+            <ChevronRight size={14} />
           </button>
         </div>
       </div>

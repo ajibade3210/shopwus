@@ -106,7 +106,6 @@ export const CustomerSchema = z.object({
   createdAt: z.string().min(1),
 });
 
-export type CustomerAttributeValidation = z.infer<typeof CustomerAttributeSchema>;
 export type NewCustomerInput = z.infer<typeof NewCustomerInputSchema>;
 export type AddServiceInput = z.infer<typeof AddServiceInputSchema>;
 export type CustomerValidation = z.infer<typeof CustomerSchema>;

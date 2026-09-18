@@ -1,5 +1,39 @@
 import type { ReactNode } from "react";
 
+// API DTO shapes (response contracts from the Shopwus API)
+export interface UserDto {
+  id: string;
+  email: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  phone?: string | null;
+  role: string;
+  avatarUrl?: string | null;
+}
+
+export interface BusinessDto {
+  id: string;
+  slug: string;
+  name: string;
+  logoUrl?: string | null;
+}
+
+export interface AuthResponseDto {
+  user: UserDto;
+  business?: BusinessDto | null;
+  studio?: BusinessDto | null;
+  accessToken?: string;
+  refreshToken?: string;
+  token?: string;
+}
+
+export interface MeResponseDto {
+  user: UserDto;
+  business?: BusinessDto | null;
+  isStudioOwner?: boolean;
+  permissions?: string[];
+}
+
 // User and authentication types
 export interface User {
   id: string;

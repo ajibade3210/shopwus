@@ -7,6 +7,7 @@ import type {
   Lead,
   LeadFilterStatus,
   LeadStatus,
+  LeadsSummary,
   PublicInquiryInput,
   PublicInquiryResponse,
 } from "@/types";
@@ -44,12 +45,6 @@ export async function getLeads(query?: string, status?: LeadFilterStatus): Promi
   );
   if (Array.isArray(response)) return response;
   return response?.items || response?.leads || response?.data || [];
-}
-
-export interface LeadsSummary {
-  total: number;
-  newToday: number;
-  conversion: number;
 }
 
 export async function getLeadsSummary(): Promise<LeadsSummary> {

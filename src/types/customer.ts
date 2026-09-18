@@ -29,6 +29,13 @@ export interface CustomerAttribute {
   value: string;
 }
 
+/**
+ * CustomerAttributeValidation mirrors CustomerAttribute — it exists as a
+ * named alias so callers can reference the validated/parsed shape without
+ * importing the Zod schema itself.
+ */
+export type CustomerAttributeValidation = CustomerAttribute;
+
 export interface Customer {
   id: string;
   businessId?: string;
@@ -43,6 +50,12 @@ export interface Customer {
   isActive: boolean;
   isExistingCustomer?: boolean;
   createdAt: string;
+}
+
+export interface CustomersSummary {
+  total: number;
+  activeServicesCount: number;
+  totalRevenue: number;
 }
 
 export interface NewCustomerInput {
@@ -95,6 +108,9 @@ export interface CustomerTableProps {
   onSelectAllActive: () => void;
   onClearSelection: () => void;
   onOpenBroadcast: () => void;
+  onDeleteSelected?: () => Promise<unknown>;
+  isDeletingBulk?: boolean;
+  onDeleteCustomer?: (customer: Customer) => void;
   currentPage: number;
   totalPages: number;
   pageSize: number;
@@ -142,6 +158,8 @@ export interface CustomerDetailDrawerProps {
   onConfirmResendInvoice: (invoice: Invoice) => void;
   onDeleteDraftInvoice: (invoiceId: string) => void;
   onDeleteService: (customerId: string, serviceId: string, serviceName: string) => void;
+  onDeleteCustomer?: (customerId: string) => Promise<unknown>;
+  isDeletingCustomer?: boolean;
   onUpdateServiceStatus: (
     customerId: string,
     serviceId: string,
@@ -169,4 +187,14 @@ export interface CustomerBroadcastModalProps {
   selectedCustomers: Customer[];
   onClose: () => void;
   onToast?: (message: string) => void;
+}
+
+export interface CustomerAttributesEditorProps {
+  attributes: CustomerAttribute[];
+  isViewMode: boolean;
+  attributeError: string;
+  keyInputRefs: React.MutableRefObject<(HTMLInputElement | null)[]>;
+  onAddAttributeRow: () => void;
+  onRemoveAttributeRow: (index: number) => void;
+  onAttributeChange: (index: number, field: "key" | "value", newValue: string) => void;
 }

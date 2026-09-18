@@ -35,34 +35,36 @@ export function StudioServicesSection({
           return (
             <div
               key={service.id || idx}
-              className="bg-white border border-[#e8dfd3] rounded-2xl p-5 sm:p-6 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all group"
+              className="bg-card border border-border-hairline rounded-2xl p-5 sm:p-6 flex flex-col justify-between shadow-card hover:shadow-md transition-all group"
             >
               <div>
                 <div className="mb-3.5 flex items-center justify-between gap-2 flex-wrap">
                   <span
                     style={{
                       backgroundColor: `${primaryColor}14`,
-                      color: isDarkColor(primaryColor) ? primaryColor : "#1c1917",
+                      color: isDarkColor(primaryColor) ? primaryColor : undefined,
                       borderColor: `${primaryColor}28`,
                     }}
-                    className="text-[10px] font-semibold uppercase tracking-[0.14em] px-3 py-1 rounded-full border inline-block shadow-2xs"
+                    className={`text-[10px] font-semibold uppercase tracking-[0.14em] px-3 py-1 rounded-full border inline-block shadow-2xs ${
+                      !isDarkColor(primaryColor) ? "text-on-surface" : ""
+                    }`}
                   >
                     {service.category || ""}
                   </span>
 
                   {formattedPrice && (
-                    <span className="text-xs font-bold text-[#1c1917] bg-[#fafaf9] border border-[#e8dfd3] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 shadow-2xs">
-                      <Tag size={11} className="text-[#78716c]" />
+                    <span className="text-xs font-bold text-on-surface bg-surface-low border border-border-hairline px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 shadow-2xs">
+                      <Tag size={11} className="text-outline" />
                       {formattedPrice}
                     </span>
                   )}
                 </div>
 
-                <h3 className="font-serif text-lg sm:text-xl text-[#1c1917] font-normal mb-2 group-hover:text-[#0058be] transition-colors">
+                <h3 className="font-serif text-lg sm:text-xl text-on-surface font-normal mb-2 group-hover:text-primary transition-colors">
                   {service.name}
                 </h3>
 
-                <p className="text-xs text-[#666059] leading-relaxed mb-4">
+                <p className="text-xs text-on-surface-variant leading-relaxed mb-4">
                   {service.description ||
                     "Comprehensive design, vendor curation, on-site choreography, and bespoke styling tailored to your aesthetic vision."}
                 </p>

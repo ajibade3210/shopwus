@@ -47,25 +47,25 @@ export function CustomerMessageModal({
       onClick={onClose}
     >
       <div
-        className="bg-white border border-[#eae3d7] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-5 relative max-h-[90vh] overflow-y-auto"
+        className="bg-card border border-border-hairline rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-popover space-y-5 relative max-h-[90vh] overflow-y-auto font-sans"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between pb-3 border-b border-[#f0e8dc]">
+        <div className="flex items-start justify-between pb-3 border-b border-border-hairline">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#855e2e] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-muted block">
               Client Communication
             </span>
-            <h3 className="text-xl font-serif font-bold text-[#191c1d] tracking-tight mt-0.5">
+            <h3 className="text-xl font-sans font-bold text-on-surface tracking-tight mt-0.5">
               Send Message
             </h3>
-            <p className="text-xs text-[#5c5f60] mt-0.5">
-              Recipient: <b className="text-[#191c1d]">{customer.name}</b>
+            <p className="text-xs text-muted mt-0.5">
+              Recipient: <b className="text-on-surface">{customer.name}</b>
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-full text-[#8e9192] hover:text-[#191c1d] hover:bg-[#f3f4f5] transition-colors cursor-pointer"
+            className="p-1 rounded-xl text-muted hover:text-on-surface hover:bg-surface-container-high transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -73,10 +73,10 @@ export function CustomerMessageModal({
 
         <div className="flex items-center gap-2 text-xs flex-wrap">
           <span
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium ${
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-[11px] font-medium border ${
               customer.phone
-                ? "bg-[#ecfdf5] text-[#065f46] border border-[#a7f3d0]"
-                : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb]"
+                ? "bg-tertiary-container text-on-tertiary-container border-tertiary/20"
+                : "bg-surface-container-high text-outline border-border-hairline"
             }`}
           >
             <WhatsAppIcon className="w-3.5 h-3.5" />
@@ -84,10 +84,10 @@ export function CustomerMessageModal({
           </span>
 
           <span
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium ${
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-[11px] font-medium border ${
               customer.email
-                ? "bg-[#eff6ff] text-[#1e40af] border border-[#bfdbfe]"
-                : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb]"
+                ? "bg-primary/10 text-primary border-primary/20"
+                : "bg-surface-container-high text-outline border-border-hairline"
             }`}
           >
             <Mail size={12} />
@@ -96,7 +96,7 @@ export function CustomerMessageModal({
         </div>
 
         <div>
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
             Message Content *
           </label>
           <textarea
@@ -104,7 +104,7 @@ export function CustomerMessageModal({
             value={messageText}
             onChange={e => setMessageText(e.target.value)}
             placeholder="Type your bespoke message or client update here..."
-            className="w-full bg-[#faf8f5] border border-[#ded7cb] rounded-2xl p-4 text-xs text-[#191c1d] focus:outline-none transition-all"
+            className="w-full bg-surface-container-lowest border border-border-hairline rounded-2xl p-4 text-xs text-on-surface focus:outline-hidden focus:border-primary transition-all"
           />
         </div>
 
@@ -115,11 +115,11 @@ export function CustomerMessageModal({
             onClick={() => handleSendWhatsAppMessage(customer.phone || "", messageText)}
             className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
               customer.phone?.trim()
-                ? "bg-[#15803d] hover:bg-[#166534] text-white shadow-xs hover:-translate-y-0.5 cursor-pointer"
-                : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb] cursor-not-allowed opacity-60"
+                ? "bg-tertiary hover:bg-tertiary-dim text-on-tertiary shadow-xs cursor-pointer"
+                : "bg-surface-container-high text-outline border border-border-hairline cursor-not-allowed opacity-60"
             }`}
           >
-            <WhatsAppIcon className="w-4 h-4 text-white" />
+            <WhatsAppIcon className="w-4 h-4 text-on-tertiary" />
             <span>{customer.phone?.trim() ? "Send via WhatsApp" : "WhatsApp (No phone)"}</span>
           </button>
 
@@ -129,8 +129,8 @@ export function CustomerMessageModal({
             onClick={() => handleSendEmailMessage(customer.email, customer.name, messageText)}
             className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
               customer.email?.trim()
-                ? "bg-[#111827] hover:bg-black text-white shadow-xs hover:-translate-y-0.5 cursor-pointer"
-                : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb] cursor-not-allowed opacity-60"
+                ? "bg-primary hover:bg-primary-hover text-white shadow-xs cursor-pointer"
+                : "bg-surface-container-high text-outline border border-border-hairline cursor-not-allowed opacity-60"
             }`}
           >
             <Mail size={14} />

@@ -1,7 +1,13 @@
 import { APP_CONFIG } from "@/constants";
 import { apiClient } from "@/lib/api-client";
 import { InvoiceInputSchema } from "@/lib/schemas";
-import type { Invoice, InvoiceInput, InvoiceStatus } from "@/types";
+import type {
+  Invoice,
+  InvoiceInput,
+  InvoicePdfResponse,
+  InvoiceStatus,
+  InvoicesSummary,
+} from "@/types";
 import { CURRENCY_SYMBOLS, normalizePhoneNumber } from "@/utils";
 
 /**
@@ -15,15 +21,6 @@ export async function getInvoices(status?: InvoiceStatus): Promise<Invoice[]> {
   });
   if (Array.isArray(data)) return data;
   return data?.items || data?.invoices || data?.data || [];
-}
-
-export interface InvoicesSummary {
-  totalInvoiced: number;
-  paidRevenue: number;
-  outstandingRevenue: number;
-  totalCount: number;
-  paidCount: number;
-  collectionRate: number;
 }
 
 export async function getInvoicesSummary(): Promise<InvoicesSummary> {
@@ -115,16 +112,6 @@ export async function markInvoiceAsUnpaid(id: string): Promise<Invoice> {
   return apiClient.patch<Invoice>(`/invoices/${encodeURIComponent(id)}/status`, {
     status: "sent",
   });
-}
-
-export interface InvoicePdfResponse {
-  status?: string;
-  ready?: boolean;
-  downloadUrl?: string;
-  pdfUrl?: string;
-  filename?: string;
-  invoiceNumber?: string;
-  message?: string;
 }
 
 /**

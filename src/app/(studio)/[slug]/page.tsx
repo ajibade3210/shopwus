@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { ElanEventsPage } from "@/components/studio/elan-events-page";
+import { StorefrontPage } from "@/components/studio/storefront-page";
 import { APP_CONFIG } from "@/constants";
 
 export default function Page() {
@@ -9,5 +9,5 @@ export default function Page() {
   const slugParam = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
   const slug = (slugParam as string) || APP_CONFIG.defaultSlug;
 
-  return <ElanEventsPage slug={slug} />;
+  return <StorefrontPage slug={slug} />;
 }

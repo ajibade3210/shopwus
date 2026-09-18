@@ -165,23 +165,23 @@ export function InvoiceGeneratorPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[#1f1d1a] antialiased">
+    <div className="min-h-screen bg-surface text-on-surface antialiased">
       {/* 1. Header Navigation */}
-      <header className="border-b border-[#eee7dc] bg-[var(--background)]/90 backdrop-blur-md sticky top-0 z-40 print:hidden">
+      <header className="border-b border-border-hairline bg-surface/90 backdrop-blur-md sticky top-0 z-40 print:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <a
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#665e57] hover:text-[#1f1d1a] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-muted hover:text-on-surface transition-colors"
             >
               <ArrowLeft size={14} />
               <span>Back to Home</span>
             </a>
-            <span className="text-[#ded5c8] hidden sm:inline">|</span>
-            <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-[#8c827a]">
+            <span className="text-border-hairline hidden sm:inline">|</span>
+            <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-text-muted">
               <span>Resources</span>
               <span>/</span>
-              <span className="text-[#1f1d1a] font-bold">Free Invoice Generator</span>
+              <span className="text-on-surface font-bold">Free Invoice Generator</span>
             </div>
           </div>
 
@@ -190,13 +190,13 @@ export function InvoiceGeneratorPage() {
           <div className="flex items-center gap-3">
             <a
               href="/login"
-              className="text-xs font-semibold text-[#524a43] hover:text-[#1f1d1a] hidden sm:inline"
+              className="text-xs font-semibold text-text-muted hover:text-on-surface hidden sm:inline"
             >
               Log in
             </a>
             <a
               href="/signup"
-              className="bg-[#191c1d] hover:bg-black !text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
+              className="bg-primary hover:bg-primary-hover text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
             >
               <span>Start Free Trial</span>
               <ArrowRight size={13} />
@@ -209,27 +209,27 @@ export function InvoiceGeneratorPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 print:p-0 print:m-0 print:max-w-none">
         {/* Hero Section (Print Hidden) */}
         <section className="text-center max-w-3xl mx-auto space-y-3 print:hidden">
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0]">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary-container text-on-tertiary-container border border-tertiary/20">
             Free Studio Tool
           </span>
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#1f1d1a] tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold text-on-surface tracking-tight leading-tight">
             Create client-ready invoices in 60 seconds.
           </h1>
-          <p className="text-sm sm:text-base text-[#665e57] leading-relaxed">
+          <p className="text-sm sm:text-base text-on-surface-variant leading-relaxed">
             Craft polished, print-ready invoices directly in your browser. No account required, no
             watermarks to pay for, and no hidden fees.
           </p>
         </section>
 
         {/* Mobile Tab Switcher (Visible only on < md screens, print hidden) */}
-        <div className="md:hidden flex rounded-2xl bg-white p-1 border border-[#eee7dc] shadow-2xs print:hidden">
+        <div className="md:hidden flex rounded-2xl bg-card p-1 border border-border-hairline shadow-2xs print:hidden">
           <button
             type="button"
             onClick={() => setActiveTab("edit")}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               activeTab === "edit"
-                ? "bg-[#191c1d] text-white shadow-xs"
-                : "text-[#665e57] hover:text-[#1f1d1a]"
+                ? "bg-primary text-white shadow-xs"
+                : "text-text-muted hover:text-on-surface"
             }`}
           >
             <PenLine size={14} />
@@ -240,8 +240,8 @@ export function InvoiceGeneratorPage() {
             onClick={() => setActiveTab("preview")}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               activeTab === "preview"
-                ? "bg-[#191c1d] text-white shadow-xs"
-                : "text-[#665e57] hover:text-[#1f1d1a]"
+                ? "bg-primary text-white shadow-xs"
+                : "text-text-muted hover:text-on-surface"
             }`}
           >
             <Eye size={14} />

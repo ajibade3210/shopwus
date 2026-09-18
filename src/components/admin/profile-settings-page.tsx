@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import {
   calculateBusinessValuation,
   getBusinessProfile,
@@ -13,13 +14,25 @@ import { logger } from "@/lib/logger";
 import type { BusinessProfile, BusinessValuation, ProfileSettingsPageProps } from "@/types";
 import { useAdminToast } from "./admin-layout";
 import { ValuationCard } from "./analytics/valuation-card";
+import { LocationSection } from "./profile/location-section";
 import { ProfileHeaderCard } from "./profile/profile-header-card";
 import { ProfileIdentityCard } from "./profile/profile-identity-card";
 import { ProfileSecurityCard } from "./profile/profile-security-card";
 
-export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
+type ProfileTab = "profile" | "delivery";
+
+function ProfileSettingsInner({ onToast }: ProfileSettingsPageProps) {
   const { showToast } = useAdminToast();
   const notify = onToast || showToast;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Active tab state synced with URL query (?tab=profile|delivery)
+  const initialTab = (searchParams.get("tab") as ProfileTab) || "profile";
+  const [activeTab, setActiveTab] = useState<ProfileTab>(
+    initialTab === "delivery" ? "delivery" : "profile"
+  );
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -27,6 +40,21 @@ export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
   const [studioName, setStudioName] = useState(getCurrentSession()?.studioName || "");
   const [businessProfile, setBusinessProfile] = useState<Partial<BusinessProfile> | null>(null);
   const [valuation, setValuation] = useState<BusinessValuation | null>(null);
+
+  // Sync tab from URL if changed externally
+  useEffect(() => {
+    const tabParam = searchParams.get("tab") as ProfileTab | null;
+    if (tabParam && (tabParam === "profile" || tabParam === "delivery")) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
+
+  const handleTabChange = (newTab: ProfileTab) => {
+    setActiveTab(newTab);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", newTab);
+    router.replace(`/vendor/profile?${params.toString()}`, { scroll: false });
+  };
 
   useEffect(() => {
     getCurrentUser()
@@ -39,6 +67,7 @@ export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
       .catch(err => {
         logger.warn("Failed to load user profile on mount", err);
       });
+
     getBusinessProfile()
       .then(profile => {
         if (profile) {
@@ -51,6 +80,7 @@ export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
       .catch(err => {
         logger.warn("Failed to load business profile on mount", err);
       });
+
     calculateBusinessValuation()
       .then(val => {
         setValuation(val);
@@ -64,9 +94,7 @@ export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
     name: string;
     email: string;
     phone: string;
-    bankName?: string | null;
-    accountName?: string | null;
-    accountNumber?: string | null;
+    studioName?: string;
   }) => {
     try {
       const [, updatedBusiness] = await Promise.all([
@@ -76,20 +104,20 @@ export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
         }),
         updateBusinessProfile({
           phone: updates.phone,
-          bankName: updates.bankName,
-          accountName: updates.accountName,
-          accountNumber: updates.accountNumber,
+          ...(updates.studioName
+            ? { businessName: updates.studioName, name: updates.studioName }
+            : {}),
         }),
       ]);
       setName(updates.name);
       setPhone(updates.phone);
+      if (updates.studioName) {
+        setStudioName(updates.studioName);
+      }
       if (updatedBusiness) {
         setBusinessProfile(prev => ({
           ...prev,
           ...updatedBusiness,
-          bankName: updates.bankName,
-          accountName: updates.accountName,
-          accountNumber: updates.accountNumber,
         }));
       }
       notify("Profile credentials updated successfully");
@@ -133,38 +161,90 @@ export function ProfileSettingsPage({ onToast }: ProfileSettingsPageProps) {
 
   return (
     <section className="content profile-content max-w-5xl mx-auto space-y-6 sm:space-y-7 pb-16">
-      {/* Page Title */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#191c1d] tracking-tight">
-          Admin Overview
-        </h1>
+      {/* Top Navigation Bar: Strictly 2 tabs (Profile & Location) */}
+      <div className="border-b border-border-hairline">
+        <nav
+          className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"
+          aria-label="Profile Sections"
+        >
+          <button
+            type="button"
+            onClick={() => handleTabChange("profile")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === "profile"
+                ? "bg-card text-on-surface shadow-2xs border border-border-hairline"
+                : "text-muted hover:text-on-surface hover:bg-surface-low border border-transparent"
+            }`}
+          >
+            Profile
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTabChange("delivery")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === "delivery"
+                ? "bg-card text-on-surface shadow-2xs border border-border-hairline"
+                : "text-muted hover:text-on-surface hover:bg-surface-low border border-transparent"
+            }`}
+          >
+            Location
+          </button>
+        </nav>
       </div>
 
-      {/* Studio Equity & Business Valuation Estimator */}
-      <ValuationCard valuation={valuation} onRefresh={handleRefreshValuation} onToast={notify} />
+      {/* Tab 1: Profile */}
+      {activeTab === "profile" && (
+        <div className="space-y-6 sm:space-y-7 animate-in fade-in duration-150">
+          {/* 1. Business Valuation comes FIRST */}
+          <ValuationCard
+            valuation={valuation}
+            onRefresh={handleRefreshValuation}
+            onToast={notify}
+          />
 
-      {/* Director Identity Panel */}
-      <ProfileIdentityCard
-        name={name}
-        email={email}
-        phone={phone}
-        avatar={avatar}
-        studioName={studioName}
-        bankName={businessProfile?.bankName}
-        accountName={businessProfile?.accountName}
-        accountNumber={businessProfile?.accountNumber}
-        onSave={handleSaveProfile}
-      />
+          {/* 2. Profile Identity & Bank Settlement Card */}
+          <ProfileIdentityCard
+            name={name}
+            email={email}
+            phone={phone}
+            avatar={avatar}
+            studioName={studioName}
+            onSave={handleSaveProfile}
+          />
 
-      {/* Email & Document Header Banner Panel */}
-      <ProfileHeaderCard
-        business={businessProfile}
-        onUpdateHeader={handleUpdateHeader}
-        onToast={notify}
-      />
+          {/* 3. Email & Document Header Banner Panel */}
+          <ProfileHeaderCard
+            business={businessProfile}
+            onUpdateHeader={handleUpdateHeader}
+            onToast={notify}
+          />
 
-      {/* Authentication & Security Panel */}
-      <ProfileSecurityCard email={email} />
+          {/* 4. Authentication & Security Panel */}
+          <ProfileSecurityCard email={email} />
+        </div>
+      )}
+
+      {/* Tab 2: Location */}
+      {activeTab === "delivery" && (
+        <div className="space-y-6 sm:space-y-7 animate-in fade-in duration-150">
+          <LocationSection />
+        </div>
+      )}
     </section>
+  );
+}
+
+export function ProfileSettingsPage(props: ProfileSettingsPageProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-5xl mx-auto p-8 text-center text-xs text-muted">
+          Loading settings...
+        </div>
+      }
+    >
+      <ProfileSettingsInner {...props} />
+    </Suspense>
   );
 }

@@ -141,22 +141,22 @@ export function CustomerBroadcastModal({
       onClick={onClose}
     >
       <div
-        className="bg-white border border-[#eee7dc] rounded-2xl max-w-xl w-full p-6 sm:p-7 shadow-xl space-y-5 relative max-h-[90vh] overflow-y-auto font-sans"
+        className="bg-card border border-border-hairline rounded-3xl max-w-xl w-full p-6 sm:p-7 shadow-popover space-y-5 relative max-h-[90vh] overflow-y-auto font-sans"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between pb-3 border-b border-[#f0e8dc]">
+        <div className="flex items-start justify-between pb-3 border-b border-border-hairline">
           <div>
-            <h3 className="text-xl font-serif font-bold text-[#191c1d] tracking-tight">
+            <h3 className="text-xl font-sans font-bold text-on-surface tracking-tight">
               Broadcast Message
             </h3>
-            <p className="text-xs text-[#747878] mt-0.5 font-medium">
+            <p className="text-xs text-muted mt-0.5 font-medium">
               Targeting {totalCount} active customer{totalCount === 1 ? "" : "s"}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#8e9192] hover:text-[#191c1d] hover:bg-[#faf8f5] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl text-muted hover:text-on-surface hover:bg-surface-container-high transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X size={18} />
@@ -164,15 +164,15 @@ export function CustomerBroadcastModal({
         </div>
 
         <div className="flex items-center gap-2 flex-wrap text-xs">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-[#faf8f5] text-[#855e2e] border border-[#e8ded1]">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-surface-container-high text-on-surface border border-border-hairline">
             <span>{totalCount} Selected Active</span>
           </span>
 
           <span
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border ${
               withPhone.length > 0
-                ? "bg-[#ecfdf5] text-[#065f46] border border-[#a7f3d0]"
-                : "bg-[#faf8f5] text-[#8c827a] border border-[#e8ded1]"
+                ? "bg-tertiary-container text-on-tertiary-container border-tertiary/20"
+                : "bg-surface-container-high text-muted border-border-hairline"
             }`}
           >
             <WhatsAppIcon className="w-3.5 h-3.5" />
@@ -180,10 +180,10 @@ export function CustomerBroadcastModal({
           </span>
 
           <span
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border ${
               withEmail.length > 0
-                ? "bg-[#eff6ff] text-[#1e40af] border border-[#bfdbfe]"
-                : "bg-[#faf8f5] text-[#8c827a] border border-[#e8ded1]"
+                ? "bg-primary/10 text-primary border-primary/20"
+                : "bg-surface-container-high text-muted border-border-hairline"
             }`}
           >
             <Mail size={13} />
@@ -192,17 +192,17 @@ export function CustomerBroadcastModal({
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-[11px] font-bold text-[#747878] uppercase tracking-wider block">
+          <label className="text-[11px] font-bold text-on-surface uppercase tracking-wider block">
             Select Broadcast Channel
           </label>
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
               onClick={() => setChannel("whatsapp")}
-              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg border text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
                 channel === "whatsapp"
-                  ? "bg-[#ecfdf5] text-[#065f46] border-[#10b981] font-semibold"
-                  : "bg-white text-[#5c5f60] border-[#ded7cb] hover:bg-[#faf8f5]"
+                  ? "bg-tertiary-container text-on-tertiary-container border-tertiary/20 font-semibold"
+                  : "bg-surface-container-lowest text-muted border-border-hairline hover:bg-surface-container"
               }`}
             >
               <WhatsAppIcon className="w-3.5 h-3.5" />
@@ -212,10 +212,10 @@ export function CustomerBroadcastModal({
             <button
               type="button"
               onClick={() => setChannel("email")}
-              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg border text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
                 channel === "email"
-                  ? "bg-[#eff6ff] text-[#1e40af] border-[#3b82f6] font-semibold"
-                  : "bg-white text-[#5c5f60] border-[#ded7cb] hover:bg-[#faf8f5]"
+                  ? "bg-primary/10 text-primary border-primary/20 font-semibold"
+                  : "bg-surface-container-lowest text-muted border-border-hairline hover:bg-surface-container"
               }`}
             >
               <Mail size={13} />
@@ -225,10 +225,10 @@ export function CustomerBroadcastModal({
             <button
               type="button"
               onClick={() => setChannel("both")}
-              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg border text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
                 channel === "both"
-                  ? "bg-[#faf5ee] text-[#855e2e] border-[#855e2e] font-semibold"
-                  : "bg-white text-[#5c5f60] border-[#ded7cb] hover:bg-[#faf8f5]"
+                  ? "bg-surface-container-high text-on-surface border-border-hairline font-semibold"
+                  : "bg-surface-container-lowest text-muted border-border-hairline hover:bg-surface-container"
               }`}
             >
               <Send size={13} />
@@ -239,27 +239,27 @@ export function CustomerBroadcastModal({
 
         {(channel === "email" || channel === "both") && (
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-[#747878] uppercase tracking-wider block">
-              Email Subject Line <span className="text-red-500">*</span>
+            <label className="text-[11px] font-bold text-on-surface uppercase tracking-wider block">
+              Email Subject Line <span className="text-error">*</span>
             </label>
             <input
               type="text"
               value={subject}
               onChange={e => setSubject(e.target.value)}
               placeholder="e.g. Autumn Gala Atelier Invitations"
-              className="w-full px-3.5 py-2.5 bg-white border border-[#ded7cb] rounded-xl text-xs text-[#191c1d] focus:outline-none transition-colors"
+              className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-border-hairline rounded-xl text-xs text-on-surface focus:outline-hidden focus:border-primary transition-colors"
             />
           </div>
         )}
 
         <div className="space-y-1.5">
-          <label className="text-[11px] font-bold text-[#747878] uppercase tracking-wider block">
+          <label className="text-[11px] font-bold text-on-surface uppercase tracking-wider block">
             Media Attachment / Image Link{" "}
-            <span className="text-[#8c827a] font-normal lowercase">(optional)</span>
+            <span className="text-muted font-normal lowercase">(optional)</span>
           </label>
           <div className="flex items-center gap-2">
-            <div className="flex-1 flex items-center bg-white border border-[#ded7cb] rounded-xl overflow-hidden transition-colors shadow-2xs">
-              <span className="pl-3.5 pr-2 text-[#8c827a] flex items-center justify-center shrink-0">
+            <div className="flex-1 flex items-center bg-surface-container-lowest border border-border-hairline rounded-xl overflow-hidden transition-colors shadow-2xs focus-within:border-primary">
+              <span className="pl-3.5 pr-2 text-muted flex items-center justify-center shrink-0">
                 <ImageIcon size={15} />
               </span>
               <input
@@ -267,47 +267,47 @@ export function CustomerBroadcastModal({
                 value={imageUrl}
                 onChange={e => setImageUrl(e.target.value)}
                 placeholder="https://cdn.example.com/invitation-card.jpg"
-                className="w-full py-2.5 pr-3.5 bg-transparent border-0 text-xs text-[#191c1d] focus:outline-none placeholder:text-[#9ca3af]"
+                className="w-full py-2.5 pr-3.5 bg-transparent border-0 text-xs text-on-surface focus:outline-hidden placeholder:text-outline"
               />
             </div>
             {imageUrl && (
               <button
                 type="button"
                 onClick={() => setImageUrl("")}
-                className="px-3 py-2.5 text-xs font-semibold text-[#8c827a] hover:text-red-500 rounded-xl border border-[#ded7cb] hover:bg-[#faf8f5] cursor-pointer transition-colors"
+                className="px-3 py-2.5 text-xs font-semibold text-muted hover:text-error rounded-xl border border-border-hairline hover:bg-surface-container-low cursor-pointer transition-colors"
               >
                 Clear
               </button>
             )}
           </div>
           {imageUrl && (
-            <div className="mt-2 p-2 bg-[#faf8f5] border border-[#ded7cb] rounded-xl flex items-center gap-3">
+            <div className="mt-2 p-2 bg-surface-container-low border border-border-hairline rounded-xl flex items-center gap-3">
               <img
                 src={imageUrl}
                 alt="Attachment preview"
-                className="w-12 h-12 object-cover rounded-lg border border-[#e0d5c4]"
+                className="w-12 h-12 object-cover rounded-lg border border-border-hairline"
                 onError={e => {
                   (e.currentTarget as HTMLImageElement).src =
                     "https://placehold.co/100x100?text=Preview";
                 }}
               />
-              <span className="text-[11px] text-[#5c5f60] truncate flex-1">{imageUrl}</span>
+              <span className="text-[11px] text-muted truncate flex-1">{imageUrl}</span>
             </div>
           )}
         </div>
 
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <label className="text-[11px] font-bold text-[#747878] uppercase tracking-wider block">
+            <label className="text-[11px] font-bold text-on-surface uppercase tracking-wider block">
               Broadcast Message Copy
             </label>
             <span
               className={`text-[11px] font-mono font-semibold ${
                 isOverLimit
-                  ? "text-red-600 font-bold"
+                  ? "text-error font-bold"
                   : remainingChars < 50
                     ? "text-amber-600"
-                    : "text-[#8c827a]"
+                    : "text-muted"
               }`}
             >
               {message.length} / {maxLength} chars ({remainingChars} left)
@@ -318,14 +318,14 @@ export function CustomerBroadcastModal({
             rows={5}
             value={message}
             onChange={e => setMessage(e.target.value)}
-            className={`w-full p-3.5 bg-white border rounded-xl text-xs text-[#191c1d] focus:outline-none transition-colors leading-relaxed ${
-              isOverLimit ? "border-red-500 focus:border-red-500" : "border-[#ded7cb]"
+            className={`w-full p-3.5 bg-surface-container-lowest border rounded-xl text-xs text-on-surface focus:outline-hidden focus:border-primary transition-colors leading-relaxed ${
+              isOverLimit ? "border-error" : "border-border-hairline"
             }`}
             placeholder="Type your bespoke broadcast message here..."
           />
 
           {isOverLimit && (
-            <div className="flex items-center gap-1.5 text-xs text-red-600 mt-1">
+            <div className="flex items-center gap-1.5 text-xs text-error mt-1">
               <AlertCircle size={13} />
               <span>
                 Message exceeds the {maxLength} character limit for {channel}. Please shorten your
@@ -336,26 +336,26 @@ export function CustomerBroadcastModal({
         </div>
 
         {channel === "whatsapp" && withPhone.length > 0 && (
-          <div className="pt-1 border-t border-[#f4eee6]">
+          <div className="pt-1 border-t border-border-hairline">
             <button
               type="button"
               onClick={() => setShowQueue(prev => !prev)}
-              className="text-xs font-semibold text-[#855e2e] hover:underline cursor-pointer flex items-center justify-between w-full py-1"
+              className="text-xs font-semibold text-primary hover:underline cursor-pointer flex items-center justify-between w-full py-1"
             >
               <span>View Individual 1-by-1 WhatsApp Dispatches ({withPhone.length})</span>
               {showQueue ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
             </button>
 
             {showQueue && (
-              <div className="mt-2 max-h-36 overflow-y-auto p-2 bg-[#faf8f5] border border-[#ded7cb] rounded-xl space-y-1.5">
+              <div className="mt-2 max-h-36 overflow-y-auto p-2 bg-surface-container-low border border-border-hairline rounded-xl space-y-1.5">
                 {withPhone.map(cust => (
                   <div
                     key={cust.id}
-                    className="flex items-center justify-between px-3 py-2 bg-white border border-[#eee7dc] rounded-lg text-xs"
+                    className="flex items-center justify-between px-3 py-2 bg-card border border-border-hairline rounded-lg text-xs"
                   >
                     <div>
-                      <b className="text-[#191c1d] font-semibold">{cust.name}</b>
-                      <span className="text-[#747878] ml-2">{cust.phone}</span>
+                      <b className="text-on-surface font-semibold">{cust.name}</b>
+                      <span className="text-muted ml-2">{cust.phone}</span>
                     </div>
                     <a
                       href={createWhatsAppDirectUrl(
@@ -365,7 +365,7 @@ export function CustomerBroadcastModal({
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#047857] bg-[#ecfdf5] hover:bg-[#d1fae5] px-2.5 py-1 rounded-md transition-colors"
+                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-on-tertiary-container bg-tertiary-container hover:bg-tertiary-container/80 px-2.5 py-1 rounded-md transition-colors"
                     >
                       <span>Send Direct</span>
                       <ExternalLink size={10} />
@@ -377,11 +377,11 @@ export function CustomerBroadcastModal({
           </div>
         )}
 
-        <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#f0e8dc]">
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-border-hairline">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl border border-[#ded7cb] text-xs font-semibold text-[#5c5f60] hover:bg-[#faf8f5] transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl border border-border-hairline text-xs font-semibold text-on-surface bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -390,7 +390,7 @@ export function CustomerBroadcastModal({
             type="button"
             onClick={handleExecuteBroadcast}
             disabled={isSubmitting || isOverLimit || totalCount === 0 || !message.trim()}
-            className="inline-flex items-center gap-2 bg-[#191c1d] hover:bg-black text-white px-5 py-2 rounded-xl text-xs font-semibold hover:-translate-y-0.5 hover:shadow-xs active:translate-y-0 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send size={13} className={isSubmitting ? "animate-spin" : ""} />
             <span>

@@ -30,8 +30,16 @@ export function PublicLandingPage() {
         </div>
         <BrandLogo className="public-logo" />
         <div className="nav-ctas">
-          <a href="/signup">Sign up</a>
-          <a className="dark-button bg-[#000000] border-[#000000]" href="/login">
+          <a
+            href="/signup"
+            className="text-on-surface-variant hover:text-on-surface transition-colors"
+          >
+            Sign up
+          </a>
+          <a
+            className="dark-button bg-primary hover:bg-primary-hover border-primary hover:border-primary-hover rounded-md text-white shadow-xs"
+            href="/login"
+          >
             Enter Studio <ArrowRight size={15} />
           </a>
         </div>
@@ -39,17 +47,22 @@ export function PublicLandingPage() {
 
       <section className="hero">
         <div className="hero-copy">
-          <h1>
-            The storefront platform for
+          <h1 className="font-sans font-bold text-on-surface tracking-tight">
+            No more scattered records or manual guesswork.
             <br />
-            <em>online vendors & businesses.</em>
+            <span className="text-primary font-bold">
+              Your go-to hub to sell, track, and manage.
+            </span>
           </h1>
-          <p>
-            Create your bespoke 3D digital storefront, broadcast WhatsApp updates, issue itemized
-            multi-currency invoices, and track your business valuation—all in one place.
+          <p className="text-on-surface-variant text-base leading-relaxed">
+            Everything you need to run your business in one place. Capture leads, track orders, and
+            pull up customer info instantly without digging through old chats or Excel files.
           </p>
           <div className="hero-ctas">
-            <a className="dark-button bg-[#000000] border-[#000000]" href="/signup">
+            <a
+              className="dark-button bg-primary hover:bg-primary-hover border-primary hover:border-primary-hover rounded-md text-white shadow-xs"
+              href="/signup"
+            >
               Start my free trial now <ArrowRight size={15} />
             </a>
           </div>

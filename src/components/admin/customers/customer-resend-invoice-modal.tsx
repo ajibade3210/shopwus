@@ -17,53 +17,53 @@ export function CustomerResendInvoiceModal({
       onClick={onClose}
     >
       <div
-        className="bg-white border border-[#eae3d7] rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl space-y-4 relative"
+        className="bg-card border border-border-hairline rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-popover space-y-4 relative font-sans"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between pb-3 border-b border-[#f0e8dc]">
+        <div className="flex items-start justify-between pb-3 border-b border-border-hairline">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#1e40af] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
               Invoice Re-Dispatch
             </span>
-            <h3 className="text-lg font-serif font-bold text-[#191c1d] tracking-tight mt-0.5">
+            <h3 className="text-lg font-sans font-bold text-on-surface tracking-tight mt-0.5">
               Resend Invoice {invoice.invoiceNumber}?
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-full text-[#8e9192] hover:text-[#191c1d] hover:bg-[#f3f4f5] transition-colors cursor-pointer"
+            className="p-1 rounded-xl text-muted hover:text-on-surface hover:bg-surface-container-high transition-colors cursor-pointer"
           >
             <X size={16} />
           </button>
         </div>
 
-        <div className="text-xs text-[#5c5f60] space-y-2">
+        <div className="text-xs text-muted space-y-2">
           <p>
             Are you sure you want to re-send this invoice to{" "}
-            <b className="text-[#191c1d]">{invoice.customerName}</b>?
+            <b className="text-on-surface">{invoice.customerName}</b>?
           </p>
-          <div className="bg-[#faf8f5] p-3 rounded-xl border border-[#eee7dc] space-y-1">
+          <div className="bg-surface-container-low p-3 rounded-xl border border-border-hairline space-y-1">
             <div className="flex justify-between">
-              <span className="text-[#8c827a]">Recipient:</span>
-              <b className="text-[#191c1d]">{invoice.customerEmail}</b>
+              <span className="text-muted">Recipient:</span>
+              <b className="text-on-surface">{invoice.customerEmail}</b>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#8c827a]">Total Due:</span>
-              <b className="font-mono text-[#191c1d]">{formatMoney(invoice.total)}</b>
+              <span className="text-muted">Total Due:</span>
+              <b className="font-mono text-on-surface">{formatMoney(invoice.total)}</b>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#8c827a]">Due Date:</span>
-              <span className="text-[#191c1d]">{invoice.dueDate}</span>
+              <span className="text-muted">Due Date:</span>
+              <span className="text-on-surface">{invoice.dueDate}</span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#f0e8dc]">
+        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-border-hairline">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl border border-[#ded7cb] text-xs font-semibold text-[#5c5f60] hover:bg-[#faf8f5] transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl border border-border-hairline text-xs font-semibold text-on-surface bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -75,7 +75,7 @@ export function CustomerResendInvoiceModal({
                 onClose();
               }
             }}
-            className="inline-flex items-center gap-1.5 bg-[#111827] hover:bg-black text-white px-5 py-2 rounded-xl text-xs font-semibold shadow-xs hover:-translate-y-0.5 transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
           >
             <RefreshCw size={13} />
             <span>Confirm Resend</span>

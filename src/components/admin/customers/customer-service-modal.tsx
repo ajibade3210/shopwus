@@ -106,22 +106,22 @@ export function CustomerServiceModal({
       onClick={onClose}
     >
       <div
-        className="bg-white border border-[#eae3d7] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-5 relative"
+        className="bg-card border border-border-hairline rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-popover space-y-5 relative font-sans"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between pb-3 border-b border-[#f0e8dc]">
+        <div className="flex items-start justify-between pb-3 border-b border-border-hairline">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#855e2e] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-muted block">
               Add Service · {customer.name}
             </span>
-            <h3 className="text-xl font-serif font-bold text-[#191c1d] tracking-tight mt-0.5">
+            <h3 className="text-xl font-sans font-bold text-on-surface tracking-tight mt-0.5">
               New Service
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-full text-[#8e9192] hover:text-[#191c1d] hover:bg-[#f3f4f5] transition-colors cursor-pointer"
+            className="p-1 rounded-xl text-muted hover:text-on-surface hover:bg-surface-container-high transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -129,16 +129,16 @@ export function CustomerServiceModal({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
               Service Name *
             </label>
             {dbServices.length > 0 ? (
-              <div className="signup-field relative flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-4 py-3 text-xs transition-all">
+              <div className="signup-field relative flex items-center bg-surface-container-lowest border border-border-hairline rounded-xl px-4 py-3 text-xs transition-all focus-within:border-primary">
                 <select
                   required
                   value={formData.name}
                   onChange={e => handleSelectService(e.target.value)}
-                  className="w-full text-xs text-[#191c1d] bg-transparent focus:outline-none appearance-none cursor-pointer pr-6"
+                  className="w-full text-xs text-on-surface bg-transparent focus:outline-hidden appearance-none cursor-pointer pr-6"
                 >
                   <option value="" disabled>
                     Select a service from catalog
@@ -151,19 +151,19 @@ export function CustomerServiceModal({
                 </select>
                 <ChevronDown
                   size={14}
-                  className="absolute right-3.5 text-[#6b7280] pointer-events-none"
+                  className="absolute right-3.5 text-muted pointer-events-none"
                 />
               </div>
             ) : (
-              <div className="p-3.5 bg-[#fefce8] border border-[#fef08a] rounded-2xl flex items-center justify-between gap-3 text-xs text-[#854d0e]">
+              <div className="p-3.5 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-between gap-3 text-xs text-amber-600">
                 <div className="flex items-center gap-2">
-                  <AlertCircle size={15} className="text-[#a16207] shrink-0" />
+                  <AlertCircle size={15} className="text-amber-600 shrink-0" />
                   <span>No services saved in your studio catalog.</span>
                 </div>
                 <Link
                   href="/vendor/settings"
                   onClick={onClose}
-                  className="font-semibold underline hover:text-[#713f12] shrink-0 text-xs"
+                  className="font-semibold underline hover:text-amber-700 shrink-0 text-xs"
                 >
                   Go to Preferences &rarr;
                 </Link>
@@ -173,15 +173,15 @@ export function CustomerServiceModal({
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d]">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface">
                 Category
               </label>
               {dbCategories.length > 0 && (
-                <span className="text-[10px] text-[#8e9192] italic">Select one or more</span>
+                <span className="text-[10px] text-muted italic">Select one or more</span>
               )}
             </div>
             {dbCategories.length > 0 ? (
-              <div className="flex flex-wrap gap-1.5 p-2 bg-[#faf8f5] border border-[#ded7cb] rounded-2xl">
+              <div className="flex flex-wrap gap-1.5 p-2 bg-surface-container-low border border-border-hairline rounded-2xl">
                 {dbCategories.map(cat => {
                   const isSelected = formData.categories.includes(cat);
                   return (
@@ -191,8 +191,8 @@ export function CustomerServiceModal({
                       onClick={() => handleToggleCategory(cat)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-[#191c1d] text-white border-[#191c1d] shadow-2xs"
-                          : "bg-white text-[#5c5f60] border-[#ded7cb] hover:border-[#855e2e] hover:text-[#191c1d]"
+                          ? "bg-primary text-white border-primary shadow-2xs"
+                          : "bg-surface-container-lowest text-muted border-border-hairline hover:border-outline hover:text-on-surface"
                       }`}
                     >
                       {isSelected ? "✓ " : "+ "}
@@ -202,15 +202,15 @@ export function CustomerServiceModal({
                 })}
               </div>
             ) : (
-              <div className="p-3.5 bg-[#fefce8] border border-[#fef08a] rounded-2xl flex items-center justify-between gap-3 text-xs text-[#854d0e]">
+              <div className="p-3.5 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-between gap-3 text-xs text-amber-600">
                 <div className="flex items-center gap-2">
-                  <AlertCircle size={15} className="text-[#a16207] shrink-0" />
+                  <AlertCircle size={15} className="text-amber-600 shrink-0" />
                   <span>No categories saved in your studio catalog.</span>
                 </div>
                 <Link
                   href="/vendor/settings"
                   onClick={onClose}
-                  className="font-semibold underline hover:text-[#713f12] shrink-0 text-xs"
+                  className="font-semibold underline hover:text-amber-700 shrink-0 text-xs"
                 >
                   Go to Preferences &rarr;
                 </Link>
@@ -220,10 +220,10 @@ export function CustomerServiceModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
                 Budget / Value (₦)
               </label>
-              <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-4 py-3 text-xs transition-all">
+              <div className="signup-field flex items-center bg-surface-container-lowest border border-border-hairline rounded-xl px-4 py-3 text-xs transition-all focus-within:border-primary">
                 <input
                   type="number"
                   step="1000"
@@ -235,16 +235,16 @@ export function CustomerServiceModal({
                       amount: Number(e.target.value) || 0,
                     })
                   }
-                  className="w-full text-xs text-[#191c1d] font-mono focus:outline-none"
+                  className="w-full text-xs text-on-surface font-mono focus:outline-hidden"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
                 Status
               </label>
-              <div className="signup-field flex items-center bg-[#faf8f5] border border-[#ded7cb] rounded-xl px-3 py-2 text-xs transition-all">
+              <div className="signup-field flex items-center bg-surface-container-lowest border border-border-hairline rounded-xl px-3 py-2 text-xs transition-all focus-within:border-primary">
                 <select
                   value={formData.status}
                   onChange={e =>
@@ -253,7 +253,7 @@ export function CustomerServiceModal({
                       status: e.target.value as ServiceStatus,
                     })
                   }
-                  className="w-full bg-transparent text-xs text-[#191c1d] focus:outline-none"
+                  className="w-full bg-transparent text-xs text-on-surface focus:outline-hidden"
                 >
                   <option value="pending">Pending</option>
                   <option value="active">Active</option>
@@ -263,18 +263,18 @@ export function CustomerServiceModal({
             </div>
           </div>
 
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#f0e8dc]">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-border-hairline">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-[#ded7cb] text-xs font-semibold text-[#5c5f60] hover:bg-[#faf8f5] transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-border-hairline text-xs font-semibold text-on-surface bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isAdding || !formData.name || dbServices.length === 0}
-              className="inline-flex items-center gap-2 bg-[#191c1d] hover:bg-black text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-xs hover:-translate-y-0.5 transition-all cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
             >
               {isAdding ? (
                 <>

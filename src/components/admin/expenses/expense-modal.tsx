@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { EXPENSE_CATEGORIES, EXPENSE_CATEGORY_CONFIG, EXPENSE_PAYMENT_METHODS } from "@/constants";
 import { createExpense, updateExpense } from "@/lib/api";
@@ -10,6 +10,7 @@ import type {
   ExpenseModalProps,
   ExpensePaymentMethod,
 } from "@/types";
+import { DeleteConfirmModal } from "../common/delete-confirm-modal";
 
 export function ExpenseModal({
   isOpen,
@@ -17,6 +18,8 @@ export function ExpenseModal({
   onClose,
   onToast,
   onExpenseSaved,
+  onDelete,
+  isDeleting = false,
 }: ExpenseModalProps) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState<number | "">("");
@@ -26,6 +29,7 @@ export function ExpenseModal({
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -101,27 +105,27 @@ export function ExpenseModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div
-        className="bg-white border border-[#ded5c8] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
+        className="bg-card border border-border-hairline rounded-3xl w-full max-w-lg shadow-popover overflow-hidden animate-in zoom-in-95 duration-200 font-sans"
         role="dialog"
         aria-modal="true"
         aria-labelledby="expense-modal-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-[#f0ece5]">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-border-hairline">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#9e633d] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
               Financial Record
             </span>
-            <h2 id="expense-modal-title" className="text-lg font-serif font-bold text-[#1f1d1a]">
+            <h2 id="expense-modal-title" className="text-lg font-bold text-on-surface">
               {existingExpense ? "Edit Expense" : "Log Business Expense"}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-xl bg-[#faf7f2] hover:bg-[#f0ebe3] flex items-center justify-center text-[#665e57] hover:text-[#191c1d] transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-xl bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-muted hover:text-on-surface transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X size={16} />
@@ -131,7 +135,7 @@ export function ExpenseModal({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 bg-[#fef2f2] border border-[#fecaca] rounded-xl text-xs text-[#dc2626] font-medium">
+            <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-xs text-rose-600 font-medium">
               {error}
             </div>
           )}
@@ -139,7 +143,7 @@ export function ExpenseModal({
           <div>
             <label
               htmlFor="expense-title"
-              className="block text-xs font-semibold text-[#1f1d1a] mb-1.5"
+              className="block text-xs font-semibold text-on-surface mb-1.5"
             >
               Expense Title / Description *
             </label>
@@ -150,7 +154,7 @@ export function ExpenseModal({
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="e.g. Bulk Velvet Fabric, Instagram Ads Drop, Packaging Boxes"
-              className="w-full px-3.5 py-2.5 bg-white border border-[#ded5c8] rounded-xl text-xs text-[#191c1d] placeholder:text-[#9a918a] focus:outline-none transition-colors"
+              className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-border-hairline rounded-xl text-xs text-on-surface placeholder:text-muted focus:outline-hidden focus:border-primary transition-colors"
             />
           </div>
 
@@ -158,7 +162,7 @@ export function ExpenseModal({
             <div>
               <label
                 htmlFor="expense-amount"
-                className="block text-xs font-semibold text-[#1f1d1a] mb-1.5"
+                className="block text-xs font-semibold text-on-surface mb-1.5"
               >
                 Amount (₦) *
               </label>
@@ -171,14 +175,14 @@ export function ExpenseModal({
                 value={amount}
                 onChange={e => setAmount(e.target.value === "" ? "" : Number(e.target.value))}
                 placeholder="25000"
-                className="w-full px-3.5 py-2.5 bg-white border border-[#ded5c8] rounded-xl text-xs font-mono text-[#191c1d] placeholder:text-[#9a918a] focus:outline-none transition-colors"
+                className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-border-hairline rounded-xl text-xs font-mono text-on-surface placeholder:text-muted focus:outline-hidden focus:border-primary transition-colors"
               />
             </div>
 
             <div>
               <label
                 htmlFor="expense-category"
-                className="block text-xs font-semibold text-[#1f1d1a] mb-1.5"
+                className="block text-xs font-semibold text-on-surface mb-1.5"
               >
                 Category *
               </label>
@@ -186,7 +190,7 @@ export function ExpenseModal({
                 id="expense-category"
                 value={category}
                 onChange={e => setCategory(e.target.value as ExpenseCategory)}
-                className="w-full px-3.5 py-2.5 bg-white border border-[#ded5c8] rounded-xl text-xs text-[#191c1d] focus:outline-none transition-colors cursor-pointer"
+                className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-border-hairline rounded-xl text-xs text-on-surface focus:outline-hidden focus:border-primary transition-colors cursor-pointer"
               >
                 {EXPENSE_CATEGORIES.map(cat => (
                   <option key={cat} value={cat}>
@@ -201,7 +205,7 @@ export function ExpenseModal({
             <div>
               <label
                 htmlFor="expense-date"
-                className="block text-xs font-semibold text-[#1f1d1a] mb-1.5"
+                className="block text-xs font-semibold text-on-surface mb-1.5"
               >
                 Date *
               </label>
@@ -211,14 +215,14 @@ export function ExpenseModal({
                 required
                 value={date}
                 onChange={e => setDate(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-[#ded5c8] rounded-xl text-xs text-[#1f1d1a] focus:outline-none transition-colors"
+                className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-border-hairline rounded-xl text-xs text-on-surface focus:outline-hidden focus:border-primary transition-colors"
               />
             </div>
 
             <div>
               <label
                 htmlFor="expense-payment-method"
-                className="block text-xs font-semibold text-[#1f1d1a] mb-1.5"
+                className="block text-xs font-semibold text-on-surface mb-1.5"
               >
                 Payment Method *
               </label>
@@ -226,7 +230,7 @@ export function ExpenseModal({
                 id="expense-payment-method"
                 value={paymentMethod}
                 onChange={e => setPaymentMethod(e.target.value as ExpensePaymentMethod)}
-                className="w-full px-3.5 py-2.5 bg-white border border-[#ded5c8] rounded-xl text-xs text-[#1f1d1a] focus:outline-none transition-colors cursor-pointer"
+                className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-border-hairline rounded-xl text-xs text-on-surface focus:outline-hidden focus:border-primary transition-colors cursor-pointer"
               >
                 {Object.entries(EXPENSE_PAYMENT_METHODS).map(([key, label]) => (
                   <option key={key} value={key}>
@@ -240,7 +244,7 @@ export function ExpenseModal({
           <div>
             <label
               htmlFor="expense-notes"
-              className="block text-xs font-semibold text-[#1f1d1a] mb-1.5"
+              className="block text-xs font-semibold text-on-surface mb-1.5"
             >
               Additional Notes (Optional)
             </label>
@@ -250,29 +254,60 @@ export function ExpenseModal({
               value={notes}
               onChange={e => setNotes(e.target.value)}
               placeholder="Supplier name, invoice receipt number, delivery destination..."
-              className="w-full px-3.5 py-2 bg-white border border-[#ded5c8] rounded-xl text-xs text-[#1f1d1a] placeholder:text-[#9a918a] focus:outline-none transition-colors resize-none"
+              className="w-full px-3.5 py-2 bg-surface-container-lowest border border-border-hairline rounded-xl text-xs text-on-surface placeholder:text-muted focus:outline-hidden focus:border-primary transition-colors resize-none"
             />
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#f0ece5]">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold text-[#665e57] hover:bg-[#faf7f2] transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="dark-button bg-[#000000] border-[#000000] px-5 py-2.5 rounded-xl text-xs font-semibold !text-white cursor-pointer disabled:opacity-50"
-            >
-              {isSubmitting ? "Saving..." : existingExpense ? "Update Expense" : "Save Expense"}
-            </button>
+          <div className="flex items-center justify-between gap-3 pt-3 border-t border-border-hairline">
+            {existingExpense && onDelete ? (
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(true)}
+                disabled={isSubmitting || isDeleting}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-error hover:bg-error-container/40 border border-error/20 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                <Trash2 size={13} />
+                <span>Delete Expense</span>
+              </button>
+            ) : (
+              <div />
+            )}
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-muted hover:text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting || isDeleting}
+                className="bg-primary hover:bg-primary-hover px-5 py-2.5 rounded-xl text-xs font-semibold text-white shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+              >
+                {isSubmitting ? "Saving..." : existingExpense ? "Update Expense" : "Save Expense"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
+
+      {existingExpense && (
+        <DeleteConfirmModal
+          isOpen={showDeleteConfirm}
+          title={`Delete "${existingExpense.title}"?`}
+          description="Are you sure you want to delete this expense record? This action cannot be undone and will update your financial reports."
+          confirmLabel="Delete expense"
+          isDeleting={isDeleting}
+          onConfirm={async () => {
+            await onDelete?.(existingExpense.id, existingExpense.title);
+            setShowDeleteConfirm(false);
+            onClose();
+          }}
+          onClose={() => setShowDeleteConfirm(false)}
+        />
+      )}
     </div>
   );
 }
