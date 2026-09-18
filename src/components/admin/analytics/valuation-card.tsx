@@ -24,8 +24,11 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const { data: billingSummary, isLoading: isBillingLoading, refetch: refetchBilling } =
-    useBillingSummaryQuery();
+  const {
+    data: billingSummary,
+    isLoading: isBillingLoading,
+    refetch: refetchBilling,
+  } = useBillingSummaryQuery();
 
   const totalSettled = billingSummary?.stats?.totalSettled || 0;
 
@@ -36,9 +39,7 @@ export function ValuationCard({ valuation, onRefresh, onToast }: ValuationCardPr
     return billingSummary.transactions
       .filter(
         tx =>
-          tx.status === "SUCCESS" &&
-          Boolean(tx.paidAt) &&
-          new Date(tx.paidAt).getTime() > oneDayAgo
+          tx.status === "SUCCESS" && Boolean(tx.paidAt) && new Date(tx.paidAt).getTime() > oneDayAgo
       )
       .reduce((sum, tx) => sum + (tx.merchantSettlement || 0), 0);
   }, [billingSummary?.transactions]);

@@ -300,7 +300,9 @@ export function EditHeaderModal({
               {/* Form Controls */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-on-surface">Header Title</label>
+                  <label className="block text-xs font-semibold text-on-surface">
+                    Header Title
+                  </label>
                   <input
                     type="text"
                     value={headerTitle}
