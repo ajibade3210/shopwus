@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { EXPENSE_CATEGORIES, EXPENSE_CATEGORY_CONFIG, EXPENSE_PAYMENT_METHODS } from "@/constants";
 import { createExpense, updateExpense } from "@/lib/api";
@@ -10,6 +10,7 @@ import type {
   ExpenseModalProps,
   ExpensePaymentMethod,
 } from "@/types";
+import { DeleteConfirmModal } from "../common/delete-confirm-modal";
 
 export function ExpenseModal({
   isOpen,
@@ -17,6 +18,8 @@ export function ExpenseModal({
   onClose,
   onToast,
   onExpenseSaved,
+  onDelete,
+  isDeleting = false,
 }: ExpenseModalProps) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState<number | "">("");
@@ -26,6 +29,7 @@ export function ExpenseModal({
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -255,24 +259,55 @@ export function ExpenseModal({
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-border-hairline">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold text-muted hover:text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-primary hover:bg-primary-hover px-5 py-2.5 rounded-xl text-xs font-semibold text-white shadow-xs transition-colors cursor-pointer disabled:opacity-50"
-            >
-              {isSubmitting ? "Saving..." : existingExpense ? "Update Expense" : "Save Expense"}
-            </button>
+          <div className="flex items-center justify-between gap-3 pt-3 border-t border-border-hairline">
+            {existingExpense && onDelete ? (
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(true)}
+                disabled={isSubmitting || isDeleting}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-error hover:bg-error-container/40 border border-error/20 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                <Trash2 size={13} />
+                <span>Delete Expense</span>
+              </button>
+            ) : (
+              <div />
+            )}
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-muted hover:text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting || isDeleting}
+                className="bg-primary hover:bg-primary-hover px-5 py-2.5 rounded-xl text-xs font-semibold text-white shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+              >
+                {isSubmitting ? "Saving..." : existingExpense ? "Update Expense" : "Save Expense"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
+
+      {existingExpense && (
+        <DeleteConfirmModal
+          isOpen={showDeleteConfirm}
+          title={`Delete "${existingExpense.title}"?`}
+          description="Are you sure you want to delete this expense record? This action cannot be undone and will update your financial reports."
+          confirmLabel="Delete expense"
+          isDeleting={isDeleting}
+          onConfirm={async () => {
+            await onDelete?.(existingExpense.id, existingExpense.title);
+            setShowDeleteConfirm(false);
+            onClose();
+          }}
+          onClose={() => setShowDeleteConfirm(false)}
+        />
+      )}
     </div>
   );
 }

@@ -48,15 +48,15 @@ export function PublicLandingPage() {
       <section className="hero">
         <div className="hero-copy">
           <h1 className="font-sans font-bold text-on-surface tracking-tight">
-            An operational & financial
+            No more scattered records or manual guesswork.
             <br />
             <span className="text-primary font-bold">
-              intelligence engine for online businesses.
+              Your go-to hub to sell, track, and manage.
             </span>
           </h1>
           <p className="text-on-surface-variant text-base leading-relaxed">
-            Unify your storefront, client pipelines, itemized multi-currency invoicing, expense
-            bookkeeping, and live valuation analytics—all in one unified operating system.
+            Everything you need to run your business in one place. Capture leads, track orders, and
+            pull up customer info instantly without digging through old chats or Excel files.
           </p>
           <div className="hero-ctas">
             <a

@@ -212,11 +212,72 @@ export interface OrderDetailsDrawerProps {
   onUpdated?: () => void;
 }
 
+export type OrderTab = "all" | "unfulfilled" | "completed" | "abandoned";
+export type OrderView = "table" | "board";
+
+export interface BoardCardProps {
+  order: Order;
+  effectiveStatus: FulfillmentStatus;
+  onSelect: (id: string) => void;
+  onMoveTo: (orderId: string, status: FulfillmentStatus) => Promise<void> | void;
+  onDragStart: (e: React.DragEvent, orderId: string) => void;
+}
+
+export interface BoardColumnDef {
+  key: string;
+  title: string;
+  headerBg: string;
+  statuses: FulfillmentStatus[];
+  dropTargetStatus: FulfillmentStatus;
+}
+
+export type ColumnDateFilter = "ALL" | "TODAY" | "7_DAYS" | "30_DAYS";
+
+export interface ColumnFilterState {
+  dateRange: ColumnDateFilter;
+  orderStatus: OrderStatus | "ALL";
+  paymentStatus: PaymentStatus | "ALL";
+}
+
+export interface OrderBoardMeta {
+  totalDelivered: number;
+  showingCount: number;
+  hasOverflow: boolean;
+  overflowCount: number;
+  timeframeDays: number;
+}
+
+export interface OrderBoardResponse {
+  items: Order[];
+  deliveredMeta: OrderBoardMeta;
+}
+
+export interface OrdersBoardProps {
+  orders: Order[];
+  isLoading: boolean;
+  onSelectOrder: (id: string) => void;
+  onMoveTo: (orderId: string, status: FulfillmentStatus) => Promise<void> | void;
+  deliveredMeta?: OrderBoardMeta | null;
+  onSwitchToTable?: () => void;
+}
+
 export interface OrdersTableProps {
   orders: Array<Order | CheckoutSession>;
   isAbandonedTab: boolean;
   isLoading: boolean;
   onSelectOrder: (id: string) => void;
+  summary?: OrderSummary;
+  tab: OrderTab;
+  onTabChange: (tab: OrderTab) => void;
+  searchQuery: string;
+  onSearch: (q: string) => void;
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+  totalRecords: number;
+  startIndex: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
 }
 
 export interface CheckoutDeliveryFormProps {

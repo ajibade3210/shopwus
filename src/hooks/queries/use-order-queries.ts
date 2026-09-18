@@ -4,7 +4,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-keys";
 import {
   createManualOrder,
+  deleteOrder,
   dispatchOrder,
+  getOrderBoard,
   getOrderById,
   getOrderSummary,
   getOrders,
@@ -18,10 +20,19 @@ import type {
   UpdateOrderStatusInput,
 } from "@/types";
 
-export function useOrdersQuery(params?: GetOrdersParams) {
+export function useOrdersQuery(params?: GetOrdersParams, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: queryKeys.orders.list(params),
     queryFn: () => getOrders(params),
+    enabled: options?.enabled,
+  });
+}
+
+export function useOrderBoardQuery(timeframeDays?: number, options?: { enabled?: boolean }) {
+  return useQuery({
+    queryKey: queryKeys.orders.board(),
+    queryFn: () => getOrderBoard(timeframeDays),
+    enabled: options?.enabled,
   });
 }
 
@@ -51,6 +62,17 @@ export function useUpdateOrderStatusMutation() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.orders.all });
       queryClient.invalidateQueries({ queryKey: queryKeys.orders.detail(variables.id) });
+    },
+  });
+}
+
+export function useDeleteOrderMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteOrder(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.orders.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.products.all });
     },
   });
 }

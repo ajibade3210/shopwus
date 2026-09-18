@@ -10,6 +10,7 @@ import {
   useCreateCustomerMutation,
   useCustomersQuery,
   useCustomersSummaryQuery,
+  useDeleteCustomerMutation,
   useDeleteCustomerServiceMutation,
   useDeleteInvoiceMutation,
   useInvoicesQuery,
@@ -49,6 +50,7 @@ export function useCustomers(onToast?: (message: string) => void) {
   const toggleStatusMutation = useToggleCustomerStatusMutation();
   const resendInvoiceMutation = useResendInvoiceMutation();
   const deleteInvoiceMutation = useDeleteInvoiceMutation();
+  const deleteCustomerMutation = useDeleteCustomerMutation();
 
   const items = customersData;
   const invoices = invoicesData;
@@ -204,6 +206,31 @@ export function useCustomers(onToast?: (message: string) => void) {
     }
   };
 
+  const handleDeleteCustomer = async (customerId: string) => {
+    try {
+      await deleteCustomerMutation.mutateAsync(customerId);
+      setSelectedCustomerId(null);
+      onToast?.("Customer deleted successfully.");
+      return true;
+    } catch {
+      onToast?.("Failed to delete customer.");
+      return false;
+    }
+  };
+
+  const handleBulkDeleteCustomers = async (customerIds: string[]) => {
+    if (customerIds.length === 0) return false;
+    try {
+      await Promise.all(customerIds.map(id => deleteCustomerMutation.mutateAsync(id)));
+      setSelectedCustomerId(null);
+      onToast?.(`${customerIds.length} customers deleted successfully.`);
+      return true;
+    } catch {
+      onToast?.("Failed to delete selected customers.");
+      return false;
+    }
+  };
+
   const selectedCustomer = items.find(c => c.id === selectedCustomerId) || null;
   const customerInvoices = selectedCustomer
     ? invoices.filter(
@@ -243,6 +270,7 @@ export function useCustomers(onToast?: (message: string) => void) {
     activeServicesCount,
     isExporting,
     isSubmitting: createCustomerMutation.isPending || updateCustomerMutation.isPending,
+    isDeletingCustomer: deleteCustomerMutation.isPending,
     isLoading: isLoadingCustomers || isLoadingInvoices,
     handleSearch,
     reloadCustomers,
@@ -255,5 +283,7 @@ export function useCustomers(onToast?: (message: string) => void) {
     handleToggleCustomerStatus,
     handleResendInvoice,
     handleDeleteDraftInvoice,
+    handleDeleteCustomer,
+    handleBulkDeleteCustomers,
   };
 }

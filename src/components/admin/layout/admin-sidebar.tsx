@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowLeftRight,
   Eye,
   FileText,
   LogOut,
@@ -9,21 +10,16 @@ import {
   ShoppingBag,
   Store,
   TrendingUp,
+  UserSearch,
   Users,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BrandLogo } from "@/components/shared/brand-logo";
-import {
-  useCustomersQuery,
-  useExpensesQuery,
-  useInvoicesQuery,
-  useLeadsQuery,
-  useOrderSummaryQuery,
-  useProductsQuery,
-} from "@/hooks/queries";
+import { useLeadsSummaryQuery, useOrderSummaryQuery } from "@/hooks/queries";
 import { useCurrentStudio } from "@/hooks/use-current-studio";
+import { useUnseenBadge } from "@/hooks/use-unseen-badge";
 import type { AdminSidebarProps } from "@/types";
 import { LogoutConfirmModal } from "./logout-modal";
 
@@ -36,20 +32,11 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
   );
 
   const { slug, userName, userRole, initials } = useCurrentStudio();
-  const { data: leads } = useLeadsQuery();
-  const { data: customers } = useCustomersQuery();
-  const { data: invoices } = useInvoicesQuery();
-  const { data: expenses } = useExpensesQuery();
-  const { data: productsData } = useProductsQuery({ limit: 1 });
+  const { data: leadsSummary } = useLeadsSummaryQuery();
   const { data: orderSummary } = useOrderSummaryQuery();
 
-  const leadCount = leads?.length ?? null;
-  const customerCount = customers?.length ?? null;
-  const invoiceCount = invoices?.length ?? null;
-  const expenseCount = expenses?.length ?? null;
-  const productCount = productsData?.meta?.total ?? null;
-  const unfulfilledOrderCount =
-    orderSummary?.unfulfilled ?? (orderSummary?.totalOrders ? orderSummary.totalOrders : null);
+  const unseenLeads = useUnseenBadge("leads_badge", leadsSummary?.total ?? null);
+  const unseenOrders = useUnseenBadge("orders_badge", orderSummary?.totalOrders ?? null);
 
   // Close sidebar on click outside or Escape key when open
   useEffect(() => {
@@ -128,9 +115,9 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
             onClick={onClose}
           >
             <ShoppingBag size={16} /> Orders{" "}
-            {unfulfilledOrderCount !== null && (
+            {unseenOrders > 0 && (
               <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
-                {unfulfilledOrderCount}
+                {unseenOrders}
               </span>
             )}
           </Link>
@@ -139,22 +126,17 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
             href="/vendor/products"
             onClick={onClose}
           >
-            <Package size={16} /> Products{" "}
-            {productCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
-                {productCount}
-              </span>
-            )}
+            <Package size={16} /> Products
           </Link>
           <Link
             className={navLinkClass(path === "/vendor/leads")}
             href="/vendor/leads"
             onClick={onClose}
           >
-            <Users size={16} /> Leads{" "}
-            {leadCount !== null && (
+            <UserSearch size={16} /> Leads{" "}
+            {unseenLeads > 0 && (
               <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
-                {leadCount}
+                {unseenLeads}
               </span>
             )}
           </Link>
@@ -163,36 +145,28 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
             href="/vendor/customers"
             onClick={onClose}
           >
-            <Users size={16} /> Customers{" "}
-            {customerCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
-                {customerCount}
-              </span>
-            )}
+            <Users size={16} /> Customers
           </Link>
           <Link
             className={navLinkClass(path === "/vendor/invoices")}
             href="/vendor/invoices"
             onClick={onClose}
           >
-            <FileText size={16} /> Invoices{" "}
-            {invoiceCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
-                {invoiceCount}
-              </span>
-            )}
+            <FileText size={16} /> Invoices
           </Link>
           <Link
             className={navLinkClass(path === "/vendor/expenses")}
             href="/vendor/expenses"
             onClick={onClose}
           >
-            <Receipt size={16} /> Expenses{" "}
-            {expenseCount !== null && (
-              <span className="ml-auto text-[11px] font-mono bg-surface-high text-on-surface-variant px-1.5 py-0.5 rounded">
-                {expenseCount}
-              </span>
-            )}
+            <Receipt size={16} /> Expenses
+          </Link>
+          <Link
+            className={navLinkClass(path?.startsWith("/vendor/transactions"))}
+            href="/vendor/transactions"
+            onClick={onClose}
+          >
+            <ArrowLeftRight size={16} /> Transactions
           </Link>
 
           {/* Collapsible Online Store Section */}

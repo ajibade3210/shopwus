@@ -37,6 +37,8 @@ interface AuthResponseDto {
   token?: string;
 }
 
+type MeResponseDto = AuthResponseDto;
+
 export function saveAuthTokens(accessToken?: string, refreshToken?: string): void {
   if (typeof window === "undefined") return;
   if (accessToken) {

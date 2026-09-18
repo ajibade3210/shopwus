@@ -373,8 +373,6 @@ export function useSettingsForm({ notify }: UseSettingsFormOptions) {
       const updated = await updateBusinessProfile({
         businessName: branding.name,
         slug: branding.slug,
-        tagline: branding.tagline,
-        location: branding.location,
         website: normalizedWebsite,
         email: branding.email,
         currency: branding.currency,

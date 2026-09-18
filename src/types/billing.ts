@@ -30,6 +30,36 @@ export interface BusinessBilling {
   updatedAt: string;
 }
 
+export interface BillingTransactionItem {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  reference: string;
+  amount: number;
+  merchantSettlement: number;
+  platformFee: number;
+  status: "SUCCESS" | "FAILED" | "REFUNDED";
+  paidAt: string;
+}
+
+export type TransactionStatusFilter = "all" | "SUCCESS" | "FAILED" | "REFUNDED";
+
+export interface TransactionTableProps {
+  items: BillingTransactionItem[];
+  paginatedItems: BillingTransactionItem[];
+  searchQuery: string;
+  statusFilter: TransactionStatusFilter;
+  onSearch: (q: string) => void;
+  onStatusFilterChange: (s: TransactionStatusFilter) => void;
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+  startIndex: number;
+  onPageChange: (p: number) => void;
+  onPageSizeChange: (size: number) => void;
+  isLoading?: boolean;
+}
+
 export interface BillingSummary {
   billing: BusinessBilling;
   stats: {
@@ -37,17 +67,7 @@ export interface BillingSummary {
     totalSettled: number;
     totalPlatformFees: number;
   };
-  transactions: Array<{
-    id: string;
-    orderNumber: string;
-    customerName: string;
-    reference: string;
-    amount: number;
-    merchantSettlement: number;
-    platformFee: number;
-    status: "SUCCESS" | "FAILED" | "REFUNDED";
-    paidAt: string;
-  }>;
+  transactions: BillingTransactionItem[];
 }
 
 export interface InitializePaymentResponse {

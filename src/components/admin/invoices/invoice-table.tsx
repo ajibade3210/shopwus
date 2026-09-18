@@ -8,6 +8,7 @@ import {
   Eye,
   RefreshCw,
   Search,
+  Trash2,
 } from "lucide-react";
 import { INVOICE_PAGE_CONFIG, INVOICE_STATUS_FILTERS } from "@/constants";
 import type { InvoiceStatusFilter, InvoiceTableProps } from "@/types";
@@ -25,6 +26,7 @@ export function InvoiceTable({
   onSelectInvoice,
   onMarkPaid,
   onMarkUnpaid,
+  onDeleteDraft,
   currentPage,
   totalPages,
   pageSize,
@@ -183,6 +185,19 @@ export function InvoiceTable({
                       >
                         <RefreshCw size={11} />
                         <span>Revert</span>
+                      </button>
+                    )}
+
+                    {inv.status === "draft" && onDeleteDraft && (
+                      <button
+                        type="button"
+                        onClick={() => onDeleteDraft(inv)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-error hover:bg-error-container/40 border border-error/20 text-xs font-semibold transition-colors cursor-pointer"
+                        title="Delete draft invoice"
+                        aria-label="Delete draft invoice"
+                      >
+                        <Trash2 size={11} />
+                        <span>Delete</span>
                       </button>
                     )}
 

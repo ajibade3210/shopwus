@@ -150,13 +150,9 @@ export interface IdentitySectionProps {
   slug: string;
   setSlug: (v: string) => void;
   slugStatus: "checking" | "available" | "taken" | "idle";
-  tagline: string;
-  setTagline: (v: string) => void;
-  location: string;
-  setLocation: (v: string) => void;
   website: string;
   setWebsite: (v: string) => void;
-  email: string;
+  email?: string;
   setEmail?: (v: string) => void;
   currency: CurrencyCode;
   setCurrency: (v: CurrencyCode) => void;
@@ -477,16 +473,11 @@ export interface ProfileIdentityCardProps {
   phone: string;
   avatar: string;
   studioName?: string;
-  bankName?: string | null;
-  accountName?: string | null;
-  accountNumber?: string | null;
   onSave: (updates: {
     name: string;
     email: string;
     phone: string;
-    bankName?: string | null;
-    accountName?: string | null;
-    accountNumber?: string | null;
+    studioName?: string;
   }) => Promise<void>;
 }
 

@@ -1,14 +1,14 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useSettingsForm } from "@/hooks/use-settings-form";
 import type { EnhancedSettingsPageProps } from "@/types";
 import { useAdminToast } from "./admin-layout";
 import { AppearanceSection } from "./settings/appearance-section";
-import { BillingSection } from "./settings/billing-section";
 import { ChannelsSection } from "./settings/channels-section";
 import { ContactSection } from "./settings/contact-section";
-import { DeliverySection } from "./settings/delivery-section";
 import { FooterSection } from "./settings/footer-section";
 import { IdentitySection } from "./settings/identity-section";
 import { PortfolioSection } from "./settings/portfolio-section";
@@ -24,14 +24,8 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
     setName,
     slug,
     setSlug,
-    tagline,
-    setTagline,
-    location,
-    setLocation,
     website,
     setWebsite,
-    email,
-    setEmail,
     currency,
     setCurrency,
     about,
@@ -172,14 +166,8 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
           slug={slug}
           setSlug={setSlug}
           slugStatus={slugStatus}
-          tagline={tagline}
-          setTagline={setTagline}
-          location={location}
-          setLocation={setLocation}
           website={website}
           setWebsite={setWebsite}
-          email={email}
-          setEmail={setEmail}
           currency={currency}
           setCurrency={setCurrency}
           businessType={businessType}
@@ -283,9 +271,27 @@ export function EnhancedSettingsPage({ onToast }: EnhancedSettingsPageProps) {
           setByAppointmentOnly={setByAppointmentOnly}
         />
 
-        <DeliverySection />
-
-        <BillingSection />
+        {/* Fulfillment & Delivery Notice Callout */}
+        <div className="p-4 sm:p-5 bg-surface-low border border-border-hairline rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+          <div className="space-y-1">
+            <h3 className="text-xs font-bold text-on-surface">
+              Looking for Delivery Rates & Pickup Settings?
+            </h3>
+            <p className="text-[11px] text-muted leading-relaxed">
+              Store origin address, courier pickup, and customer fulfillment rules are now managed
+              in Location Settings.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href="/vendor/profile?tab=delivery"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-card hover:bg-surface border border-border-hairline text-on-surface text-xs font-semibold rounded-lg transition-colors shadow-2xs text-decoration-none"
+            >
+              <span>Delivery Settings</span>
+              <ArrowUpRight size={13} className="text-muted" />
+            </Link>
+          </div>
+        </div>
 
         <AppearanceSection
           colors={colors}

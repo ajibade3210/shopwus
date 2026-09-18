@@ -232,5 +232,6 @@ export * from "./expense";
 export * from "./guest-invoice";
 export * from "./invoice";
 export * from "./landing";
+export * from "./order";
 export * from "./theme";
 export * from "./valuation";

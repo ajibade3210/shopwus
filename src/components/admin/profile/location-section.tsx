@@ -1,14 +1,14 @@
 "use client";
 
-import { AlertCircle, Check, CheckCircle2, Loader2, Phone, ShieldCheck } from "lucide-react";
+import { AlertCircle, CheckCircle2, ChevronDown, Loader2, Phone } from "lucide-react";
 import { useEffect, useId, useMemo, useState } from "react";
 import { NIGERIAN_CITIES_BY_STATE, NIGERIAN_STATES } from "@/constants/delivery";
 import { useDeliverySettingsQuery, useUpdateDeliverySettingsMutation } from "@/hooks/queries";
 import { useAdminToast } from "../layout/admin-toast-provider";
-import { Card } from "./card";
-import { Toggle } from "./toggle";
+import { Card } from "../settings/card";
+import { Toggle } from "../settings/toggle";
 
-export function DeliverySection() {
+export function LocationSection() {
   const { showToast } = useAdminToast();
   const { data: settings, isLoading } = useDeliverySettingsQuery();
   const updateSettingsMutation = useUpdateDeliverySettingsMutation();
@@ -96,15 +96,15 @@ export function DeliverySection() {
 
   if (isLoading) {
     return (
-      <div className="p-8 text-center text-xs text-[#6b7280]">
-        <Loader2 size={18} className="animate-spin mx-auto mb-2 text-[#191c1d]" />
+      <div className="p-8 text-center text-xs text-muted">
+        <Loader2 size={18} className="animate-spin mx-auto mb-2 text-primary" />
         Loading delivery settings...
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6">
       {errorMsg && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2 text-xs text-red-700">
           <AlertCircle size={16} className="shrink-0 mt-0.5" />
@@ -114,20 +114,14 @@ export function DeliverySection() {
 
       {/* Origin Address Card */}
       <Card title="Store Origin Address" description="Terminal Africa Courier Pickup Location">
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-[#6b7280]">
-              Where couriers (DHL, Fez, etc.) arrive to collect orders for delivery.
-            </p>
-            <div className="flex items-center gap-1 text-[11px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-full shrink-0">
-              <ShieldCheck size={13} />
-              <span>Real-time Quoting Active</span>
-            </div>
-          </div>
+        <div className="space-y-4 font-sans">
+          <p className="text-xs text-muted">
+            Where couriers (DHL, Fez, etc.) arrive to collect orders for delivery.
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div className="sm:col-span-2">
-              <label htmlFor={addr1Id} className="block text-xs font-medium text-[#374151] mb-1">
+              <label htmlFor={addr1Id} className="block text-xs font-medium text-on-surface mb-1">
                 Street Address Line 1 *
               </label>
               <input
@@ -136,12 +130,12 @@ export function DeliverySection() {
                 placeholder="Shop number, Street, Landmark"
                 value={addressLine1}
                 onChange={e => setAddressLine1(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                className="w-full px-3.5 py-2.5 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor={addr2Id} className="block text-xs font-medium text-[#374151] mb-1">
+              <label htmlFor={addr2Id} className="block text-xs font-medium text-on-surface mb-1">
                 Address Line 2 (Optional)
               </label>
               <input
@@ -150,49 +144,59 @@ export function DeliverySection() {
                 placeholder="Suite, building, or unit number"
                 value={addressLine2}
                 onChange={e => setAddressLine2(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                className="w-full px-3.5 py-2.5 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none"
               />
             </div>
 
             <div>
-              <label htmlFor={stateId} className="block text-xs font-medium text-[#374151] mb-1">
+              <label htmlFor={stateId} className="block text-xs font-medium text-on-surface mb-1">
                 Store State *
               </label>
-              <select
-                id={stateId}
-                value={state}
-                onChange={e => {
-                  setState(e.target.value);
-                  setCity(NIGERIAN_CITIES_BY_STATE[e.target.value]?.[0] || "");
-                }}
-                className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
-              >
-                {NIGERIAN_STATES.map(s => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor={cityId} className="block text-xs font-medium text-[#374151] mb-1">
-                City / Area *
-              </label>
-              {citiesForState.length > 0 ? (
+              <div className="relative">
                 <select
-                  id={cityId}
-                  value={city}
-                  onChange={e => setCity(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                  id={stateId}
+                  value={state}
+                  onChange={e => {
+                    setState(e.target.value);
+                    setCity(NIGERIAN_CITIES_BY_STATE[e.target.value]?.[0] || "");
+                  }}
+                  className="w-full px-3.5 py-2.5 pr-10 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none appearance-none cursor-pointer font-medium"
                 >
-                  <option value="">-- Choose City --</option>
-                  {citiesForState.map(c => (
-                    <option key={c} value={c}>
-                      {c}
+                  {NIGERIAN_STATES.map(s => (
+                    <option key={s} value={s}>
+                      {s}
                     </option>
                   ))}
                 </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-muted">
+                  <ChevronDown size={15} />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor={cityId} className="block text-xs font-medium text-on-surface mb-1">
+                City / Area *
+              </label>
+              {citiesForState.length > 0 ? (
+                <div className="relative">
+                  <select
+                    id={cityId}
+                    value={city}
+                    onChange={e => setCity(e.target.value)}
+                    className="w-full px-3.5 py-2.5 pr-10 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none appearance-none cursor-pointer font-medium"
+                  >
+                    <option value="">-- Choose City --</option>
+                    {citiesForState.map(c => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-muted">
+                    <ChevronDown size={15} />
+                  </div>
+                </div>
               ) : (
                 <input
                   id={cityId}
@@ -200,7 +204,7 @@ export function DeliverySection() {
                   placeholder="e.g. Ikeja"
                   value={city}
                   onChange={e => setCity(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                  className="w-full px-3.5 py-2.5 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none"
                 />
               )}
             </div>
@@ -208,14 +212,14 @@ export function DeliverySection() {
             <div>
               <label
                 htmlFor={senderPhoneId}
-                className="block text-xs font-medium text-[#374151] mb-1"
+                className="block text-xs font-medium text-on-surface mb-1"
               >
                 Store / Dispatch Phone Number *
               </label>
               <div className="relative">
                 <Phone
                   size={13}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9ca3af]"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-outline"
                 />
                 <input
                   id={senderPhoneId}
@@ -223,10 +227,10 @@ export function DeliverySection() {
                   placeholder="e.g. 08012345678"
                   value={senderPhone}
                   onChange={e => setSenderPhone(e.target.value)}
-                  className="w-full pl-8 pr-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                  className="w-full pl-8 pr-3.5 py-2.5 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none"
                 />
               </div>
-              <p className="text-[10px] text-[#9ca3af] mt-1">
+              <p className="text-[10px] text-outline mt-1">
                 Couriers call this number upon arrival to pick up packages.
               </p>
             </div>
@@ -234,7 +238,7 @@ export function DeliverySection() {
             <div>
               <label
                 htmlFor={postalCodeId}
-                className="block text-xs font-medium text-[#374151] mb-1"
+                className="block text-xs font-medium text-on-surface mb-1"
               >
                 Postal Code (Optional)
               </label>
@@ -244,7 +248,7 @@ export function DeliverySection() {
                 placeholder="e.g. 100001"
                 value={postalCode}
                 onChange={e => setPostalCode(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                className="w-full px-3.5 py-2.5 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none"
               />
             </div>
           </div>
@@ -256,15 +260,15 @@ export function DeliverySection() {
         title="Delivery & Fulfillment Modes"
         description="Control which fulfillment channels are visible to your customers during storefront checkout"
       >
-        <div className="space-y-6">
+        <div className="space-y-6 font-sans">
           {/* Home Delivery & Terminal Quoting Toggle */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <span className="font-semibold text-xs text-[#191c1d] block">
+                <span className="font-semibold text-xs text-on-surface block">
                   Enable Home Delivery
                 </span>
-                <span className="text-[11px] text-[#6b7280]">
+                <span className="text-[11px] text-muted">
                   Customers can enter their address and receive real-time courier quotes.
                 </span>
               </div>
@@ -275,11 +279,11 @@ export function DeliverySection() {
             </div>
 
             {enableHomeDelivery && (
-              <div className="p-4 bg-[#fafaf9] border border-[#e5e7eb] rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 bg-surface-low border border-border-hairline rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label
                     htmlFor={fallbackFeeId}
-                    className="block text-xs font-medium text-[#374151] mb-1"
+                    className="block text-xs font-medium text-on-surface mb-1"
                   >
                     Fallback Flat Shipping Fee (₦)
                   </label>
@@ -290,9 +294,9 @@ export function DeliverySection() {
                     placeholder="3000"
                     value={fallbackShippingFee}
                     onChange={e => setFallbackShippingFee(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] transition-all"
+                    className="w-full px-3 py-2 text-xs bg-white border border-border-hairline rounded-xl focus:border-primary text-on-surface transition-all outline-none"
                   />
-                  <p className="text-[10px] text-[#9ca3af] mt-1">
+                  <p className="text-[10px] text-outline mt-1">
                     Used if couriers are temporarily unreachable or timeout. Default ₦3,000.
                   </p>
                 </div>
@@ -300,7 +304,7 @@ export function DeliverySection() {
                 <div>
                   <label
                     htmlFor={freeThresholdId}
-                    className="block text-xs font-medium text-[#374151] mb-1"
+                    className="block text-xs font-medium text-on-surface mb-1"
                   >
                     Free Delivery Threshold (₦)
                   </label>
@@ -311,9 +315,9 @@ export function DeliverySection() {
                     placeholder="e.g. 50000"
                     value={freeDeliveryThreshold}
                     onChange={e => setFreeDeliveryThreshold(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-white border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] transition-all"
+                    className="w-full px-3 py-2 text-xs bg-white border border-border-hairline rounded-xl focus:border-primary text-on-surface transition-all outline-none"
                   />
-                  <p className="text-[10px] text-[#9ca3af] mt-1">
+                  <p className="text-[10px] text-outline mt-1">
                     Orders with subtotal at or above this amount receive free shipping. Leave blank
                     to disable.
                   </p>
@@ -323,13 +327,13 @@ export function DeliverySection() {
           </div>
 
           {/* Store Pickup Toggle */}
-          <div className="pt-4 border-t border-[#eee] space-y-3">
+          <div className="pt-4 border-t border-border-hairline space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <span className="font-semibold text-xs text-[#191c1d] block">
+                <span className="font-semibold text-xs text-on-surface block">
                   Enable In-Store Pickup
                 </span>
-                <span className="text-[11px] text-[#6b7280]">
+                <span className="text-[11px] text-muted">
                   Allows customers to order online and collect in person with zero shipping fee.
                 </span>
               </div>
@@ -343,7 +347,7 @@ export function DeliverySection() {
               <div>
                 <label
                   htmlFor={pickupInstructionsId}
-                  className="block text-xs font-medium text-[#374151] mb-1"
+                  className="block text-xs font-medium text-on-surface mb-1"
                 >
                   Pickup Instructions for Customer
                 </label>
@@ -353,7 +357,7 @@ export function DeliverySection() {
                   placeholder="e.g. Available for collection Monday–Saturday between 10am and 6pm. Bring your order reference number."
                   value={pickupInstructions}
                   onChange={e => setPickupInstructions(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#fafaf9] border border-[#e5e7eb] rounded-xl focus:border-[#191c1d] focus:bg-white transition-all"
+                  className="w-full px-3 py-2 text-xs bg-surface-low border border-border-hairline rounded-xl focus:border-primary focus:bg-white text-on-surface transition-all outline-none"
                 />
               </div>
             )}
@@ -373,7 +377,7 @@ export function DeliverySection() {
           type="button"
           onClick={() => handleSaveSettings()}
           disabled={updateSettingsMutation.isPending}
-          className="px-6 py-2.5 bg-[#191c1d] hover:bg-black text-white text-xs font-semibold rounded-xl transition-all shadow-xs disabled:opacity-50 flex items-center gap-2"
+          className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-xl transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
         >
           {updateSettingsMutation.isPending ? (
             <>
@@ -381,10 +385,7 @@ export function DeliverySection() {
               Saving Settings...
             </>
           ) : (
-            <>
-              <Check size={14} />
-              Save Delivery Settings
-            </>
+            <>Save Delivery Settings</>
           )}
         </button>
       </div>

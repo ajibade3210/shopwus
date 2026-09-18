@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useCustomers } from "@/hooks/use-customers";
 import type { Customer, CustomersPageProps, Invoice } from "@/types";
 import { formatMoney, Metric, PageTitle, useAdminToast } from "./admin-layout";
+import { DeleteConfirmModal } from "./common/delete-confirm-modal";
 import { CustomerAddModal } from "./customers/customer-add-modal";
 import { CustomerBroadcastModal } from "./customers/customer-broadcast-modal";
 import { CustomerDetailDrawer } from "./customers/customer-detail-drawer";
@@ -48,10 +49,16 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
     handleToggleCustomerStatus,
     handleResendInvoice,
     handleDeleteDraftInvoice,
+    handleDeleteCustomer,
+    isDeletingCustomer,
+    handleBulkDeleteCustomers,
   } = useCustomers(notify);
 
   const [selectedCustomerIds, setSelectedCustomerIds] = useState<string[]>([]);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState(false);
+  const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
+  const [isBulkDeleting, setIsBulkDeleting] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [customerToEdit, setCustomerToEdit] = useState<Customer | null>(null);
   const [showBroadcastModal, setShowBroadcastModal] = useState(false);
@@ -82,6 +89,18 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
 
   const handleClearCustomerSelection = () => {
     setSelectedCustomerIds([]);
+  };
+
+  const handleBulkDeleteSelected = async () => {
+    if (selectedCustomerIds.length === 0) return;
+    setIsBulkDeleting(true);
+    try {
+      await handleBulkDeleteCustomers(selectedCustomerIds);
+      setSelectedCustomerIds([]);
+    } finally {
+      setIsBulkDeleting(false);
+      setShowBulkDeleteConfirm(false);
+    }
   };
 
   const handleOpenBroadcastModal = () => {
@@ -205,6 +224,9 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
         onSelectAllActive={handleSelectAllActiveCustomers}
         onClearSelection={handleClearCustomerSelection}
         onOpenBroadcast={handleOpenBroadcastModal}
+        onDeleteSelected={async () => setShowBulkDeleteConfirm(true)}
+        isDeletingBulk={isBulkDeleting}
+        onDeleteCustomer={setCustomerToDelete}
         currentPage={currentPage}
         totalPages={totalPages}
         pageSize={pageSize}
@@ -228,6 +250,11 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
         onConfirmResendInvoice={setConfirmResendInvoice}
         onDeleteDraftInvoice={handleDeleteDraftInvoice}
         onDeleteService={handleDeleteService}
+        onDeleteCustomer={async customerId => {
+          await handleDeleteCustomer(customerId);
+          setSelectedCustomerIds(prev => prev.filter(id => id !== customerId));
+        }}
+        isDeletingCustomer={isDeletingCustomer}
         onUpdateServiceStatus={handleUpdateServiceStatus}
       />
 
@@ -297,6 +324,31 @@ export function CustomersPage({ onToast }: CustomersPageProps) {
         onClose={() => setShowImportModal(false)}
         onToast={notify}
         onImportSuccess={reloadCustomers}
+      />
+
+      <DeleteConfirmModal
+        isOpen={Boolean(customerToDelete)}
+        title={`Delete customer "${customerToDelete?.name}"?`}
+        description={`Are you sure you want to delete customer '${customerToDelete?.name}'? Past orders and invoices will remain intact in your financial records, but will no longer be linked to this customer profile.`}
+        confirmLabel="Delete customer"
+        isDeleting={isDeletingCustomer}
+        onConfirm={async () => {
+          if (!customerToDelete) return;
+          await handleDeleteCustomer(customerToDelete.id);
+          setSelectedCustomerIds(prev => prev.filter(id => id !== customerToDelete.id));
+          setCustomerToDelete(null);
+        }}
+        onClose={() => setCustomerToDelete(null)}
+      />
+
+      <DeleteConfirmModal
+        isOpen={showBulkDeleteConfirm}
+        title={`Delete ${selectedCustomerIds.length} customer${selectedCustomerIds.length > 1 ? "s" : ""}?`}
+        description={`This will permanently remove ${selectedCustomerIds.length} customer profile${selectedCustomerIds.length > 1 ? "s" : ""}. Past orders and invoices will remain in your records but will no longer be linked to a customer. This action cannot be undone.`}
+        confirmLabel="Delete customers"
+        isDeleting={isBulkDeleting}
+        onConfirm={handleBulkDeleteSelected}
+        onClose={() => setShowBulkDeleteConfirm(false)}
       />
     </section>
   );

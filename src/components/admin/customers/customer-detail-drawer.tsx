@@ -1,9 +1,8 @@
-"use client";
-
 import { ChevronDown, FileText, MessageSquare, Plus, RefreshCw, Trash2, X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { CustomerDetailDrawerProps, ServiceStatus } from "@/types";
 import { formatMoney, formatStatusLabel } from "@/utils";
+import { DeleteConfirmModal } from "../common/delete-confirm-modal";
 
 export function CustomerDetailDrawer({
   customer,
@@ -17,17 +16,21 @@ export function CustomerDetailDrawer({
   onConfirmResendInvoice,
   onDeleteDraftInvoice,
   onDeleteService,
+  onDeleteCustomer,
+  isDeletingCustomer = false,
   onUpdateServiceStatus,
 }: CustomerDetailDrawerProps) {
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === "Escape" && !isConfirmDeleteOpen) {
         onClose();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [onClose, isConfirmDeleteOpen]);
 
   if (!customer) return null;
 
@@ -388,8 +391,38 @@ export function CustomerDetailDrawer({
               </div>
             )}
           </div>
+
+          {/* Delete Customer Danger Section */}
+          {onDeleteCustomer && (
+            <div className="pt-4 border-t border-border-hairline">
+              <button
+                type="button"
+                onClick={() => setIsConfirmDeleteOpen(true)}
+                disabled={isDeletingCustomer}
+                className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-error hover:bg-error-container/20 border border-error/20 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                <Trash2 size={13} />
+                <span>Delete Customer</span>
+              </button>
+            </div>
+          )}
         </div>
       </aside>
+
+      <DeleteConfirmModal
+        isOpen={isConfirmDeleteOpen}
+        title="Delete Customer"
+        description={`Are you sure you want to delete customer "${customer.name}"? Past orders and invoices will remain intact in your financial records, but will no longer be linked to this customer profile.`}
+        confirmLabel="Delete Customer"
+        isDeleting={isDeletingCustomer}
+        onConfirm={async () => {
+          if (onDeleteCustomer) {
+            await onDeleteCustomer(customer.id);
+            setIsConfirmDeleteOpen(false);
+          }
+        }}
+        onClose={() => setIsConfirmDeleteOpen(false)}
+      />
     </div>
   );
 }

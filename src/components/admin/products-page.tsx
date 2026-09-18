@@ -1,10 +1,10 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useCategoriesQuery, useProductSummaryQuery, useProductsQuery } from "@/hooks/queries";
 import type { Product, ProductStatus } from "@/types";
-import { Metric, PageTitle } from "./admin-layout";
+import { Metric, MetricsGrid, PageTitle } from "./common";
 import { ProductModal } from "./products/product-modal";
 import { ProductsTable } from "./products/products-table";
 
@@ -13,10 +13,11 @@ export function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<ProductStatus | "">("");
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
-  const { data: summary } = useProductSummaryQuery();
+  const { data: summary, isLoading: isSummaryLoading } = useProductSummaryQuery();
   const { data: categories = [] } = useCategoriesQuery();
   const {
     data: productsData,
@@ -24,7 +25,7 @@ export function ProductsPage() {
     refetch,
   } = useProductsQuery({
     page,
-    limit: 15,
+    limit: pageSize,
     search: search || undefined,
     categoryId: categoryFilter || undefined,
     status: (statusFilter as ProductStatus) || undefined,
@@ -43,6 +44,26 @@ export function ProductsPage() {
     setIsModalOpen(true);
   };
 
+  const handleSearch = (q: string) => {
+    setSearch(q);
+    setPage(1);
+  };
+
+  const handleCategoryFilter = (cat: string) => {
+    setCategoryFilter(cat);
+    setPage(1);
+  };
+
+  const handleStatusFilter = (status: ProductStatus | "") => {
+    setStatusFilter(status);
+    setPage(1);
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setPage(1);
+  };
+
   const action = (
     <button
       type="button"
@@ -55,101 +76,58 @@ export function ProductsPage() {
   );
 
   return (
-    <section className="content">
+    <section className="content font-sans">
       <PageTitle title="Products & Inventory" action={action} />
 
-      {/* Top Metric Strip */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-7">
-        <Metric label="Total Products" value={String(summary?.total || 0)} />
-        <Metric label="Active in Store" value={String(summary?.active || 0)} />
-        <Metric label="Low Stock Alerts" value={String(summary?.lowStock || 0)} />
-        <Metric label="Out of Stock" value={String(summary?.outOfStock || 0)} />
-      </div>
-
-      {/* Filter and Search Bar */}
-      <div className="bg-card border border-border-hairline rounded-xl p-3 sm:p-4 shadow-card space-y-3">
-        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-          <div className="relative flex-1">
-            <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-outline" />
-            <input
-              type="text"
-              placeholder="Search products by title, SKU..."
-              value={search}
-              onChange={e => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-surface-low border border-border-hairline rounded-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <select
-              value={categoryFilter}
-              onChange={e => {
-                setCategoryFilter(e.target.value);
-                setPage(1);
-              }}
-              className="px-3 py-2 text-xs bg-surface-low border border-border-hairline rounded-md font-medium text-on-surface focus:outline-none focus:border-primary transition-colors cursor-pointer"
-            >
-              <option value="">All Categories</option>
-              {categories.map(c => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={statusFilter}
-              onChange={e => {
-                setStatusFilter(e.target.value ? (e.target.value as ProductStatus) : "");
-                setPage(1);
-              }}
-              className="px-3 py-2 text-xs bg-surface-low border border-border-hairline rounded-md font-medium text-on-surface focus:outline-none focus:border-primary transition-colors cursor-pointer"
-            >
-              <option value="">All Statuses</option>
-              <option value="ACTIVE">Active</option>
-              <option value="DRAFT">Draft</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Product Table */}
-        <ProductsTable
-          products={products}
-          isLoading={isLoading}
-          onEdit={handleOpenEdit}
-          onRefresh={refetch}
+      {/* Top Metrics Row */}
+      <MetricsGrid cols={4}>
+        <Metric
+          label="Total products"
+          value={String(summary?.total || 0)}
+          detail="Catalog items"
+          isLoading={isSummaryLoading}
         />
+        <Metric
+          label="Active in store"
+          value={String(summary?.active || 0)}
+          detail="Visible to buyers"
+          isLoading={isSummaryLoading}
+        />
+        <Metric
+          label="Low stock alerts"
+          value={String(summary?.lowStock || 0)}
+          detail="Threshold ≤ 5 remaining"
+          isLoading={isSummaryLoading}
+        />
+        <Metric
+          label="Out of stock"
+          value={String(summary?.outOfStock || 0)}
+          detail="Requires replenishment"
+          isLoading={isSummaryLoading}
+        />
+      </MetricsGrid>
 
-        {/* Pagination */}
-        {meta && meta.totalPages > 1 && (
-          <div className="flex items-center justify-between pt-3 border-t border-border-hairline text-xs text-on-surface-variant">
-            <div>
-              Showing Page <b>{meta.page}</b> of <b>{meta.totalPages}</b> ({meta.total} products)
-            </div>
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                disabled={page <= 1}
-                onClick={() => setPage(p => p - 1)}
-                className="p-1.5 rounded-md border border-border-hairline hover:bg-surface-low text-on-surface disabled:opacity-40 cursor-pointer transition-colors"
-              >
-                <ChevronLeft size={14} />
-              </button>
-              <button
-                type="button"
-                disabled={page >= meta.totalPages}
-                onClick={() => setPage(p => p + 1)}
-                className="p-1.5 rounded-md border border-border-hairline hover:bg-surface-low text-on-surface disabled:opacity-40 cursor-pointer transition-colors"
-              >
-                <ChevronRight size={14} />
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+      {/* Standard Register Table matching Expenses, Invoices, and Transactions */}
+      <ProductsTable
+        products={products}
+        isLoading={isLoading}
+        onEdit={handleOpenEdit}
+        onRefresh={refetch}
+        searchQuery={search}
+        onSearch={handleSearch}
+        categoryFilter={categoryFilter}
+        onCategoryChange={handleCategoryFilter}
+        categories={categories}
+        statusFilter={statusFilter}
+        onStatusFilterChange={handleStatusFilter}
+        currentPage={page}
+        totalPages={meta?.totalPages || 1}
+        pageSize={pageSize}
+        totalRecords={meta?.total || 0}
+        startIndex={(page - 1) * pageSize}
+        onPageChange={setPage}
+        onPageSizeChange={handlePageSizeChange}
+      />
 
       {/* Create/Edit Modal */}
       <ProductModal

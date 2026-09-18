@@ -58,7 +58,7 @@ export function StudioFooter({
                 {profile.businessName}
               </div>
               <div className="text-[11px] text-text-muted">
-                {profile.physicalAddress || profile.location || profile.tagline}
+                {profile.physicalAddress || profile.location}
               </div>
             </div>
           </div>

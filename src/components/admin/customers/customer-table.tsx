@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2, MoreVertical, Search, Trash2 } from "lucide-react";
+import { useState } from "react";
 import type { CustomerTableProps } from "@/types";
 import { TableEmptyState } from "../common/table-empty-state";
 
@@ -15,6 +16,9 @@ export function CustomerTable({
   onSelectAllActive,
   onClearSelection,
   onOpenBroadcast,
+  onDeleteSelected,
+  isDeletingBulk = false,
+  onDeleteCustomer,
   currentPage,
   totalPages,
   pageSize,
@@ -22,6 +26,7 @@ export function CustomerTable({
   onPageChange,
   onPageSizeChange,
 }: CustomerTableProps) {
+  const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const activeItems = items.filter(c => c.isActive);
   const isAllActiveSelected =
     activeItems.length > 0 && activeItems.every(c => selectedCustomerIds.includes(c.id));
@@ -47,6 +52,22 @@ export function CustomerTable({
               >
                 Broadcast ({selectedCustomerIds.length})
               </button>
+
+              {onDeleteSelected && (
+                <button
+                  type="button"
+                  onClick={onDeleteSelected}
+                  disabled={isDeletingBulk}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-error hover:bg-error-hover text-white text-xs font-semibold shadow-xs hover:shadow-sm transition-all cursor-pointer disabled:opacity-60"
+                >
+                  {isDeletingBulk ? (
+                    <Loader2 size={12} className="animate-spin" />
+                  ) : (
+                    <Trash2 size={12} />
+                  )}
+                  Delete ({selectedCustomerIds.length})
+                </button>
+              )}
 
               <button
                 type="button"
@@ -188,8 +209,73 @@ export function CustomerTable({
                       </span>
                     </div>
                   </td>
-                  <td className="w-5 sm:w-10 text-right px-2 sm:px-5 py-3 sm:py-3.5 border-b border-border-hairline align-middle">
-                    <ChevronRight size={14} className="text-outline ml-auto" />
+                  <td
+                    onClick={e => e.stopPropagation()}
+                    className="w-12 sm:w-16 text-right px-2 sm:px-4 py-3 sm:py-3.5 border-b border-border-hairline align-middle"
+                  >
+                    <div className="flex items-center justify-end gap-1">
+                      {onDeleteCustomer && (
+                        <div className="relative inline-block text-left">
+                          <button
+                            type="button"
+                            onClick={e => {
+                              e.stopPropagation();
+                              setActiveMenuId(activeMenuId === c.id ? null : c.id);
+                            }}
+                            className="p-1 text-outline hover:text-on-surface rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer"
+                            aria-label={`Actions for ${c.name}`}
+                          >
+                            <MoreVertical size={14} />
+                          </button>
+                          {activeMenuId === c.id && (
+                            <>
+                              <div
+                                className="fixed inset-0 z-10"
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  setActiveMenuId(null);
+                                }}
+                              />
+                              <div className="absolute right-0 mt-1 w-32 bg-card rounded-xl shadow-popover border border-border-hairline z-20 py-1 overflow-hidden">
+                                <button
+                                  type="button"
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    setActiveMenuId(null);
+                                    onSelectCustomer(c.id);
+                                  }}
+                                  className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-on-surface hover:bg-surface-container-low text-left font-medium cursor-pointer transition-colors"
+                                >
+                                  View details
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    setActiveMenuId(null);
+                                    onDeleteCustomer(c);
+                                  }}
+                                  className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-error hover:bg-error/10 text-left font-medium cursor-pointer transition-colors"
+                                >
+                                  <Trash2 size={12} /> Delete
+                                </button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+                      <button
+                        type="button"
+                        onClick={e => {
+                          e.stopPropagation();
+                          onSelectCustomer(c.id);
+                        }}
+                        className="p-1 text-outline hover:text-on-surface cursor-pointer transition-colors"
+                        aria-label={`Open details for ${c.name}`}
+                      >
+                        <ChevronRight size={14} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );

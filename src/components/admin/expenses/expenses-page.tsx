@@ -34,6 +34,7 @@ export function ExpensesPage({ onToast }: ExpensesPageProps) {
     editingExpense,
     isExporting,
     isLoading,
+    isDeleting,
     handleSearch,
     handleCategoryFilter,
     handleOpenCreate,
@@ -172,6 +173,8 @@ export function ExpensesPage({ onToast }: ExpensesPageProps) {
         existingExpense={editingExpense}
         onClose={handleCloseModal}
         onToast={notify}
+        onDelete={handleDeleteExpense}
+        isDeleting={isDeleting}
       />
     </section>
   );

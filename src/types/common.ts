@@ -103,6 +103,12 @@ export interface ExtendedMetricProps extends MetricProps {
   icon?: ReactNode;
 }
 
+export interface MetricsGridProps {
+  children: ReactNode;
+  cols?: 2 | 3 | 4;
+  className?: string;
+}
+
 export interface PageTitleProps {
   title: string;
   description?: string;
@@ -124,6 +130,17 @@ export interface TableEmptyStateProps {
 
 export interface LogoutConfirmModalProps {
   isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface DeleteConfirmModalProps {
+  isOpen: boolean;
+  title: string;
+  description: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  isDeleting?: boolean;
+  onConfirm: () => void | Promise<void>;
   onClose: () => void;
 }
 
