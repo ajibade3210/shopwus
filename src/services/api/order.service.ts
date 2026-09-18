@@ -61,3 +61,7 @@ export async function placeStorefrontOrder(slug: string, input: CreateOrderInput
     input
   );
 }
+
+export async function deleteOrder(id: string): Promise<{ success: boolean; message: string }> {
+  return apiClient.delete<{ success: boolean; message: string }>(`/orders/${id}`);
+}

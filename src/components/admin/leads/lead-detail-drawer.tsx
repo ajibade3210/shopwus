@@ -1,9 +1,8 @@
-"use client";
-
-import { FileText, MessageSquare, UserCheck, X } from "lucide-react";
-import { useEffect } from "react";
+import { FileText, MessageSquare, Trash2, UserCheck, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { LeadDetailDrawerProps } from "@/types";
 import { formatDate, formatMoney, formatStatusLabel } from "@/utils";
+import { DeleteConfirmModal } from "../common/delete-confirm-modal";
 
 export function LeadDetailDrawer({
   lead,
@@ -12,16 +11,20 @@ export function LeadDetailDrawer({
   onOpenMessageModal,
   onConvertToCustomer,
   onIssueInvoice,
+  onDeleteLead,
+  isDeleting = false,
 }: LeadDetailDrawerProps) {
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === "Escape" && !isConfirmDeleteOpen) {
         onClose();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [onClose, isConfirmDeleteOpen]);
 
   if (!lead) return null;
 
@@ -129,8 +132,38 @@ export function LeadDetailDrawer({
             <FileText size={14} />
             <span>Issue Invoice</span>
           </button>
+
+          {/* Delete Lead */}
+          {onDeleteLead && (
+            <div className="pt-3 border-t border-border-hairline">
+              <button
+                type="button"
+                onClick={() => setIsConfirmDeleteOpen(true)}
+                disabled={isDeleting}
+                className="inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl text-xs font-semibold text-error hover:bg-error-container/20 border border-error/20 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                <Trash2 size={13} />
+                <span>Delete Lead</span>
+              </button>
+            </div>
+          )}
         </div>
       </aside>
+
+      <DeleteConfirmModal
+        isOpen={isConfirmDeleteOpen}
+        title="Delete Lead Inquiry"
+        description={`Are you sure you want to delete the lead inquiry from "${lead.name}"? This action cannot be undone.`}
+        confirmLabel="Delete Lead"
+        isDeleting={isDeleting}
+        onConfirm={async () => {
+          if (onDeleteLead) {
+            await onDeleteLead(lead.id);
+            setIsConfirmDeleteOpen(false);
+          }
+        }}
+        onClose={() => setIsConfirmDeleteOpen(false)}
+      />
     </div>
   );
 }

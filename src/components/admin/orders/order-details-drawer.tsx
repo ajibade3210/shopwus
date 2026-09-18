@@ -8,18 +8,21 @@ import {
   MapPin,
   Package,
   ShieldCheck,
+  Trash2,
   Truck,
   User,
   X,
 } from "lucide-react";
 import { useState } from "react";
 import {
+  useDeleteOrderMutation,
   useDispatchOrderMutation,
   useOrderQuery,
   useUpdateOrderStatusMutation,
 } from "@/hooks/queries";
 import type { FulfillmentStatus, OrderDetailsDrawerProps, PaymentStatus } from "@/types";
 import { formatCurrency } from "@/utils/currency";
+import { DeleteConfirmModal } from "../common/delete-confirm-modal";
 import { StatusBadge } from "../common/status-badge";
 import { useAdminToast } from "../layout/admin-toast-provider";
 
@@ -28,6 +31,7 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
   const { data: order, isLoading } = useOrderQuery(orderId);
   const updateMutation = useUpdateOrderStatusMutation();
   const dispatchMutation = useDispatchOrderMutation();
+  const deleteMutation = useDeleteOrderMutation();
 
   const [fulfillmentStatus, setFulfillmentStatus] = useState<FulfillmentStatus | "">("");
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | "">("");
@@ -35,6 +39,8 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
   const [courierName, setCourierName] = useState("");
 
   const [isConfirmDispatchOpen, setIsConfirmDispatchOpen] = useState(false);
+  const [isConfirmCancelOpen, setIsConfirmCancelOpen] = useState(false);
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
   const [dispatchError, setDispatchError] = useState<string | null>(null);
 
   if (!orderId) return null;
@@ -52,6 +58,35 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
     });
     showToast("Order status updated successfully!");
     if (onUpdated) onUpdated();
+  };
+
+  const handleCancelOrder = async () => {
+    if (!order) return;
+    await updateMutation.mutateAsync({
+      id: order.id,
+      input: {
+        status: "CANCELLED",
+        fulfillmentStatus: "CANCELLED",
+      },
+    });
+    showToast("Order has been cancelled.");
+    setIsConfirmCancelOpen(false);
+    if (onUpdated) onUpdated();
+    onClose();
+  };
+
+  const handleDeleteOrder = async () => {
+    if (!order) return;
+    try {
+      await deleteMutation.mutateAsync(order.id);
+      showToast("Order permanently deleted.");
+      setIsConfirmDeleteOpen(false);
+      if (onUpdated) onUpdated();
+      onClose();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to delete order.";
+      showToast(msg);
+    }
   };
 
   const handleDispatchCourier = async () => {
@@ -393,7 +428,7 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
                     placeholder="e.g., Fez Delivery, DHL"
                     defaultValue={order.courierName || ""}
                     onChange={e => setCourierName(e.target.value)}
-                    className="w-full px-3 py-1.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface focus:border-primary focus:outline-none"
+                    className="w-full px-3 py-1.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl text-on-surface focus:outline-none"
                   />
                 </div>
 
@@ -406,7 +441,7 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
                     placeholder="e.g., TRK-982189"
                     defaultValue={order.trackingNumber || ""}
                     onChange={e => setTrackingNumber(e.target.value)}
-                    className="w-full px-3 py-1.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-mono text-on-surface focus:border-primary focus:outline-none"
+                    className="w-full px-3 py-1.5 text-xs bg-surface-container-lowest border border-border-hairline rounded-xl font-mono text-on-surface focus:outline-none"
                   />
                 </div>
               </div>
@@ -419,6 +454,37 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
               >
                 {updateMutation.isPending ? "Updating..." : "Save Status Changes"}
               </button>
+
+              {order && (
+                <div className="pt-3 mt-3 border-t border-border-hairline space-y-2">
+                  {order.status !== "CANCELLED" && (
+                    <button
+                      type="button"
+                      onClick={() => setIsConfirmCancelOpen(true)}
+                      disabled={updateMutation.isPending || deleteMutation.isPending}
+                      className="inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl text-xs font-semibold text-error hover:bg-error-container/20 border border-error/20 transition-colors cursor-pointer disabled:opacity-50"
+                    >
+                      <span>Cancel Order</span>
+                    </button>
+                  )}
+
+                  {order.paymentStatus === "UNPAID" || order.status === "CANCELLED" ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsConfirmDeleteOpen(true)}
+                      disabled={updateMutation.isPending || deleteMutation.isPending}
+                      className="inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl text-xs font-semibold text-error hover:bg-error-container/20 border border-error/20 transition-colors cursor-pointer disabled:opacity-50"
+                    >
+                      <Trash2 size={13} />
+                      <span>Delete Order</span>
+                    </button>
+                  ) : (
+                    <p className="text-[11px] text-muted text-center italic py-1">
+                      Paid orders must be cancelled before they can be permanently deleted.
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -489,6 +555,26 @@ export function OrderDetailsDrawer({ orderId, onClose, onUpdated }: OrderDetails
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={isConfirmCancelOpen}
+          title="Cancel Order"
+          description={`Are you sure you want to cancel order "${order?.orderNumber}"? The order status will be updated to CANCELLED and will no longer appear in active fulfillment queues.`}
+          confirmLabel="Cancel Order"
+          isDeleting={updateMutation.isPending}
+          onConfirm={handleCancelOrder}
+          onClose={() => setIsConfirmCancelOpen(false)}
+        />
+
+        <DeleteConfirmModal
+          isOpen={isConfirmDeleteOpen}
+          title={`Delete order "${order?.orderNumber}"?`}
+          description="Are you sure you want to permanently delete this order? All line items and fulfillment history for this order will be permanently removed. This action cannot be undone."
+          confirmLabel="Delete Order"
+          isDeleting={deleteMutation.isPending}
+          onConfirm={handleDeleteOrder}
+          onClose={() => setIsConfirmDeleteOpen(false)}
+        />
       </div>
     </div>
   );

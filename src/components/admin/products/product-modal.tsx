@@ -1,13 +1,15 @@
 "use client";
 
-import { AlertCircle, Layers, Truck, X } from "lucide-react";
+import { AlertCircle, Layers, Trash2, Truck, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   useCategoriesQuery,
   useCreateProductMutation,
+  useDeleteProductMutation,
   useUpdateProductMutation,
 } from "@/hooks/queries";
 import type { ProductModalProps, ProductOption, ProductVariantInput } from "@/types";
+import { DeleteConfirmModal } from "../common/delete-confirm-modal";
 import { ProductImageUploader } from "./product-image-uploader";
 import { ProductVariantMatrix } from "./product-variant-matrix";
 
@@ -23,6 +25,8 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
   const { data: categories = [] } = useCategoriesQuery();
   const createMutation = useCreateProductMutation();
   const updateMutation = useUpdateProductMutation();
+  const deleteMutation = useDeleteProductMutation();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -658,24 +662,60 @@ export function ProductModal({ isOpen, onClose, product, onSuccess }: ProductMod
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-4 border-t border-border-hairline flex items-center justify-end gap-2.5">
-            <button
-              type="button"
-              onClick={onClose}
-              className="inline-flex items-center justify-center gap-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface border border-border-hairline px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
-            >
-              {isSubmitting ? "Saving Product..." : isEditing ? "Save Changes" : "Create Product"}
-            </button>
+          <div className="pt-4 border-t border-border-hairline flex items-center justify-between gap-2.5">
+            {isEditing && product ? (
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(true)}
+                disabled={isSubmitting || deleteMutation.isPending}
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-error hover:bg-error-container/40 border border-error/20 hover:shadow-xs transition-all cursor-pointer disabled:opacity-50"
+              >
+                <Trash2 size={13} />
+                <span>Delete Product</span>
+              </button>
+            ) : (
+              <div />
+            )}
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={onClose}
+                className="inline-flex items-center justify-center gap-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface border border-border-hairline px-4 py-2 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting || deleteMutation.isPending}
+                className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-semibold hover:shadow-xs transition-all cursor-pointer shadow-xs disabled:opacity-50"
+              >
+                {isSubmitting ? "Saving Product..." : isEditing ? "Save Changes" : "Create Product"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
+
+      {isEditing && product && (
+        <DeleteConfirmModal
+          isOpen={showDeleteConfirm}
+          title={`Delete "${product.name}"?`}
+          description="Are you sure you want to remove this product from your catalog? This action cannot be undone."
+          confirmLabel="Delete product"
+          isDeleting={deleteMutation.isPending}
+          onConfirm={async () => {
+            try {
+              await deleteMutation.mutateAsync(product.id);
+              setShowDeleteConfirm(false);
+              onClose();
+              onSuccess?.();
+            } catch {
+              setError("Failed to delete product. Please try again.");
+            }
+          }}
+          onClose={() => setShowDeleteConfirm(false)}
+        />
+      )}
     </div>
   );
 }

@@ -217,6 +217,8 @@ export interface InvoiceTableProps {
   onSelectInvoice: (invoice: Invoice) => void;
   onMarkPaid: (id: string) => void;
   onMarkUnpaid: (id: string) => void;
+  onDeleteDraft?: (invoice: Invoice) => void;
+  isDeleting?: boolean;
   currentPage: number;
   totalPages: number;
   pageSize: number;

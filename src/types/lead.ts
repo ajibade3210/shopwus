@@ -63,6 +63,13 @@ export interface LeadTableProps {
   statusFilter?: LeadFilterStatus;
   onStatusFilterChange?: (status: LeadFilterStatus) => void;
   onSelectLead: (id: string) => void;
+  selectedLeadIds?: string[];
+  onToggleSelect?: (id: string) => void;
+  onSelectAll?: () => void;
+  onClearSelection?: () => void;
+  onDeleteSelected?: () => Promise<unknown>;
+  isDeletingBulk?: boolean;
+  onDeleteLead?: (lead: Lead) => void;
   currentPage: number;
   totalPages: number;
   pageSize: number;
@@ -78,6 +85,8 @@ export interface LeadDetailDrawerProps {
   onOpenMessageModal: (lead: Lead) => void;
   onConvertToCustomer: (leadId: string) => void;
   onIssueInvoice: (lead: Lead) => void;
+  onDeleteLead?: (leadId: string) => Promise<unknown>;
+  isDeleting?: boolean;
 }
 
 export interface LeadMessageModalProps {

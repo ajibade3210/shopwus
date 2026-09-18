@@ -108,6 +108,9 @@ export interface CustomerTableProps {
   onSelectAllActive: () => void;
   onClearSelection: () => void;
   onOpenBroadcast: () => void;
+  onDeleteSelected?: () => Promise<unknown>;
+  isDeletingBulk?: boolean;
+  onDeleteCustomer?: (customer: Customer) => void;
   currentPage: number;
   totalPages: number;
   pageSize: number;
@@ -155,6 +158,8 @@ export interface CustomerDetailDrawerProps {
   onConfirmResendInvoice: (invoice: Invoice) => void;
   onDeleteDraftInvoice: (invoiceId: string) => void;
   onDeleteService: (customerId: string, serviceId: string, serviceName: string) => void;
+  onDeleteCustomer?: (customerId: string) => Promise<unknown>;
+  isDeletingCustomer?: boolean;
   onUpdateServiceStatus: (
     customerId: string,
     serviceId: string,

@@ -133,6 +133,17 @@ export interface LogoutConfirmModalProps {
   onClose: () => void;
 }
 
+export interface DeleteConfirmModalProps {
+  isOpen: boolean;
+  title: string;
+  description: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  isDeleting?: boolean;
+  onConfirm: () => void | Promise<void>;
+  onClose: () => void;
+}
+
 export interface SettingsSaveBarProps {
   saving: boolean;
   slug: string;

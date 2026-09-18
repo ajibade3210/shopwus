@@ -120,6 +120,7 @@ export function useExpenses(notify?: (message: string) => void) {
     isModalOpen,
     editingExpense,
     isSubmitting: createMutation.isPending || updateMutation.isPending,
+    isDeleting: deleteMutation.isPending,
     isExporting,
     isLoading: isLoadingExpenses || isLoadingSummary,
     handleSearch,

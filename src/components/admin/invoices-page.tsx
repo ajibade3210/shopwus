@@ -4,8 +4,10 @@ import { Download, MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import { INVOICE_PAGE_CONFIG } from "@/constants";
 import { useInvoices } from "@/hooks";
-import type { InvoicesPageProps } from "@/types";
+import { useDeleteInvoiceMutation } from "@/hooks/queries";
+import type { Invoice, InvoicesPageProps } from "@/types";
 import { formatMoney, Metric, PageTitle, useAdminToast } from "./admin-layout";
+import { DeleteConfirmModal } from "./common/delete-confirm-modal";
 import { InvoiceModal } from "./invoices/invoice-modal";
 import { InvoiceTable } from "./invoices/invoice-table";
 
@@ -13,6 +15,8 @@ export function InvoicesPage({ onToast }: InvoicesPageProps) {
   const { showToast } = useAdminToast();
   const notify = onToast || showToast;
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [invoiceToDelete, setInvoiceToDelete] = useState<Invoice | null>(null);
+  const deleteInvoiceMutation = useDeleteInvoiceMutation();
 
   const {
     invoices,
@@ -127,6 +131,7 @@ export function InvoicesPage({ onToast }: InvoicesPageProps) {
         onSelectInvoice={handleOpenEdit}
         onMarkPaid={handleMarkPaid}
         onMarkUnpaid={handleMarkUnpaid}
+        onDeleteDraft={setInvoiceToDelete}
         currentPage={currentPage}
         totalPages={totalPages}
         pageSize={pageSize}
@@ -147,6 +152,25 @@ export function InvoicesPage({ onToast }: InvoicesPageProps) {
           }}
         />
       )}
+
+      <DeleteConfirmModal
+        isOpen={Boolean(invoiceToDelete)}
+        title={`Delete draft invoice ${invoiceToDelete?.invoiceNumber || ""}?`}
+        description="This draft invoice will be permanently removed from your register. This action cannot be undone."
+        confirmLabel="Delete draft"
+        isDeleting={deleteInvoiceMutation.isPending}
+        onConfirm={async () => {
+          if (!invoiceToDelete) return;
+          try {
+            await deleteInvoiceMutation.mutateAsync(invoiceToDelete.id);
+            notify(`Draft invoice ${invoiceToDelete.invoiceNumber} deleted.`);
+            setInvoiceToDelete(null);
+          } catch {
+            notify("Failed to delete draft invoice.");
+          }
+        }}
+        onClose={() => setInvoiceToDelete(null)}
+      />
     </section>
   );
 }
