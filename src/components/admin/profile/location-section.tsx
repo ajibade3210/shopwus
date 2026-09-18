@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, Check, CheckCircle2, ChevronDown, Loader2, Phone } from "lucide-react";
+import { AlertCircle, CheckCircle2, ChevronDown, Loader2, Phone } from "lucide-react";
 import { useEffect, useId, useMemo, useState } from "react";
 import { NIGERIAN_CITIES_BY_STATE, NIGERIAN_STATES } from "@/constants/delivery";
 import { useDeliverySettingsQuery, useUpdateDeliverySettingsMutation } from "@/hooks/queries";
@@ -385,9 +385,7 @@ export function LocationSection() {
               Saving Settings...
             </>
           ) : (
-            <>
-              Save Delivery Settings
-            </>
+            <>Save Delivery Settings</>
           )}
         </button>
       </div>
