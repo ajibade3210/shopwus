@@ -12,8 +12,9 @@ export const VALUATION_TIER_CONFIG: Record<
   }
 > = {
   emerging: {
-    label: "Early Stage",
-    description: "Early-stage business with steady initial sales and lean expenses.",
+    label: "Emerging Business",
+    description:
+      "Early-stage business building initial market presence, steady customer orders, and lean operating costs.",
     minMultiple: 1.8,
     maxMultiple: 2.4,
     badgeColor: "#0284c7",
@@ -21,7 +22,8 @@ export const VALUATION_TIER_CONFIG: Record<
   },
   established: {
     label: "Growing Business",
-    description: "Consistent monthly cashflow and healthy profit margins.",
+    description:
+      "Proven market traction with consistent monthly cashflow, healthy profit margins, and loyal repeat buyers.",
     minMultiple: 2.5,
     maxMultiple: 3.2,
     badgeColor: "#16a34a",
@@ -29,7 +31,8 @@ export const VALUATION_TIER_CONFIG: Record<
   },
   flagship: {
     label: "Established Brand",
-    description: "Strong customer loyalty and high profit margins.",
+    description:
+      "Strong brand equity commanding premium pricing, defensible profit margins, and high customer retention.",
     minMultiple: 3.3,
     maxMultiple: 4.2,
     badgeColor: "#9333ea",
@@ -37,7 +40,8 @@ export const VALUATION_TIER_CONFIG: Record<
   },
   haute: {
     label: "Scaled Enterprise",
-    description: "High recurring revenue, strong brand equity, and premium valuation multiples.",
+    description:
+      "High recurring revenue, established market authority, and premium valuation multiples.",
     minMultiple: 4.3,
     maxMultiple: 5.5,
     badgeColor: "#d97706",

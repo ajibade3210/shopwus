@@ -230,38 +230,39 @@ export function EditHeaderModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-      <div className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-[#e5e7eb] flex flex-col max-h-[92vh]">
+      <div className="bg-card rounded-3xl w-full max-w-2xl overflow-hidden shadow-popover border border-border-hairline flex flex-col max-h-[92vh] font-sans text-on-surface animate-in zoom-in-95 duration-150">
         {/* Modal Header */}
-        <div className="px-6 py-5 border-b border-[#e5e7eb] flex items-center justify-between bg-[#fafaf9]">
+        <div className="px-6 py-5 border-b border-border-hairline flex items-center justify-between bg-surface-low">
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-[#191c1d]">
+            <h3 className="text-base sm:text-lg font-bold text-on-surface font-sans">
               Email & Document Header
             </h3>
-            <p className="text-xs text-[#6b7280] mt-0.5">
+            <p className="text-xs text-muted mt-0.5">
               Customize the branded banner atop your client emails, invoices, and receipts.
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-[#6b7280] hover:bg-[#e5e7eb] hover:text-[#191c1d] transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-xl flex items-center justify-center text-muted hover:bg-surface-high hover:text-on-surface transition-colors cursor-pointer"
+            aria-label="Close modal"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="px-6 pt-4 pb-2 border-b border-[#f1f5f9] flex gap-2">
+        <div className="px-6 pt-4 pb-2 border-b border-border-hairline flex gap-2 bg-card">
           <button
             type="button"
             onClick={() => setActiveTab("auto")}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               activeTab === "auto"
-                ? "bg-[#191c1d] text-white shadow-xs"
-                : "bg-[#f3f4f6] text-[#4b5563] hover:bg-[#e5e7eb]"
+                ? "bg-card text-on-surface shadow-2xs border border-border-hairline"
+                : "bg-surface-low text-muted hover:text-on-surface hover:bg-surface-high border border-transparent"
             }`}
           >
-            <Sparkles size={14} />
+            <Sparkles size={14} className="text-primary" />
             Auto-Generate Header
           </button>
           <button
@@ -269,25 +270,25 @@ export function EditHeaderModal({
             onClick={() => setActiveTab("custom")}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               activeTab === "custom"
-                ? "bg-[#191c1d] text-white shadow-xs"
-                : "bg-[#f3f4f6] text-[#4b5563] hover:bg-[#e5e7eb]"
+                ? "bg-card text-on-surface shadow-2xs border border-border-hairline"
+                : "bg-surface-low text-muted hover:text-on-surface hover:bg-surface-high border border-transparent"
             }`}
           >
-            <ImageIcon size={14} />
+            <ImageIcon size={14} className="text-primary" />
             Upload Custom Banner
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-card">
           {activeTab === "auto" ? (
             <div className="space-y-5">
               {/* Live Preview Card */}
               <div>
-                <label className="block text-xs font-semibold text-[#191c1d] mb-2">
+                <label className="block text-xs font-semibold text-on-surface mb-2">
                   Live Banner Preview (1200×360)
                 </label>
-                <div className="relative w-full aspect-[10/3] rounded-2xl border border-[#e5e7eb] bg-[#f8fafc] overflow-hidden shadow-xs flex items-center justify-center">
+                <div className="relative w-full aspect-[10/3] rounded-2xl border border-border-hairline bg-surface-low overflow-hidden shadow-xs flex items-center justify-center">
                   <canvas
                     ref={canvasRef}
                     className="w-full h-full object-contain"
@@ -299,18 +300,18 @@ export function EditHeaderModal({
               {/* Form Controls */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-[#374151]">Header Title</label>
+                  <label className="block text-xs font-semibold text-on-surface">Header Title</label>
                   <input
                     type="text"
                     value={headerTitle}
                     onChange={e => setHeaderTitle(e.target.value)}
                     placeholder="e.g. SHOPWUS"
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-[#d1d5db] bg-white text-[#191c1d] focus:outline-none shadow-2xs"
+                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-border-hairline bg-surface-low text-on-surface focus:outline-none focus:border-primary shadow-2xs"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-[#374151]">
+                  <label className="block text-xs font-semibold text-on-surface">
                     Caption / Subtitle
                   </label>
                   <input
@@ -318,15 +319,15 @@ export function EditHeaderModal({
                     value={headerCaption}
                     onChange={e => setHeaderCaption(e.target.value)}
                     placeholder="e.g. Shop With Us"
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-[#d1d5db] bg-white text-[#191c1d] focus:outline-none shadow-2xs"
+                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-border-hairline bg-surface-low text-on-surface focus:outline-none focus:border-primary shadow-2xs"
                   />
                 </div>
               </div>
 
               {/* Logo Picker in Generator */}
-              <div className="bg-[#fafaf9] border border-[#e5e7eb] rounded-2xl p-4 flex items-center justify-between gap-4">
+              <div className="bg-surface-low border border-border-hairline rounded-2xl p-4 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-[#26282B] flex items-center justify-center overflow-hidden shrink-0 border border-[#e5e7eb]">
+                  <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center overflow-hidden shrink-0 border border-border-hairline">
                     {customLogoUrl ? (
                       <img
                         src={customLogoUrl}
@@ -334,24 +335,24 @@ export function EditHeaderModal({
                         className="w-full h-full object-contain p-1"
                       />
                     ) : (
-                      <span className="text-white font-bold text-lg">
+                      <span className="text-white font-bold text-lg font-mono">
                         {headerTitle ? headerTitle.charAt(0).toUpperCase() : "S"}
                       </span>
                     )}
                   </div>
                   <div>
-                    <span className="text-xs font-semibold text-[#191c1d] block">
+                    <span className="text-xs font-semibold text-on-surface block">
                       Generator Logo Mark
                     </span>
-                    <span className="text-[11px] text-[#6b7280]">
+                    <span className="text-[11px] text-muted">
                       {customLogoUrl ? "Custom logo active" : "Using initial monogram"}
                     </span>
                   </div>
                 </div>
 
-                <label className="cursor-pointer inline-flex items-center gap-1.5 bg-white hover:bg-[#f3f4f6] text-[#191c1d] border border-[#d1d5db] px-3.5 py-2 rounded-xl text-xs font-medium shadow-2xs transition-colors select-none">
+                <label className="cursor-pointer inline-flex items-center gap-1.5 bg-card hover:bg-surface-high text-on-surface border border-border-hairline px-3.5 py-2 rounded-xl text-xs font-medium shadow-2xs transition-colors select-none">
                   {isUploadingLogo ? (
-                    <Loader2 size={13} className="animate-spin text-[#0058be]" />
+                    <Loader2 size={13} className="animate-spin text-primary" />
                   ) : (
                     <Upload size={13} />
                   )}
@@ -370,10 +371,10 @@ export function EditHeaderModal({
             <div className="space-y-5">
               {/* Custom Banner Uploader */}
               <div>
-                <label className="block text-xs font-semibold text-[#191c1d] mb-2">
+                <label className="block text-xs font-semibold text-on-surface mb-2">
                   Custom Banner Graphic
                 </label>
-                <div className="relative w-full aspect-[10/3] rounded-2xl border-2 border-dashed border-[#d1d5db] bg-[#fafaf9] hover:bg-[#f3f4f6] transition-colors flex flex-col items-center justify-center p-4 text-center group cursor-pointer overflow-hidden">
+                <div className="relative w-full aspect-[10/3] rounded-2xl border-2 border-dashed border-border-hairline bg-surface-low hover:bg-surface-high transition-colors flex flex-col items-center justify-center p-4 text-center group cursor-pointer overflow-hidden">
                   {customBannerUrl ? (
                     <img
                       src={customBannerUrl}
@@ -382,22 +383,22 @@ export function EditHeaderModal({
                     />
                   ) : (
                     <div className="space-y-2">
-                      <div className="w-10 h-10 rounded-full bg-white shadow-xs border border-[#e5e7eb] flex items-center justify-center mx-auto text-[#6b7280]">
+                      <div className="w-10 h-10 rounded-full bg-card shadow-xs border border-border-hairline flex items-center justify-center mx-auto text-muted">
                         <Upload size={18} />
                       </div>
                       <div>
-                        <p className="text-xs font-semibold text-[#191c1d]">
+                        <p className="text-xs font-semibold text-on-surface">
                           Click or drag banner image here
                         </p>
-                        <p className="text-[11px] text-[#9ca3af] mt-0.5">
+                        <p className="text-[11px] text-muted mt-0.5">
                           Recommended ratio: 10:3 or 1200×360px · PNG, JPG, WEBP
                         </p>
                       </div>
                     </div>
                   )}
                   {isUploadingBanner && (
-                    <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex items-center justify-center">
-                      <Loader2 size={24} className="animate-spin text-[#0058be]" />
+                    <div className="absolute inset-0 bg-card/80 backdrop-blur-xs flex items-center justify-center">
+                      <Loader2 size={24} className="animate-spin text-primary" />
                     </div>
                   )}
                   <input
@@ -414,24 +415,24 @@ export function EditHeaderModal({
         </div>
 
         {/* Placement Preferences Checkboxes */}
-        <div className="px-6 py-3.5 bg-[#fafaf9] border-t border-[#e5e7eb] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-          <span className="font-semibold text-[#191c1d]">Header Visibility:</span>
+        <div className="px-6 py-3.5 bg-surface-low border-t border-border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <span className="font-semibold text-on-surface">Header Visibility:</span>
           <div className="flex items-center gap-6">
-            <label className="flex items-center gap-2 cursor-pointer select-none text-[#374151]">
+            <label className="flex items-center gap-2 cursor-pointer select-none text-on-surface-variant">
               <input
                 type="checkbox"
                 checked={includeInInvoice}
                 onChange={e => setIncludeInInvoice(e.target.checked)}
-                className="w-4 h-4 rounded border-[#d1d5db] text-[#0058be] focus:ring-0 cursor-pointer accent-[#191c1d]"
+                className="w-4 h-4 rounded border-border-hairline text-primary focus:ring-0 cursor-pointer accent-primary"
               />
               <span className="font-medium text-xs">Add to Invoice</span>
             </label>
-            <label className="flex items-center gap-2 cursor-pointer select-none text-[#374151]">
+            <label className="flex items-center gap-2 cursor-pointer select-none text-on-surface-variant">
               <input
                 type="checkbox"
                 checked={includeInEmail}
                 onChange={e => setIncludeInEmail(e.target.checked)}
-                className="w-4 h-4 rounded border-[#d1d5db] text-[#0058be] focus:ring-0 cursor-pointer accent-[#191c1d]"
+                className="w-4 h-4 rounded border-border-hairline text-primary focus:ring-0 cursor-pointer accent-primary"
               />
               <span className="font-medium text-xs">Add to Email</span>
             </label>
@@ -439,12 +440,12 @@ export function EditHeaderModal({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-4 border-t border-[#e5e7eb] bg-[#fafaf9] flex items-center justify-end gap-3">
+        <div className="px-6 py-4 border-t border-border-hairline bg-surface-low flex items-center justify-end gap-3">
           <button
             type="button"
             onClick={onClose}
             disabled={isSaving || isUploadingLogo || isUploadingBanner}
-            className="px-4 py-2 rounded-xl text-xs font-semibold text-[#4b5563] hover:bg-[#e5e7eb] transition-colors cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 rounded-xl text-xs font-semibold text-on-surface bg-surface-low hover:bg-surface-high border border-border-hairline transition-colors cursor-pointer disabled:opacity-50"
           >
             Cancel
           </button>
@@ -452,7 +453,7 @@ export function EditHeaderModal({
             type="button"
             onClick={handleSave}
             disabled={isSaving || isUploadingLogo || isUploadingBanner}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#191c1d] hover:bg-black text-white text-xs font-semibold shadow-xs transition-all cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-on-primary text-xs font-semibold shadow-xs transition-all cursor-pointer disabled:opacity-50"
           >
             {isSaving ? (
               <>

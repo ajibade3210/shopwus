@@ -51,53 +51,54 @@ export function LeadMessageModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150"
       onClick={onClose}
     >
       <div
-        className="bg-white border border-[#eae3d7] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-5 relative max-h-[90vh] overflow-y-auto"
+        className="bg-card border border-border-hairline rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-popover space-y-5 relative max-h-[90vh] overflow-y-auto font-sans animate-in zoom-in-95 duration-150"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between pb-3 border-b border-[#f0e8dc]">
+        <div className="flex items-start justify-between pb-3 border-b border-border-hairline">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#855e2e] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
               Inquiry Follow-up
             </span>
-            <h3 className="text-xl font-serif font-bold text-[#191c1d] tracking-tight mt-0.5">
+            <h3 className="text-lg sm:text-xl font-bold text-on-surface tracking-tight mt-0.5 font-sans">
               Message {lead.name}
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-full text-[#8e9192] hover:text-[#191c1d] hover:bg-[#f3f4f5] transition-colors cursor-pointer"
+            className="p-1 rounded-lg text-muted hover:text-on-surface hover:bg-surface-high transition-colors cursor-pointer"
+            aria-label="Close modal"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Lead Summary Card */}
-        <div className="p-4 bg-[#faf8f5] border border-[#ded7cb] rounded-2xl space-y-2 text-xs">
+        <div className="p-4 bg-surface-low border border-border-hairline rounded-2xl space-y-2 text-xs">
           <div className="flex items-center justify-between">
-            <span className="font-semibold text-[#191c1d]">{lead.name}</span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#eae3d7] text-[#5c5f60]">
+            <span className="font-semibold text-on-surface">{lead.name}</span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-surface-high text-on-surface-variant">
               {lead.service || "General Inquiry"}
             </span>
           </div>
           {lead.budget && (
-            <p className="text-[#5c5f60]">
-              <strong className="text-[#191c1d]">Budget:</strong> ₦
+            <p className="text-muted">
+              <strong className="text-on-surface">Budget:</strong> ₦
               {Number(lead.budget).toLocaleString()}
             </p>
           )}
           {lead.eventDate && (
-            <p className="text-[#5c5f60]">
-              <strong className="text-[#191c1d]">Target Date:</strong> {lead.eventDate}
+            <p className="text-muted">
+              <strong className="text-on-surface">Target Date:</strong> {lead.eventDate}
             </p>
           )}
           {lead.message && (
-            <div className="p-2.5 bg-white border border-[#eae3d7] rounded-xl text-[#5c5f60] italic text-[11px]">
+            <div className="p-2.5 bg-card border border-border-hairline rounded-xl text-on-surface-variant italic text-[11px]">
               &ldquo;{lead.message}&rdquo;
             </div>
           )}
@@ -108,8 +109,8 @@ export function LeadMessageModal({
           <span
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border ${
               lead.phone
-                ? "bg-[#faf8f5] border-[#ded7cb] text-[#191c1d]"
-                : "bg-stone-50 border-stone-200 text-stone-400"
+                ? "bg-card border-border-hairline text-on-surface"
+                : "bg-surface-low border-border-hairline text-muted"
             }`}
           >
             <WhatsAppIcon className="w-3.5 h-3.5 text-[#15803d]" />
@@ -118,8 +119,8 @@ export function LeadMessageModal({
           <span
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border ${
               lead.email
-                ? "bg-[#faf8f5] border-[#ded7cb] text-[#191c1d]"
-                : "bg-stone-50 border-stone-200 text-stone-400"
+                ? "bg-card border-border-hairline text-on-surface"
+                : "bg-surface-low border-border-hairline text-muted"
             }`}
           >
             <Mail size={12} />
@@ -129,7 +130,7 @@ export function LeadMessageModal({
 
         {/* Message Content */}
         <div>
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-[#191c1d] mb-1.5">
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-on-surface mb-1.5">
             Message Content *
           </label>
           <textarea
@@ -137,7 +138,7 @@ export function LeadMessageModal({
             value={messageText}
             onChange={e => setMessageText(e.target.value)}
             placeholder="Type your bespoke message or consultation reply here..."
-            className="w-full bg-[#faf8f5] border border-[#ded7cb] rounded-2xl p-4 text-xs text-[#191c1d] focus:outline-none transition-all"
+            className="w-full bg-surface-low border border-border-hairline rounded-2xl p-4 text-xs text-on-surface focus:outline-none focus:border-primary transition-all font-sans"
           />
         </div>
 
@@ -150,7 +151,7 @@ export function LeadMessageModal({
             className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
               lead.phone?.trim() && !isSendingEmail
                 ? "bg-[#15803d] hover:bg-[#166534] text-white shadow-xs cursor-pointer"
-                : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb] cursor-not-allowed opacity-60"
+                : "bg-surface-high text-muted border border-border-hairline cursor-not-allowed opacity-60"
             }`}
             title={
               lead.phone?.trim()
@@ -168,8 +169,8 @@ export function LeadMessageModal({
             onClick={() => setShowEmailConfirm(true)}
             className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
               lead.email?.trim() && !isSendingEmail && messageText.trim()
-                ? "bg-[#1e40af] hover:bg-[#1e3a8a] text-white shadow-xs cursor-pointer"
-                : "bg-[#f3f4f6] text-[#9ca3af] border border-[#e5e7eb] cursor-not-allowed opacity-60"
+                ? "bg-primary hover:bg-primary-hover text-on-primary shadow-xs cursor-pointer"
+                : "bg-surface-high text-muted border border-border-hairline cursor-not-allowed opacity-60"
             }`}
             title={lead.email?.trim() ? "Send via Email and mark as Contacted" : "Email required"}
           >

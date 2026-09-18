@@ -9,7 +9,7 @@ export function TableCard({
 }) {
   return (
     <div
-      className={`border border-[#eee7dc] bg-white rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col min-h-[clamp(540px,65vh,850px)] ${className}`}
+      className={`border border-border-hairline bg-card rounded-2xl overflow-hidden shadow-card flex flex-col min-h-[clamp(540px,65vh,850px)] ${className}`}
     >
       {children}
     </div>
@@ -25,7 +25,7 @@ export function TableHead({
 }) {
   return (
     <div
-      className={`flex items-center justify-between border-b border-[#eee7dc] p-4 sm:p-[16px_22px] bg-white ${className}`}
+      className={`flex items-center justify-between border-b border-border-hairline p-4 sm:p-[16px_22px] bg-card ${className}`}
     >
       {children}
     </div>
