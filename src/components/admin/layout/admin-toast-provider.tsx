@@ -1,8 +1,8 @@
 "use client";
 
 import { Check, X } from "lucide-react";
-import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
-import type { AdminToastContextType, ToastProps } from "@/types";
+import { createContext, useContext, useEffect, useState } from "react";
+import type { AdminToastContextType, AdminToastProviderProps, ToastProps } from "@/types";
 
 export const AdminToastContext = createContext<AdminToastContextType>({
   showToast: () => {},
@@ -36,7 +36,7 @@ export function Toast({ message, onClose }: ToastProps) {
   );
 }
 
-export function AdminToastProvider({ children }: { children: ReactNode }) {
+export function AdminToastProvider({ children }: AdminToastProviderProps) {
   const [toastMessage, setToastMessage] = useState("");
 
   const showToast = (msg: string) => {

@@ -6,6 +6,7 @@
  */
 
 import { STORAGE_KEYS } from "@/constants";
+import type { ApiResponse, RequestOptions } from "@/types";
 import { env } from "./env";
 import { logger } from "./logger";
 
@@ -25,13 +26,7 @@ export class ApiError extends Error {
   }
 }
 
-export interface ApiResponse<T = unknown> {
-  success: boolean;
-  message: string;
-  data: T;
-  statusCode?: number;
-  errors?: unknown;
-}
+export type { ApiResponse, RequestOptions };
 
 let isRefreshing = false;
 let isRedirectingToLogin = false;
@@ -78,11 +73,6 @@ function handleSessionExpired() {
       window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
     }
   }
-}
-
-interface RequestOptions extends RequestInit {
-  params?: Record<string, string | number | boolean | undefined | null>;
-  skipAuth?: boolean;
 }
 
 async function request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {

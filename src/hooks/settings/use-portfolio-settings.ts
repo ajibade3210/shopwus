@@ -11,11 +11,7 @@ import {
   MAX_PORTFOLIO_PROJECTS,
 } from "@/constants";
 import { uploadBusinessLogo, uploadMultipleMediaFiles, uploadPortfolioImage } from "@/lib/api";
-import type { PortfolioProject } from "@/types";
-
-interface UsePortfolioSettingsOptions {
-  notify: (message: string) => void;
-}
+import type { PortfolioProject, UsePortfolioSettingsOptions } from "@/types";
 
 export function usePortfolioSettings({ notify }: UsePortfolioSettingsOptions) {
   const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);

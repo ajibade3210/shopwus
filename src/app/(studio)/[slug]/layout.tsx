@@ -15,8 +15,9 @@ import { StudioNavbar } from "@/components/studio/storefront/studio-navbar";
 import { APP_CONFIG } from "@/constants";
 import { submitConsultationInquiry, submitReview } from "@/lib/api";
 import { createWhatsAppConsultationUrl } from "@/services/api/leads.service";
+import type { StorefrontLayoutInnerProps, StudioLayoutProps } from "@/types";
 
-function StorefrontLayoutInner({ children, slug }: { children: React.ReactNode; slug: string }) {
+function StorefrontLayoutInner({ children, slug }: StorefrontLayoutInnerProps) {
   const {
     profile,
     isQuoteModalOpen,
@@ -214,7 +215,7 @@ function StorefrontLayoutInner({ children, slug }: { children: React.ReactNode; 
   );
 }
 
-export default function StudioLayout({ children }: { children: React.ReactNode }) {
+export default function StudioLayout({ children }: StudioLayoutProps) {
   const params = useParams();
   const slugParam = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
   const slug = (slugParam as string) || APP_CONFIG.defaultSlug;

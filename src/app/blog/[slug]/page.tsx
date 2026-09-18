@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogArticlePage } from "@/components/blog/blog-article-page";
 import { getBlogPostBySlug, getRelatedBlogPosts } from "@/services/api/blog.service";
-
-interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
-}
+import type { BlogPostPageProps } from "@/types";
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;

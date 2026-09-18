@@ -62,3 +62,11 @@ export interface ResourcesDropdownProps {
   onClose: () => void;
   onToggle: () => void;
 }
+
+export interface BlogPostPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export interface BlogGraphicProps {
+  className?: string;
+}

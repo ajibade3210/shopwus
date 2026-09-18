@@ -60,6 +60,18 @@ export interface AdminToastContextType {
   showToast: (message: string) => void;
 }
 
+export interface AdminToastProviderProps {
+  children: ReactNode;
+}
+
+export interface QueryProviderProps {
+  children: ReactNode;
+}
+
+export interface DashboardLayoutProps {
+  children: ReactNode;
+}
+
 export interface ToastProps {
   message: string;
   onClose: () => void;
@@ -173,4 +185,29 @@ export interface SettingsSaveBarProps {
   onSave: () => void;
   bottomBarRef: import("react").RefObject<HTMLDivElement | null>;
   isAtBottom: boolean;
+}
+
+export interface BadgeSnapshot {
+  count: number;
+  viewedAt: number;
+}
+
+export interface PresignedUrlResponse {
+  uploadUrl: string;
+  publicUrl: string;
+  key: string;
+  signedContentType?: string;
+}
+
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  message: string;
+  data: T;
+  statusCode?: number;
+  errors?: unknown;
+}
+
+export interface RequestOptions extends RequestInit {
+  params?: Record<string, string | number | boolean | undefined | null>;
+  skipAuth?: boolean;
 }

@@ -9,35 +9,7 @@
 import { CUSTOM_EVENTS, STORAGE_KEYS } from "@/constants";
 import { apiClient } from "@/lib/api-client";
 import { logger } from "@/lib/logger";
-import type { User, UserSession } from "@/types";
-
-interface UserDto {
-  id: string;
-  email: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  phone?: string | null;
-  role: string;
-  avatarUrl?: string | null;
-}
-
-interface BusinessDto {
-  id: string;
-  slug: string;
-  name: string;
-  logoUrl?: string | null;
-}
-
-interface AuthResponseDto {
-  user: UserDto;
-  business?: BusinessDto | null;
-  studio?: BusinessDto | null;
-  accessToken?: string;
-  refreshToken?: string;
-  token?: string;
-}
-
-type MeResponseDto = AuthResponseDto;
+import type { AuthResponseDto, MeResponseDto, User, UserSession } from "@/types";
 
 export function saveAuthTokens(accessToken?: string, refreshToken?: string): void {
   if (typeof window === "undefined") return;

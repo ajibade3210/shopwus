@@ -1,8 +1,8 @@
 "use client";
 
-import type { BlogGraphicCardProps } from "@/types";
+import type { BlogGraphicCardProps, BlogGraphicProps } from "@/types";
 
-export function RetentionFlywheelGraphic({ className = "" }: { className?: string }) {
+export function RetentionFlywheelGraphic({ className = "" }: BlogGraphicProps) {
   return (
     <div
       className={`relative w-full rounded-2xl overflow-hidden border border-border-hairline bg-surface-container-low p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
@@ -349,7 +349,7 @@ export function RetentionFlywheelGraphic({ className = "" }: { className?: strin
   );
 }
 
-export function WhatsAppVsAtelierGraphic({ className = "" }: { className?: string }) {
+export function WhatsAppVsAtelierGraphic({ className = "" }: BlogGraphicProps) {
   return (
     <div
       className={`relative w-full rounded-2xl overflow-hidden border border-border-hairline bg-surface-container-low p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}
@@ -608,7 +608,7 @@ export function WhatsAppVsAtelierGraphic({ className = "" }: { className?: strin
   );
 }
 
-export function ShoeboxVsDashboardGraphic({ className = "" }: { className?: string }) {
+export function ShoeboxVsDashboardGraphic({ className = "" }: BlogGraphicProps) {
   return (
     <div
       className={`relative w-full rounded-2xl overflow-hidden border border-border-hairline bg-surface-container-low p-6 sm:p-8 flex flex-col items-center justify-center ${className}`}

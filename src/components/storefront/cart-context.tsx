@@ -1,11 +1,17 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { CartContextValue, CartItem, Product, ProductVariant } from "@/types";
+import type {
+  CartContextValue,
+  CartItem,
+  CartProviderProps,
+  Product,
+  ProductVariant,
+} from "@/types";
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-export function CartProvider({ children, slug }: { children: React.ReactNode; slug: string }) {
+export function CartProvider({ children, slug }: CartProviderProps) {
   const storageKey = `shopwus_cart_${slug}`;
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);

@@ -1,5 +1,6 @@
-import type React from "react";
+import type { ReactNode } from "react";
 import type { Category, Product } from "./product";
+
 import type { BusinessProfile } from "./profile";
 
 export type StorefrontSortOption = "featured" | "newest" | "price-asc" | "price-desc";
@@ -103,4 +104,22 @@ export interface StorefrontContextType {
   monogram: string;
   whatsAppLink: string;
   totalCustomers: number;
+}
+
+export interface UseStorefrontSettingsOptions {
+  notify: (message: string) => void;
+}
+
+export interface CartProviderProps {
+  children: ReactNode;
+  slug: string;
+}
+
+export interface StorefrontLayoutInnerProps {
+  children: ReactNode;
+  slug: string;
+}
+
+export interface StudioLayoutProps {
+  children: ReactNode;
 }

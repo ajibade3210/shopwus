@@ -1,15 +1,9 @@
 import { apiClient } from "@/lib/api-client";
 import { logger } from "@/lib/logger";
+import type { PresignedUrlResponse } from "@/types";
 
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 export const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
-
-interface PresignedUrlResponse {
-  uploadUrl: string;
-  publicUrl: string;
-  key: string;
-  signedContentType?: string;
-}
 
 /**
  * Fallback to standard multipart API upload if direct cloud storage upload fails

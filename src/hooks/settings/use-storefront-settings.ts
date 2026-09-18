@@ -3,10 +3,7 @@
 import type React from "react";
 import { useState } from "react";
 import { uploadPortfolioImage } from "@/lib/api";
-
-interface UseStorefrontSettingsOptions {
-  notify: (message: string) => void;
-}
+import type { UseStorefrontSettingsOptions } from "@/types";
 
 export function useStorefrontSettings({ notify }: UseStorefrontSettingsOptions) {
   // Banner Settings

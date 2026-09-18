@@ -1,7 +1,13 @@
 "use client";
 
 import { ChevronDown, ChevronLeft, ChevronRight, Eye, MessageCircle, Search } from "lucide-react";
-import type { CheckoutSession, Order, OrdersTableProps, OrderTab } from "@/types";
+import type {
+  AbandonedTableProps,
+  CheckoutSession,
+  Order,
+  OrdersTableProps,
+  OrderTab,
+} from "@/types";
 import { formatCurrency } from "@/utils/currency";
 import { StatusBadge } from "../common/status-badge";
 import { TableEmptyState } from "../common/table-empty-state";
@@ -212,7 +218,7 @@ function OrdersRegularTable({
   );
 }
 
-function AbandonedTable({ sessions }: { sessions: CheckoutSession[] }) {
+function AbandonedTable({ sessions }: AbandonedTableProps) {
   return (
     <table className="w-full text-left text-xs text-on-surface border-collapse font-sans">
       <thead>

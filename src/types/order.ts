@@ -352,3 +352,7 @@ export interface CreateOrderModalProps {
   onClose: () => void;
   onCreated?: (order: Order) => void;
 }
+
+export interface AbandonedTableProps {
+  sessions: CheckoutSession[];
+}

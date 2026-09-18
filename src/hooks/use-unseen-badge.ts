@@ -1,13 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { BadgeSnapshot } from "@/types";
 
 const TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
-
-interface BadgeSnapshot {
-  count: number;
-  viewedAt: number;
-}
 
 function readSnapshot(key: string): BadgeSnapshot | null {
   try {

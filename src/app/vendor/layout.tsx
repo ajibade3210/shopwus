@@ -4,8 +4,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AdminLayout } from "@/components/admin/admin-layout";
 import { isAuthenticated } from "@/lib/api";
+import type { DashboardLayoutProps } from "@/types";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [authed, setAuthed] = useState(true);
