@@ -6,6 +6,7 @@ import {
   createManualOrder,
   deleteOrder,
   dispatchOrder,
+  getOrderBoard,
   getOrderById,
   getOrderSummary,
   getOrders,
@@ -23,6 +24,14 @@ export function useOrdersQuery(params?: GetOrdersParams, options?: { enabled?: b
   return useQuery({
     queryKey: queryKeys.orders.list(params),
     queryFn: () => getOrders(params),
+    enabled: options?.enabled,
+  });
+}
+
+export function useOrderBoardQuery(timeframeDays?: number, options?: { enabled?: boolean }) {
+  return useQuery({
+    queryKey: queryKeys.orders.board(),
+    queryFn: () => getOrderBoard(timeframeDays),
     enabled: options?.enabled,
   });
 }

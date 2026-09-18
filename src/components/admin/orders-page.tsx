@@ -2,8 +2,8 @@
 
 import { LayoutGrid, List, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { BOARD_QUERY_LIMIT } from "@/constants";
 import {
+  useOrderBoardQuery,
   useOrderSummaryQuery,
   useOrdersQuery,
   useUpdateOrderStatusMutation,
@@ -25,7 +25,9 @@ export function OrdersPage() {
   const [pageSize, setPageSize] = useState(10);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [overrides, setOverrides] = useState<Record<string, FulfillmentStatus>>({});
+  const [overrides, setOverrides] = useState<
+    Record<string, { status: FulfillmentStatus; fulfilledAt?: string; updatedAt: string }>
+  >({});
 
   const { showToast } = useAdminToast();
   const updateStatusMutation = useUpdateOrderStatusMutation();
@@ -53,18 +55,12 @@ export function OrdersPage() {
     { enabled: view === "table" }
   );
 
-  // Active pipeline orders query — active only when in board view (capped at 100 max by API)
+  // Active pipeline orders query — active only when in board view (active orders + 14-day deliveries)
   const {
     data: boardData,
     isLoading: isBoardLoading,
     refetch: refetchBoard,
-  } = useOrdersQuery(
-    {
-      tab: "all",
-      limit: BOARD_QUERY_LIMIT,
-    },
-    { enabled: view === "board" }
-  );
+  } = useOrderBoardQuery(undefined, { enabled: view === "board" });
 
   const tableOrders = ordersData?.items || [];
   const meta = ordersData?.meta;
@@ -73,9 +69,14 @@ export function OrdersPage() {
   const rawBoardOrders = (boardData?.items as Order[]) || [];
   const boardOrders = rawBoardOrders
     .map(order => {
-      const overrideStatus = overrides[order.id];
-      if (overrideStatus) {
-        return { ...order, fulfillmentStatus: overrideStatus };
+      const override = overrides[order.id];
+      if (override) {
+        return {
+          ...order,
+          fulfillmentStatus: override.status,
+          fulfilledAt: override.fulfilledAt ?? order.fulfilledAt,
+          updatedAt: override.updatedAt,
+        };
       }
       return order;
     })
@@ -96,9 +97,23 @@ export function OrdersPage() {
     setPage(1);
   };
 
+  const handleSwitchToTable = (targetTab: OrderTab = "completed") => {
+    setTab(targetTab);
+    setView("table");
+    setPage(1);
+  };
+
   const handleMoveTo = async (orderId: string, targetStatus: FulfillmentStatus) => {
+    const nowIso = new Date().toISOString();
     // 1. Optimistic update
-    setOverrides(prev => ({ ...prev, [orderId]: targetStatus }));
+    setOverrides(prev => ({
+      ...prev,
+      [orderId]: {
+        status: targetStatus,
+        fulfilledAt: targetStatus === "DELIVERED" ? nowIso : undefined,
+        updatedAt: nowIso,
+      },
+    }));
 
     try {
       // 2. Fire backend mutation
@@ -220,6 +235,8 @@ export function OrdersPage() {
           isLoading={isBoardLoading}
           onSelectOrder={id => setSelectedOrderId(id)}
           onMoveTo={handleMoveTo}
+          deliveredMeta={boardData?.deliveredMeta}
+          onSwitchToTable={() => handleSwitchToTable("completed")}
         />
       )}
 

@@ -5,6 +5,7 @@ import type {
   CreateOrderInput,
   GetOrdersParams,
   Order,
+  OrderBoardResponse,
   OrderSummary,
   OrdersResponse,
   SyncCheckoutSessionInput,
@@ -21,6 +22,13 @@ export async function createManualOrder(input: CreateManualOrderInput): Promise<
 
 export async function getOrders(params?: GetOrdersParams): Promise<OrdersResponse> {
   return apiClient.get<OrdersResponse>("/orders", params);
+}
+
+export async function getOrderBoard(timeframeDays?: number): Promise<OrderBoardResponse> {
+  return apiClient.get<OrderBoardResponse>(
+    "/orders/board",
+    timeframeDays ? { timeframeDays } : undefined
+  );
 }
 
 export async function getOrderSummary(): Promise<OrderSummary> {

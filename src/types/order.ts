@@ -239,11 +239,26 @@ export interface ColumnFilterState {
   paymentStatus: PaymentStatus | "ALL";
 }
 
+export interface OrderBoardMeta {
+  totalDelivered: number;
+  showingCount: number;
+  hasOverflow: boolean;
+  overflowCount: number;
+  timeframeDays: number;
+}
+
+export interface OrderBoardResponse {
+  items: Order[];
+  deliveredMeta: OrderBoardMeta;
+}
+
 export interface OrdersBoardProps {
   orders: Order[];
   isLoading: boolean;
   onSelectOrder: (id: string) => void;
   onMoveTo: (orderId: string, status: FulfillmentStatus) => Promise<void> | void;
+  deliveredMeta?: OrderBoardMeta | null;
+  onSwitchToTable?: () => void;
 }
 
 export interface OrdersTableProps {

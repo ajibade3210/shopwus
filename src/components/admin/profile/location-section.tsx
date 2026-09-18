@@ -386,7 +386,6 @@ export function LocationSection() {
             </>
           ) : (
             <>
-              <Check size={14} />
               Save Delivery Settings
             </>
           )}

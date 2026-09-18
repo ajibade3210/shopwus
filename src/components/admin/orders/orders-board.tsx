@@ -19,7 +19,14 @@ import type {
 } from "@/types";
 import { BoardCard } from "./board-card";
 
-export function OrdersBoard({ orders, isLoading, onSelectOrder, onMoveTo }: OrdersBoardProps) {
+export function OrdersBoard({
+  orders,
+  isLoading,
+  onSelectOrder,
+  onMoveTo,
+  deliveredMeta,
+  onSwitchToTable,
+}: OrdersBoardProps) {
   const [activeDragColumn, setActiveDragColumn] = useState<string | null>(null);
   const [columnFilters, setColumnFilters] = useState<Record<string, ColumnFilterState>>({});
   const [openFilterColumn, setOpenFilterColumn] = useState<string | null>(null);
@@ -107,12 +114,27 @@ export function OrdersBoard({ orders, isLoading, onSelectOrder, onMoveTo }: Orde
         const columnRawOrders = orders.filter(order =>
           col.statuses.includes(order.fulfillmentStatus)
         );
+
+        // Strictly order newest-to-oldest for every column:
+        // - Delivered column: sort newest completion first (fulfilledAt or updatedAt)
+        // - Active columns: sort newest creation first (createdAt)
+        const sortedRawOrders = [...columnRawOrders].sort((a, b) => {
+          if (col.key === "delivered") {
+            const timeA = new Date(a.fulfilledAt || a.updatedAt).getTime();
+            const timeB = new Date(b.fulfilledAt || b.updatedAt).getTime();
+            return timeB - timeA;
+          }
+          const timeA = new Date(a.createdAt).getTime();
+          const timeB = new Date(b.createdAt).getTime();
+          return timeB - timeA;
+        });
+
         const filter = getFilterForColumn(col.key);
         const activeFilterCount = getActiveFilterCount(filter);
         const isFilterOpen = openFilterColumn === col.key;
 
         // Real-time Column Filtering
-        const columnFilteredOrders = columnRawOrders.filter(order => {
+        const columnFilteredOrders = sortedRawOrders.filter(order => {
           // 1. Date Range
           if (filter.dateRange !== "ALL") {
             const orderTime = new Date(order.createdAt).getTime();
@@ -203,7 +225,11 @@ export function OrdersBoard({ orders, isLoading, onSelectOrder, onMoveTo }: Orde
               </button>
 
               <span className="text-[10px] text-muted font-medium">
-                {count} {count === 1 ? "order" : "orders"}
+                {col.key === "delivered" && deliveredMeta?.hasOverflow
+                  ? `Showing ${count} of ${deliveredMeta.totalDelivered} deliveries`
+                  : col.key === "delivered"
+                    ? `${count} ${count === 1 ? "delivery" : "deliveries"} (past 14d)`
+                    : `${count} ${count === 1 ? "order" : "orders"}`}
               </span>
 
               {/* Column Filter Popover */}
@@ -368,6 +394,28 @@ export function OrdersBoard({ orders, isLoading, onSelectOrder, onMoveTo }: Orde
                     onDragStart={handleDragStart}
                   />
                 ))
+              )}
+
+              {!isLoading && col.key === "delivered" && onSwitchToTable && (
+                <div className="pt-2 pb-1">
+                  {deliveredMeta?.hasOverflow ? (
+                    <button
+                      type="button"
+                      onClick={onSwitchToTable}
+                      className="w-full py-2.5 px-3 flex items-center justify-center gap-1.5 text-center text-xs font-semibold text-primary hover:text-primary-hover border border-dashed border-primary/40 hover:border-primary rounded-xl bg-primary/5 hover:bg-primary/10 transition-all cursor-pointer shadow-2xs"
+                    >
+                      <span>View {deliveredMeta.overflowCount} older deliveries in Table →</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={onSwitchToTable}
+                      className="w-full py-2 px-2 text-center text-[11px] font-medium text-muted hover:text-primary transition-colors cursor-pointer hover:underline"
+                    >
+                      View all historical records in Table →
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           </div>
