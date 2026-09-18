@@ -322,6 +322,7 @@ export function StorefrontProductDetailView({
                 alt={product.name}
                 fill
                 priority
+                loading="eager"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center transition-all duration-300"
               />

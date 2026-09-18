@@ -498,6 +498,10 @@ export interface ProfileIdentityCardProps {
 
 export interface ProfileSecurityCardProps {
   email: string;
+  isGoogleConnected?: boolean;
+  hasPassword?: boolean;
+  onRefresh?: () => Promise<void> | void;
+  onToast?: (message: string) => void;
 }
 
 export interface ConfirmModalProps {

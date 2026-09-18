@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import {
   calculateBusinessValuation,
   getBusinessProfile,
@@ -16,6 +16,7 @@ import type {
   BusinessValuation,
   ProfileSettingsPageProps,
   ProfileTab,
+  User,
 } from "@/types";
 import { useAdminToast } from "./admin-layout";
 import { ValuationCard } from "./analytics/valuation-card";
@@ -36,6 +37,7 @@ function ProfileSettingsInner({ onToast }: ProfileSettingsPageProps) {
     initialTab === "delivery" ? "delivery" : "profile"
   );
 
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -59,17 +61,22 @@ function ProfileSettingsInner({ onToast }: ProfileSettingsPageProps) {
     router.replace(`/vendor/profile?${params.toString()}`, { scroll: false });
   };
 
-  useEffect(() => {
-    getCurrentUser()
+  const loadUser = useCallback(() => {
+    return getCurrentUser()
       .then(user => {
+        setCurrentUser(user);
         setName(user.name);
         setEmail(user.email);
         setPhone(user.phone || "+234 800 ELAN VIP");
         setAvatar(user.avatar || "AB");
       })
       .catch(err => {
-        logger.warn("Failed to load user profile on mount", err);
+        logger.warn("Failed to load user profile", err);
       });
+  }, []);
+
+  useEffect(() => {
+    loadUser();
 
     getBusinessProfile()
       .then(profile => {
@@ -91,7 +98,7 @@ function ProfileSettingsInner({ onToast }: ProfileSettingsPageProps) {
       .catch(err => {
         logger.warn("Failed to load business valuation on mount", err);
       });
-  }, []);
+  }, [loadUser]);
 
   const handleSaveProfile = async (updates: {
     name: string;
@@ -224,7 +231,13 @@ function ProfileSettingsInner({ onToast }: ProfileSettingsPageProps) {
           />
 
           {/* 4. Authentication & Security Panel */}
-          <ProfileSecurityCard email={email} />
+          <ProfileSecurityCard
+            email={email}
+            isGoogleConnected={currentUser?.isGoogleConnected}
+            hasPassword={currentUser?.hasPassword}
+            onRefresh={loadUser}
+            onToast={notify}
+          />
         </div>
       )}
 

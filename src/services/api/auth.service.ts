@@ -111,6 +111,9 @@ export async function getCurrentUser(): Promise<User> {
     phone: me.user.phone ?? undefined,
     avatar: me.user.avatarUrl ?? undefined,
     role: me.user.role === "OWNER" || me.user.role === "ADMIN" ? "admin" : "user",
+    emailVerified: me.user.emailVerified,
+    hasPassword: me.user.hasPassword,
+    isGoogleConnected: me.user.isGoogleConnected,
   };
 }
 
@@ -141,6 +144,9 @@ export async function updateUserProfile(data: {
     phone: me.user.phone ?? undefined,
     avatar: me.user.avatarUrl ?? undefined,
     role: me.user.role === "OWNER" || me.user.role === "ADMIN" ? "admin" : "user",
+    emailVerified: me.user.emailVerified,
+    hasPassword: me.user.hasPassword,
+    isGoogleConnected: me.user.isGoogleConnected,
   };
 }
 
@@ -151,19 +157,79 @@ export async function signIn(email: string, password: string): Promise<UserSessi
     saveAuthTokens(authData.accessToken, authData.refreshToken);
   }
 
-  const fullName =
-    [authData.user.firstName, authData.user.lastName].filter(Boolean).join(" ") ||
-    authData.user.email;
+  const user = authData.user!;
+  const fullName = [user.firstName, user.lastName].filter(Boolean).join(" ") || user.email;
 
   return createSession({
-    id: authData.user.id,
+    id: user.id,
     name: fullName,
-    email: authData.user.email,
-    role: authData.user.role,
-    studioName: authData.business?.name ?? "",
-    studioSlug: authData.business?.slug ?? "",
-    avatarUrl: authData.user.avatarUrl ?? undefined,
+    email: user.email,
+    role: user.role,
+    studioName: authData.business?.name ?? authData.studio?.name ?? "",
+    studioSlug: authData.business?.slug ?? authData.studio?.slug ?? "",
+    avatarUrl: user.avatarUrl ?? undefined,
   });
+}
+
+export async function signUpWithEmail(data: {
+  email: string;
+  password: string;
+  studioName: string;
+  slug?: string;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
+  phone?: string;
+  businessType?: string;
+}): Promise<{ requiresVerification: boolean; email: string; message: string }> {
+  return apiClient.post<{ requiresVerification: boolean; email: string; message: string }>(
+    "/auth/signup",
+    data
+  );
+}
+
+export async function verifyEmail(email: string, code: string): Promise<UserSession> {
+  const authData = await apiClient.post<AuthResponseDto>("/auth/verify-email", { email, code });
+
+  if (authData.accessToken) {
+    saveAuthTokens(authData.accessToken, authData.refreshToken);
+  }
+
+  const user = authData.user!;
+  const fullName = [user.firstName, user.lastName].filter(Boolean).join(" ") || user.email;
+
+  return createSession({
+    id: user.id,
+    name: fullName,
+    email: user.email,
+    role: user.role,
+    studioName: authData.business?.name ?? authData.studio?.name ?? "",
+    studioSlug: authData.business?.slug ?? authData.studio?.slug ?? "",
+    avatarUrl: user.avatarUrl ?? undefined,
+  });
+}
+
+export async function resendVerificationCode(email: string): Promise<{ message: string }> {
+  return apiClient.post<{ message: string }>("/auth/resend-verification", { email });
+}
+
+export async function requestPasswordReset(email: string): Promise<{ message: string }> {
+  return apiClient.post<{ message: string }>("/auth/forgot-password", { email });
+}
+
+export async function confirmPasswordReset(data: {
+  email: string;
+  resetCode: string;
+  newPassword: string;
+}): Promise<{ message: string }> {
+  return apiClient.post<{ message: string }>("/auth/reset-password", data);
+}
+
+export async function changePassword(data: {
+  currentPassword?: string;
+  newPassword: string;
+}): Promise<{ message: string }> {
+  return apiClient.post<{ message: string }>("/auth/change-password", data);
 }
 
 export async function signInWithGoogle(options?: {

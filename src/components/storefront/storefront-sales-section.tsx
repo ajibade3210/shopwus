@@ -75,6 +75,8 @@ export function StorefrontSalesSection({ profile }: StorefrontSalesSectionProps)
                   src={imageUrl}
                   alt={headerText}
                   fill
+                  priority
+                  loading="eager"
                   sizes="(max-width: 768px) 100vw, 380px"
                   className="object-cover"
                 />

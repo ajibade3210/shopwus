@@ -9,6 +9,9 @@ export interface UserDto {
   phone?: string | null;
   role: string;
   avatarUrl?: string | null;
+  emailVerified?: boolean;
+  hasPassword?: boolean;
+  isGoogleConnected?: boolean;
 }
 
 export interface BusinessDto {
@@ -25,6 +28,9 @@ export interface AuthResponseDto {
   accessToken?: string;
   refreshToken?: string;
   token?: string;
+  requiresVerification?: boolean;
+  email?: string;
+  message?: string;
 }
 
 export interface MeResponseDto {
@@ -42,6 +48,9 @@ export interface User {
   phone?: string;
   avatar?: string;
   role: "admin" | "user";
+  emailVerified?: boolean;
+  hasPassword?: boolean;
+  isGoogleConnected?: boolean;
 }
 
 export interface AuthSession {
