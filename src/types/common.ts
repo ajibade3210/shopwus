@@ -4,6 +4,28 @@ import type { ReactNode } from "react";
 export type CurrencyCode = "NGN" | "USD" | "GBP" | "EUR";
 export type ButtonRadiusType = "Square" | "Subtle" | "Rounded" | "Pill";
 
+export type StatusVariant =
+  | "new"
+  | "contacted"
+  | "qualified"
+  | "converted"
+  | "completed"
+  | "active"
+  | "paid"
+  | "closed"
+  | "lost"
+  | "overdue"
+  | "draft"
+  | "pending"
+  | "sent"
+  | string;
+
+export interface StatusBadgeProps {
+  status: StatusVariant;
+  className?: string;
+  showGlyph?: boolean;
+}
+
 export interface FormatMoneyOptions {
   decimals?: number;
 }

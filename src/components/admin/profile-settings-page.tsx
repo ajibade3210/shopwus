@@ -11,15 +11,18 @@ import {
   updateUserProfile,
 } from "@/lib/api";
 import { logger } from "@/lib/logger";
-import type { BusinessProfile, BusinessValuation, ProfileSettingsPageProps } from "@/types";
+import type {
+  BusinessProfile,
+  BusinessValuation,
+  ProfileSettingsPageProps,
+  ProfileTab,
+} from "@/types";
 import { useAdminToast } from "./admin-layout";
 import { ValuationCard } from "./analytics/valuation-card";
 import { LocationSection } from "./profile/location-section";
 import { ProfileHeaderCard } from "./profile/profile-header-card";
 import { ProfileIdentityCard } from "./profile/profile-identity-card";
 import { ProfileSecurityCard } from "./profile/profile-security-card";
-
-type ProfileTab = "profile" | "delivery";
 
 function ProfileSettingsInner({ onToast }: ProfileSettingsPageProps) {
   const { showToast } = useAdminToast();

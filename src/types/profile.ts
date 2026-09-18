@@ -552,3 +552,5 @@ export interface UseContactSettingsOptions {
 export interface UsePortfolioSettingsOptions {
   notify: (message: string) => void;
 }
+
+export type ProfileTab = "profile" | "delivery";

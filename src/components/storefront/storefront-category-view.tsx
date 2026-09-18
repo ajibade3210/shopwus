@@ -17,16 +17,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type React from "react";
 import { useEffect, useState, useTransition } from "react";
 import { useStorefrontProductsQuery } from "@/hooks/queries";
-import type { Product } from "@/types";
+import type { Product, StorefrontCategoryViewProps, StorefrontSortOption } from "@/types";
 import { formatCurrency } from "@/utils/currency";
 import { useCart } from "./cart-context";
 import { useStorefront } from "./storefront-context";
-
-type SortOption = "featured" | "newest" | "price-asc" | "price-desc";
-
-type StorefrontCategoryViewProps = {
-  categorySlug: string;
-};
 
 export function StorefrontCategoryView({ categorySlug }: StorefrontCategoryViewProps) {
   const router = useRouter();
@@ -49,7 +43,7 @@ export function StorefrontCategoryView({ categorySlug }: StorefrontCategoryViewP
   const { addItem } = useCart();
   const [addedId, setAddedId] = useState<string | null>(null);
 
-  const currentSort = (searchParams.get("sort") as SortOption) || "featured";
+  const currentSort = (searchParams.get("sort") as StorefrontSortOption) || "featured";
   const currentPage = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
 
   let sortBy: "createdAt" | "price" | undefined;
@@ -114,7 +108,7 @@ export function StorefrontCategoryView({ categorySlug }: StorefrontCategoryViewP
     });
   };
 
-  const handleSortChange = (newSort: SortOption) => {
+  const handleSortChange = (newSort: StorefrontSortOption) => {
     updateQuery({
       sort: newSort === "featured" ? null : newSort,
       page: null,
@@ -194,7 +188,7 @@ export function StorefrontCategoryView({ categorySlug }: StorefrontCategoryViewP
                 />
                 <select
                   value={currentSort}
-                  onChange={e => handleSortChange(e.target.value as SortOption)}
+                  onChange={e => handleSortChange(e.target.value as StorefrontSortOption)}
                   className="pl-9 pr-8 py-2 text-xs font-semibold bg-card border border-border-hairline rounded-xl text-on-surface appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer shadow-xs"
                 >
                   <option value="featured">Featured First</option>

@@ -3,11 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { BusinessProfile } from "@/types";
-
-type StorefrontSalesSectionProps = {
-  profile?: BusinessProfile | null;
-};
+import type { StorefrontSalesSectionProps } from "@/types";
 
 export function StorefrontSalesSection({ profile }: StorefrontSalesSectionProps) {
   // Strict Content Guard: Collapse if disabled or if profile missing or if both header and image are empty

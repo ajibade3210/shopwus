@@ -1,14 +1,7 @@
 "use client";
 
-import type { Category } from "@/types";
+import type { StorefrontCategoryPillsProps } from "@/types";
 import { useStorefront } from "./storefront-context";
-
-type StorefrontCategoryPillsProps = {
-  categories: Category[];
-  selectedCategorySlug?: string;
-  onSelectCategory: (categorySlug: string) => void;
-  totalProductCount?: number;
-};
 
 export function StorefrontCategoryPills({
   categories,

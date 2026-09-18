@@ -1,20 +1,5 @@
+import type { StatusBadgeProps, StatusVariant } from "@/types";
 import { formatStatusLabel } from "@/utils";
-
-export type StatusVariant =
-  | "new"
-  | "contacted"
-  | "qualified"
-  | "converted"
-  | "completed"
-  | "active"
-  | "paid"
-  | "closed"
-  | "lost"
-  | "overdue"
-  | "draft"
-  | "pending"
-  | "sent"
-  | string;
 
 export function getStatusBadgeClass(status: StatusVariant): string {
   switch (status?.toLowerCase()) {
@@ -46,15 +31,7 @@ export function getStatusBadgeClass(status: StatusVariant): string {
   }
 }
 
-export function StatusBadge({
-  status,
-  className = "",
-  showGlyph = false,
-}: {
-  status: StatusVariant;
-  className?: string;
-  showGlyph?: boolean;
-}) {
+export function StatusBadge({ status, className = "", showGlyph = false }: StatusBadgeProps) {
   const isPositive = [
     "active",
     "paid",

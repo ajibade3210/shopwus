@@ -17,4 +17,5 @@ export * from "./logger";
 export * from "./order";
 export * from "./product";
 export * from "./profile";
+export * from "./storefront";
 export * from "./valuation";

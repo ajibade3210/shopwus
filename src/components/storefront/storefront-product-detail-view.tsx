@@ -23,7 +23,7 @@ import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useCart } from "@/components/storefront/cart-context";
 import { useStorefrontProductDetailQuery, useStorefrontProductsQuery } from "@/hooks/queries";
-import type { Product, ProductVariant } from "@/types";
+import type { Product, ProductVariant, StorefrontProductDetailViewProps } from "@/types";
 import { formatCurrency } from "@/utils/currency";
 
 // Helper to resolve color values from hex or names
@@ -63,11 +63,6 @@ function resolveColorValue(val: string): string {
   };
   return COLOR_PALETTE[trimmed.toLowerCase()] || "#4B5563";
 }
-
-type StorefrontProductDetailViewProps = {
-  slug: string;
-  productSlug: string;
-};
 
 export function StorefrontProductDetailView({
   slug,

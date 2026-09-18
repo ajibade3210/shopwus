@@ -5,36 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { CUSTOM_EVENTS } from "@/constants";
 import { getBusinessBySlug } from "@/lib/api";
 import { getStorefrontProducts } from "@/services/api/product.service";
-import type { BusinessProfile, Category, Product } from "@/types";
-
-type StorefrontContextType = {
-  profile: BusinessProfile | null;
-  slug: string;
-  categories: Category[];
-  setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
-  isNotFound: boolean;
-  isLoading: boolean;
-  isSearchOpen: boolean;
-  setIsSearchOpen: (open: boolean) => void;
-  selectedProduct: Product | null;
-  setSelectedProduct: (product: Product | null) => void;
-  isQuoteModalOpen: boolean;
-  setIsQuoteModalOpen: (open: boolean) => void;
-  activeQuoteService?: string;
-  setActiveQuoteService: (service?: string) => void;
-  isReviewModalOpen: boolean;
-  setIsReviewModalOpen: (open: boolean) => void;
-  primaryColor: string;
-  secondaryColor: string;
-  buttonColor: string;
-  textColor: string;
-  pageBgColor: string;
-  cardBgColor: string;
-  buttonRadius: string;
-  monogram: string;
-  whatsAppLink: string;
-  totalCustomers: number;
-};
+import type { BusinessProfile, Category, Product, StorefrontContextType } from "@/types";
 
 const StorefrontContext = createContext<StorefrontContextType | undefined>(undefined);
 

@@ -2,7 +2,7 @@
 
 import { Check, Minus, Package, Plus, Share2, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { Product, ProductVariant } from "@/types";
+import type { ProductVariant, StorefrontProductModalProps } from "@/types";
 import { formatCurrency } from "@/utils/currency";
 import { useCart } from "./cart-context";
 import { useStorefront } from "./storefront-context";
@@ -39,11 +39,6 @@ function resolveColorValue(val: string): string {
   };
   return COLOR_PALETTE[trimmed.toLowerCase()] || "#374151";
 }
-
-type StorefrontProductModalProps = {
-  product: Product | null;
-  onClose: () => void;
-};
 
 export function StorefrontProductModal({ product, onClose }: StorefrontProductModalProps) {
   const {

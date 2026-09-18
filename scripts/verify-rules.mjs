@@ -13,14 +13,22 @@ function checkFile(filePath) {
   const content = fs.readFileSync(filePath, "utf-8");
   const relPath = path.relative(rootDir, filePath);
 
-  // 1. Check for interface definitions in src/components/
+  // 1. Check for interface or type definitions in src/components/
   if (filePath.startsWith(path.join(srcDir, "components"))) {
     const lines = content.split("\n");
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
-      // Match standalone interface declaration (ignore comments)
-      if (/^(?:export\s+)?interface\s+[A-Za-z0-9_]+/i.test(line) && !line.startsWith("//") && !line.startsWith("/*")) {
-        errors.push(`[RULE VIOLATION] ${relPath}:${i + 1} -> Interface defined in component. Move interface definitions to 'src/types/'.`);
+      // Match standalone interface or component prop type declaration (ignore comments)
+      if (
+        /^(?:export\s+)?(?:interface\s+[A-Za-z0-9_]+|type\s+[A-Za-z0-9_]+(?:Props|ContextType|Options)\s*=)/i.test(
+          line
+        ) &&
+        !line.startsWith("//") &&
+        !line.startsWith("/*")
+      ) {
+        errors.push(
+          `[RULE VIOLATION] ${relPath}:${i + 1} -> Interface or type defined in component. Move interface or type definitions to 'src/types/'.`
+        );
       }
     }
   }

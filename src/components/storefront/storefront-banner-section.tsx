@@ -1,11 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { BusinessProfile } from "@/types";
-
-type StorefrontBannerSectionProps = {
-  profile?: BusinessProfile | null;
-};
+import type { StorefrontBannerSectionProps } from "@/types";
 
 export function StorefrontBannerSection({ profile }: StorefrontBannerSectionProps) {
   // Strict Content Guard: Collapse if disabled or if profile missing or if both header and image are empty

@@ -4,14 +4,10 @@ import { Check, Layers, Package, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
-import type { Product } from "@/types";
+import type { Product, StorefrontBestSellersProps } from "@/types";
 import { formatCurrency } from "@/utils/currency";
 import { useCart } from "./cart-context";
 import { useStorefront } from "./storefront-context";
-
-type StorefrontBestSellersProps = {
-  products: Product[];
-};
 
 export function StorefrontBestSellers({ products }: StorefrontBestSellersProps) {
   const router = useRouter();

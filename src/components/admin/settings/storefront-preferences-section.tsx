@@ -1,49 +1,10 @@
 "use client";
 
 import { Check, Image as ImageIcon, Loader2, Trash2, Upload } from "lucide-react";
-import type React from "react";
 import { useRef } from "react";
+import type { StorefrontPreferencesSectionProps } from "@/types";
 import { Card } from "./card";
 import { Toggle } from "./toggle";
-
-type StorefrontPreferencesSectionProps = {
-  showStorefrontBanner: boolean;
-  setShowStorefrontBanner: (val: boolean) => void;
-  storefrontBannerUrl: string;
-  setStorefrontBannerUrl: (val: string) => void;
-  storefrontBannerHeader: string;
-  setStorefrontBannerHeader: (val: string) => void;
-  storefrontBannerBody: string;
-  setStorefrontBannerBody: (val: string) => void;
-  storefrontBannerTextColor: string;
-  setStorefrontBannerTextColor: (val: string) => void;
-  storefrontBannerBgColor: string;
-  setStorefrontBannerBgColor: (val: string) => void;
-
-  showStorefrontSales: boolean;
-  setShowStorefrontSales: (val: boolean) => void;
-  storefrontSalesPosition: "top" | "bottom";
-  setStorefrontSalesPosition: (val: "top" | "bottom") => void;
-  storefrontSalesUrl: string;
-  setStorefrontSalesUrl: (val: string) => void;
-  storefrontSalesHeader: string;
-  setStorefrontSalesHeader: (val: string) => void;
-  storefrontSalesBody: string;
-  setStorefrontSalesBody: (val: string) => void;
-  storefrontSalesBtnText: string;
-  setStorefrontSalesBtnText: (val: string) => void;
-  storefrontSalesBtnUrl: string;
-  setStorefrontSalesBtnUrl: (val: string) => void;
-  storefrontSalesLinkType: "product" | "category" | "whatsapp" | "custom";
-  setStorefrontSalesLinkType: (val: "product" | "category" | "whatsapp" | "custom") => void;
-
-  isUploadingBanner: boolean;
-  isUploadingSalesImage: boolean;
-  handleStorefrontBannerUpload: (e: React.ChangeEvent<HTMLInputElement>) => Promise<string | null>;
-  handleStorefrontSalesImageUpload: (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => Promise<string | null>;
-};
 
 const TEXT_COLOR_PRESETS = [
   { label: "Clean White", value: "#FFFFFF" },
