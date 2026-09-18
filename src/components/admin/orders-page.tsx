@@ -216,7 +216,6 @@ export function OrdersPage() {
           isAbandonedTab={tab === "abandoned"}
           isLoading={isTableLoading}
           onSelectOrder={id => setSelectedOrderId(id)}
-          summary={summary}
           tab={tab}
           onTabChange={handleTabChange}
           searchQuery={search}

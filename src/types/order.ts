@@ -266,7 +266,6 @@ export interface OrdersTableProps {
   isAbandonedTab: boolean;
   isLoading: boolean;
   onSelectOrder: (id: string) => void;
-  summary?: OrderSummary;
   tab: OrderTab;
   onTabChange: (tab: OrderTab) => void;
   searchQuery: string;

@@ -11,7 +11,6 @@ export function OrdersTable({
   isAbandonedTab,
   isLoading,
   onSelectOrder,
-  summary,
   tab,
   onTabChange,
   searchQuery,
@@ -37,10 +36,10 @@ export function OrdersTable({
               aria-label="Filter orders by status"
               className="h-9 appearance-none pl-3 pr-7 bg-card border border-border-hairline rounded-md text-[11px] font-medium text-on-surface hover:bg-surface-low focus:outline-none transition-colors cursor-pointer shadow-2xs font-sans"
             >
-              <option value="all">All Orders ({summary?.totalOrders || 0})</option>
-              <option value="unfulfilled">Unfulfilled ({summary?.unfulfilled || 0})</option>
+              <option value="all">All Orders</option>
+              <option value="unfulfilled">Unfulfilled</option>
               <option value="completed">Completed</option>
-              <option value="abandoned">Abandoned ({summary?.abandonedCount || 0})</option>
+              <option value="abandoned">Abandoned</option>
             </select>
             <ChevronDown
               size={12}
