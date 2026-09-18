@@ -87,7 +87,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
         }`}
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center shrink-0">
           <BrandLogo className="brand" href="/" />
           <button
             className="hidden max-[750px]:grid place-items-center bg-transparent border-0 text-muted hover:text-on-surface cursor-pointer p-1 rounded-md font-sans"
@@ -99,7 +99,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 mt-14 font-sans">
+        <nav className="flex-1 min-h-0 overflow-y-auto no-scrollbar overscroll-contain flex flex-col gap-1 mt-6 sm:mt-8 pb-3 font-sans">
           <Link
             className={navLinkClass(
               path === "/vendor/analytics" || path === "/vendor/overview" || path === "/vendor"
@@ -220,7 +220,7 @@ export function AdminSidebar({ path, open, onClose }: AdminSidebarProps) {
           </div>
         </nav>
 
-        <div className="mt-auto pt-3 border-t border-border-hairline">
+        <div className="mt-auto shrink-0 pt-3 border-t border-border-hairline bg-surface-low z-20 relative">
           <div
             className={`group relative flex items-center justify-between p-2 rounded-xl transition-all ${
               path === "/vendor/profile"
